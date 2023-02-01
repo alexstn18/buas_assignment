@@ -1,5 +1,14 @@
 #include "Player.h"
 
+Player::Player()
+{
+    // bounceCount = 0;
+}
+
+Player::~Player()
+{
+}
+
 void Player::InitPlayer()
 {
 	spriteX += speedX;

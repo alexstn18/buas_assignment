@@ -22,12 +22,6 @@ using namespace std;
 #define entitySize 32
 namespace Tmpl8
 {
-    uint32_t color;
-    uint32_t textColor = 0x000000;
-    uint32_t exitColor = 0x000000;
-    uint16_t deathCount = 0;
-    std::string healthString;
-    std::string deathCountString;
     int spikeX{ }, spikeY{ };
     int coinHitCount = 0;
     int bgX = 0, bgY = 0;
@@ -41,9 +35,6 @@ namespace Tmpl8
     Sprite grass(new Surface("assets/grassSprite.png"), 1);
     Sprite spike(new Surface("assets/spikeTile.png"), 1);
     Sprite coin(new Surface("assets/coinSpriteTest.png"), 1);
-    Sprite hpIcon(new Surface("assets/heart_shaded.png"), 1);
-    Sprite deathIcon(new Surface("assets/skullSprite.png"), 1);
-    Sprite logo(new Surface("assets/logo.png"), 1);
 
     bool isColliding(const Sprite& sprite, int spriteX, int spriteY, const Sprite &entity, int entityX, int entityY)
     {
@@ -53,12 +44,10 @@ namespace Tmpl8
 
     void Game::Tick(float deltaTime)
     {
-        color = 0xFFFFFF;
+        
         deltaTime /= 1000.f;
         deltaTime = std::min(deltaTime * 1.0f, 30.0f);
 
-        healthString = std::to_string(health);
-        deathCountString = std::to_string(deathCount);
         /* mouse trajectory line
         friction = (spriteY - mouseAxis.y) / 15;
         if (friction < NULL)
@@ -83,7 +72,7 @@ namespace Tmpl8
         if (!isPlaying)
         {
             opacityBg.Draw(screen, bgX, bgY);
-            uint16_t menuTextX = ScreenWidth / 2, menuTextY = ScreenHeight / 2;
+            
             logo.Draw(screen, 240, 50);
             screen->Print("PLAY", menuTextX - 25, menuTextY - 25, textColor, 5);
             if (mouseAxis.x > (menuTextX - 25) && mouseAxis.x < (menuTextX - 25) + 115 && mouseAxis.y > (menuTextY - 25) && mouseAxis.y < (menuTextY - 25) + 25)
@@ -140,11 +129,6 @@ namespace Tmpl8
             }
 
             // if (coinHitCount == 1) coin.~Sprite();
-
-            hpIcon.DrawScaled(0, 0, hpIcon.GetWidth() * 5, hpIcon.GetHeight() * 5, 0, screen);
-            screen->Print(healthString.c_str(), NULL + 50, NULL + 10, WHITE, 5);
-            deathIcon.DrawScaled(0, 50, deathIcon.GetWidth() * 5, deathIcon.GetHeight() * 5, 0, screen);
-            screen->Print(deathCountString.c_str(), NULL + 50, NULL + 60, WHITE, 5);
         }
     }
 }
