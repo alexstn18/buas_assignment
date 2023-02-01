@@ -9,6 +9,7 @@
 #endif
 
 #include <cstdlib>
+#include <cstdint>
 #include <cstdio>
 
 constexpr int ScreenWidth = 1280;

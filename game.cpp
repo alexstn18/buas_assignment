@@ -22,28 +22,15 @@ using namespace std;
 #define entitySize 32
 namespace Tmpl8
 {
-    int bounceCount;
     uint32_t color;
     uint32_t textColor = 0x000000;
     uint32_t exitColor = 0x000000;
     uint16_t deathCount = 0;
-    int16_t health = 100;
     std::string healthString;
     std::string deathCountString;
-    float spriteX { 5.0f }, spriteY { 5.0f }, friction { 0.0f }, speedX { 2.0f }, speedY { 3.0f };
     int spikeX{ }, spikeY{ };
     int coinHitCount = 0;
     int bgX = 0, bgY = 0;
-    bool isPlaying = false, isBouncing = false, isFlipped = false;
-
-    void InitPlayer()
-    {
-        spriteX += speedX;
-        spriteY += speedY;
-        speedY++;
-    }
-
-    void ReInitPlayer() { spriteX = 5.0f, spriteY = 5.0f; }
 
     void Game::Init() {}
 
@@ -51,12 +38,9 @@ namespace Tmpl8
     // Surface tiles("assets/rogueDBtiles.png");
     Sprite bg(new Surface("assets/bgScroll.png"), 1);
     Sprite opacityBg(new Surface("assets/halfOpacityBackground.png"), 1);
-    Sprite theSprite(new Surface("assets/ball.png"), 1);
     Sprite grass(new Surface("assets/grassSprite.png"), 1);
     Sprite spike(new Surface("assets/spikeTile.png"), 1);
     Sprite coin(new Surface("assets/coinSpriteTest.png"), 1);
-    int spriteW = theSprite.GetWidth();
-    int spriteH = theSprite.GetHeight();
     Sprite hpIcon(new Surface("assets/heart_shaded.png"), 1);
     Sprite deathIcon(new Surface("assets/skullSprite.png"), 1);
     Sprite logo(new Surface("assets/logo.png"), 1);
@@ -73,11 +57,9 @@ namespace Tmpl8
         deltaTime /= 1000.f;
         deltaTime = std::min(deltaTime * 1.0f, 30.0f);
 
-        bool isSquished = spriteH < 25 || spriteW < 25;
-
         healthString = std::to_string(health);
         deathCountString = std::to_string(deathCount);
-
+        /* mouse trajectory line
         friction = (spriteY - mouseAxis.y) / 15;
         if (friction < NULL)
         {
@@ -87,6 +69,7 @@ namespace Tmpl8
         {
             color = 0xFF0000;
         }
+        */
 
         bgX--;
 
@@ -113,6 +96,7 @@ namespace Tmpl8
             }
             else
             {
+                
                 textColor = 0x000000;
             }
             screen->Print("EXIT", (ScreenWidth / 2) - 25, (ScreenHeight / 2) + 50, exitColor, 5);
@@ -128,70 +112,11 @@ namespace Tmpl8
             }
         }
 
-        if(isPlaying)
+        if (isPlaying)
         {
             bg.Draw(screen, bgX, bgY);
-            InitPlayer();
-            if (spriteY < NULL)
-            {
-                spriteY = NULL;
-                speedY *= -0.95;
-            }
+            // InitPlayer();
 
-            if (spriteY > screen->GetHeight() - theSprite.GetHeight())
-            { //hit bottom
-                spriteY = screen->GetHeight() - theSprite.GetHeight();
-                speedY *= -0.95;
-                bounceCount += 1;
-                spriteH -= 10, isSquished = true;
-                isBouncing = true;
-            }
-            if (spriteX > screen->GetWidth() - theSprite.GetWidth() || spriteX < 0)
-            { //hit side
-                if (spriteX < NULL) // left
-                {
-                    spriteX = NULL;
-                    speedX *= -0.8;
-                    bounceCount += 1;
-                    isBouncing = true, isFlipped = false;
-                }
-                else
-                {
-                    spriteX = screen->GetWidth() - theSprite.GetWidth(); //hit right
-                    speedX *= -0.8;
-                    bounceCount += 1;
-                    isBouncing = true, isFlipped = true;
-                }  
-            }
-
-            if (isSquished)
-            {
-                spriteH++;
-                if (spriteH >= 25)
-                {
-                    spriteH = 25;
-                }
-                isSquished = false;
-            }
-
-            if (isBouncing)
-            {
-                health -= 5;
-                if (health <= NULL)
-                {
-                    health = NULL;
-                    isPlaying = false;
-                    // ReInitPlayer();
-                    return;
-
-                }
-                isBouncing = false;
-            }
-
-            if (health > 100) health = 100;
-            
-
-            theSprite.DrawScaled(static_cast<int>(spriteX), static_cast<int>(spriteY), spriteW, spriteH, isFlipped, screen);
             spike.Draw(screen, 400, 300);
             grass.Draw(screen, 25, 300);
             coin.Draw(screen, 600, 500);

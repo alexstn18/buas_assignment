@@ -1,5 +1,6 @@
 #pragma once
 #include "template.h"
+#include "Player.h"
 #include <Windows.h>
 
 namespace Tmpl8 {
@@ -18,6 +19,7 @@ public:
 	void KeyUp( int key ) { /* implement if you want to handle keys */ }
 	void KeyDown(int key) { }
 private:
+	bool isPlaying = false;
 	Surface* screen;
 	vec2 mouseAxis{};
 };
