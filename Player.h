@@ -21,6 +21,10 @@ public:
 
 	void hpCheck();
 
+	const int getHP();
+
+	const int getDeathCount();
+
 	void Draw(Surface* screen);
 private:
 	Sprite theSprite{ new Surface("assets/ball.png"), 1 };
