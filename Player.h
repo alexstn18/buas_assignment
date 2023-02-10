@@ -19,13 +19,15 @@ public:
 
 	void SquishCheck();
 
-	void hpCheck();
+	void hpCheck(bool &isPlaying);
 
 	const int getHP();
 
 	const int getDeathCount();
 
 	void Draw(Surface* screen);
+
+	void Update(bool &playing);
 private:
 	Sprite theSprite{ new Surface("assets/ball.png"), 1 };
 	int spriteW{ theSprite.GetWidth() };

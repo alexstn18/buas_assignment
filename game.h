@@ -1,6 +1,6 @@
 #pragma once
 #include "template.h"
-#include "Player.h"
+#include "Components.h"
 #include <Windows.h>
 #include <SDL.h>
 #include <iostream>
@@ -23,12 +23,19 @@ public:
 	void MouseMove(int x, int y) { mouseAxis.x = x; mouseAxis.y = y; }
 	void KeyUp( int key ) { /* implement if you want to handle keys */ }
 	void KeyDown(int key) { }
+	void Run();
 private:
 	Sprite bg{ new Surface("assets/bgScroll.png"), 1 };
 	int bgX = 0, bgY = 0;
 	bool isPlaying = false;
 	Surface* screen;
 	vec2 mouseAxis{};
+
+	Player player;
+	UserInterface hud;
+	Entity entity;
+	Map map;
+	Collider col;
 };
 
 }; // namespace Tmpl8

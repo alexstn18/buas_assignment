@@ -7,21 +7,15 @@ bool Collider::isColliding(const Sprite& sprite, int spriteX, int spriteY, const
     return false;
 }
 
-Collider::Collider()
-{
-}
+Collider::Collider() { /*m_sprite1X = m_sprite1Y = NULL;*/ }
 
-Collider::~Collider()
-{
-}
+Collider::~Collider() {}
 
-void Collider::CollisionCheck()
-{
-    /*
-    if (isColliding(theSprite, static_cast<int>(spriteX), static_cast<int>(spriteY), spike, 400, 300))
+/*
+    if (isColliding(sprite1, static_cast<int>(sprite1X), static_cast<int>(sprite1Y), sprite2, 400, 300))
     {
-        deathCount += 1;
-        ReInitPlayer(), InitPlayer();
+        // deathCount += 1;
+        // ReInitPlayer(), InitPlayer();
         //anim = deathAnim;
         //playAnim(anim);
     }
@@ -37,4 +31,5 @@ void Collider::CollisionCheck()
         health += coinHealHP;
     }
     */
+    
 }

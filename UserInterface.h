@@ -10,13 +10,13 @@ using namespace Tmpl8;
 class UserInterface
 {
 public:
-    UserInterface(Player &player);
+    UserInterface();
 
     ~UserInterface();
 
-    void PrintMenu(Surface* screen, bool &playing);
+    void PrintMenu(Surface* screen, bool& playing, const vec2& mouseAxis);
 
-    void PrintHUD(Surface* screen);
+    void PrintHUD(Surface* screen, Player* player);
 private:
     uint32_t color;
     uint32_t textColor{ 0x0 };
@@ -25,7 +25,6 @@ private:
     uint16_t menuTextY{ ScreenHeight / 2 };
     std::string healthString;
     std::string deathCountString;
-    Player &m_player;
 
     Sprite hpIcon{ new Surface("assets/heart_shaded.png"), 1 };
     Sprite deathIcon{ new Surface("assets/skullSprite.png"), 1 };

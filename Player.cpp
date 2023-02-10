@@ -1,18 +1,13 @@
 #include "Player.h"
 
-constexpr int damage = 5;
-constexpr int maxHP = 100;
-constexpr int spriteSetWidth = 25;
-constexpr float startingPoint = 5.0f;
+const int damage = 5;
+const int maxHP = 100;
+const int spriteSetWidth = 25;
+const float startingPoint = 5.0f;
 
-Player::Player()
-{
-    // bounceCount = 0;
-}
+Player::Player() { bounceCount = NULL; }
 
-Player::~Player()
-{
-}
+Player::~Player() {}
 
 void Player::InitPlayer()
 {
@@ -68,7 +63,7 @@ void Player::SquishCheck()
     }
 }
 
-void Player::hpCheck()
+void Player::hpCheck(bool &isPlaying)
 {
     if (isBouncing)
     {
@@ -76,9 +71,9 @@ void Player::hpCheck()
         if (health <= NULL)
         {
             health = NULL;
-            // isPlaying = false;
+            isPlaying = false;
             // ReInitPlayer();
-            return;
+            // return;
         }
     }
 
@@ -98,4 +93,11 @@ const int Player::getDeathCount()
 void Player::Draw(Surface* screen)
 {
     theSprite.DrawScaled(static_cast<int>(spriteX), static_cast<int>(spriteY), spriteW, spriteH, isFlipped, screen);
+}
+
+void Player::Update(bool &playing)
+{
+    CollisionCheck();
+    SquishCheck();
+    hpCheck(playing);
 }

@@ -20,7 +20,9 @@ namespace Tmpl8
     int spikeX{ }, spikeY{ };
     int coinHitCount = 0;
 
-    void Game::Init() {}
+    void Game::Init() 
+    {
+    }
 
     void Game::Shutdown() {}
     // Surface tiles("assets/rogueDBtiles.png");
@@ -47,24 +49,19 @@ namespace Tmpl8
         }
         */
 
-        bgX--;
 
-        if (bgX < -3841)
-        {
-            bgX = 0;
-        }
 
         // screen->Clear(0x699EFC);
         // std::cout << friction << "\n";
         if (!isPlaying)
         {
-            opacityBg.Draw(screen, bgX, bgY);
+            
             
         }
 
         if (isPlaying)
         {
-            bg.Draw(screen, bgX, bgY);
+            
             // InitPlayer();
 
             spike.Draw(screen, 400, 300);
@@ -73,4 +70,29 @@ namespace Tmpl8
             // if (coinHitCount == 1) coin.~Sprite();
         }
     }
+}
+
+void Game::Run()
+{
+    bgX--;
+
+    if (bgX < -3841)
+    {
+        bgX = 0;
+    }
+
+    if(!isPlaying)
+    {
+        opacityBg.Draw(screen, bgX, bgY);
+        hud.PrintMenu(screen, isPlaying, mouseAxis);
+    }
+    else
+    {
+        hud.PrintHUD(screen, &player);
+        bg.Draw(screen, bgX, bgY);
+        player.Draw(screen);
+        player.InitPlayer();
+        player.Update(isPlaying);
+    }
+    
 }
