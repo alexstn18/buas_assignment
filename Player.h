@@ -1,6 +1,7 @@
 #pragma once
 #include "surface.h"
 #include "template.h"
+#include <cassert>
 
 using namespace Tmpl8;
 
@@ -21,18 +22,20 @@ public:
 
 	void hpCheck(bool &isPlaying);
 
-	const int getHP();
+	const int32_t getHP();
 
 	const int getDeathCount();
 
 	void Draw(Surface* screen);
+
+	void Move();
 
 	void Update(bool &playing);
 private:
 	Sprite theSprite{ new Surface("assets/ball.png"), 1 };
 	int spriteW{ theSprite.GetWidth() };
 	int spriteH{ theSprite.GetHeight() };
-	int16_t health{ 100 };
+	int32_t health{ 100 };
 	float spriteX{ 5.0f };
 	float spriteY{ 5.0f };
 	float friction{ 0.0f };

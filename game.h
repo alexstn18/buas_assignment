@@ -11,6 +11,7 @@
 namespace Tmpl8 {
 
 class Surface;
+class UserInterface;
 class Game
 {
 public:
@@ -23,19 +24,20 @@ public:
 	void MouseMove(int x, int y) { mouseAxis.x = x; mouseAxis.y = y; }
 	void KeyUp( int key ) { /* implement if you want to handle keys */ }
 	void KeyDown(int key) { }
-	void Run();
+	void Update();
 private:
 	Sprite bg{ new Surface("assets/bgScroll.png"), 1 };
 	int bgX = 0, bgY = 0;
+	int coinHitCount = 0;
 	bool isPlaying = false;
 	Surface* screen;
 	vec2 mouseAxis{};
 
 	Player player;
 	UserInterface hud;
-	Entity entity;
-	Map map;
-	Collider col;
+	//Entity entity;
+	//Map map;
+	// Collider col;
 };
 
-}; // namespace Tmpl8
+} // namespace Tmpl8

@@ -1,6 +1,6 @@
 #include "Player.h"
 
-const int damage = 5;
+const int damage = 24;
 const int maxHP = 100;
 const int spriteSetWidth = 25;
 const float startingPoint = 5.0f;
@@ -11,15 +11,18 @@ Player::~Player() {}
 
 void Player::InitPlayer()
 {
-	spriteX += speedX;
-	spriteY += speedY;
-	speedY++;
+    health = maxHP;
+    spriteX = ScreenWidth - theSprite.GetWidth() - theSprite.GetWidth();
+    spriteY = startingPoint;
+    speedX = 2.0f;
+    speedY = 3.0f;
 }
 
-void Player::ReInitPlayer() { spriteX = spriteY = startingPoint; }
+void Player::ReInitPlayer() { }
 
 void Player::CollisionCheck()
 {
+    isBouncing = false;
     if (spriteY < NULL)
     {
         spriteY = NULL;
@@ -34,7 +37,7 @@ void Player::CollisionCheck()
         spriteH -= 10, isSquished = true;
         isBouncing = true;
     }
-    if (spriteX > ScreenHeight - theSprite.GetWidth() || spriteX < 0)
+    if (spriteX > ScreenWidth - theSprite.GetWidth() || spriteX < 0)
     { //hit side
         if (spriteX < NULL) // left
         {
@@ -58,8 +61,12 @@ void Player::SquishCheck()
     if (isSquished)
     {
         spriteH++;
-        if (spriteH >= spriteSetWidth) spriteH = spriteSetWidth;
-        isSquished = false;
+        if (spriteH >= spriteSetWidth)
+        {
+            spriteH = spriteSetWidth;
+            isSquished = false;
+        }
+        
     }
 }
 
@@ -76,11 +83,10 @@ void Player::hpCheck(bool &isPlaying)
             // return;
         }
     }
-
-    if (health > maxHP) health = maxHP;
+    assert(health < maxHP && "health fucked up");
 }
 
-const int Player::getHP()
+const int32_t Player::getHP()
 {
     return health;
 }
@@ -95,8 +101,16 @@ void Player::Draw(Surface* screen)
     theSprite.DrawScaled(static_cast<int>(spriteX), static_cast<int>(spriteY), spriteW, spriteH, isFlipped, screen);
 }
 
+void Player::Move()
+{
+    spriteX += speedX;
+    spriteY += speedY;
+    speedY++;
+}
+
 void Player::Update(bool &playing)
 {
+    Move();
     CollisionCheck();
     SquishCheck();
     hpCheck(playing);

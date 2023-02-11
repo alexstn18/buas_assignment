@@ -3,24 +3,20 @@
 #include "surface.h"
 #include "template.h"
 
-#define WHITE 0xFFFFFF
-#define RED 0xFF0000
-#define GREEN 0x00FF00
-#define BLUE 0x0000FF
+constexpr Pixel WHITE = 0xFFFFFF;
+constexpr Pixel RED = 0xFF0000;
+constexpr Pixel GREEN = 0x00FF00;
+constexpr Pixel BLUE = 0x0000FF;
 
-using namespace std;
+constexpr float HalfW = (ScreenWidth / 2);
+constexpr float HalfH = (ScreenHeight / 2);
 
-#define HalfW (ScreenWidth / 2)
-#define HalfH (ScreenHeight / 2)
+constexpr float spriteSize = 25;
+constexpr float entitySize = 32;
 
-#define spriteSize 25
-#define entitySize 32
 namespace Tmpl8
 {
-    int spikeX{ }, spikeY{ };
-    int coinHitCount = 0;
-
-    void Game::Init() 
+    void Game::Init()
     {
     }
 
@@ -33,66 +29,33 @@ namespace Tmpl8
 
     void Game::Tick(float deltaTime)
     {
-        
         deltaTime /= 1000.f;
         deltaTime = std::min(deltaTime * 1.0f, 30.0f);
+        Update();
+    }
 
-        /* mouse trajectory line
-        friction = (spriteY - mouseAxis.y) / 15;
-        if (friction < NULL)
+    void Game::Update()
+    {
+        bgX--;
+
+        if (bgX < -3841)
         {
-            friction = -friction;
+            bgX = 0;
         }
-        else if (friction == 0)
-        {
-            color = 0xFF0000;
-        }
-        */
 
-
-
-        // screen->Clear(0x699EFC);
-        // std::cout << friction << "\n";
         if (!isPlaying)
         {
-            
-            
+            opacityBg.Draw(screen, bgX, bgY);
+            hud.PrintMenu(screen, isPlaying, mouseAxis);
+            if (isPlaying) player.InitPlayer();
         }
-
-        if (isPlaying)
+        else
         {
-            
-            // InitPlayer();
-
-            spike.Draw(screen, 400, 300);
-            grass.Draw(screen, 25, 300);
-            coin.Draw(screen, 600, 500);
-            // if (coinHitCount == 1) coin.~Sprite();
+            bg.Draw(screen, bgX, bgY);
+            hud.PrintHUD(screen, &player);
+            player.Draw(screen);
+            player.Update(isPlaying);
         }
-    }
-}
 
-void Game::Run()
-{
-    bgX--;
-
-    if (bgX < -3841)
-    {
-        bgX = 0;
     }
-
-    if(!isPlaying)
-    {
-        opacityBg.Draw(screen, bgX, bgY);
-        hud.PrintMenu(screen, isPlaying, mouseAxis);
-    }
-    else
-    {
-        hud.PrintHUD(screen, &player);
-        bg.Draw(screen, bgX, bgY);
-        player.Draw(screen);
-        player.InitPlayer();
-        player.Update(isPlaying);
-    }
-    
 }

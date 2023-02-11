@@ -31,5 +31,3 @@ Collider::~Collider() {}
         health += coinHealHP;
     }
     */
-    
-}
