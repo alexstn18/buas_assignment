@@ -1,9 +1,16 @@
 #pragma once
+#include "Surface.h"
+#include "template.h"
 #include "Entity.h"
-class Map :
-	public Entity
+
+using namespace Tmpl8;
+
+class Entity;
+class Map
 {
 public:
+	void Init();
+	void Draw(Surface* screen);
 private:
 };
 

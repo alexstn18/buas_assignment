@@ -1,6 +1,6 @@
 #include "Player.h"
 
-const int damage = 24;
+const int damage = 25;
 const int maxHP = 100;
 const int spriteSetWidth = 25;
 const float startingPoint = 5.0f;
@@ -23,13 +23,13 @@ void Player::ReInitPlayer() { }
 void Player::CollisionCheck()
 {
     isBouncing = false;
-    if (spriteY < NULL)
+    if (hitTop)
     {
         spriteY = NULL;
         speedY *= -0.95;
     }
 
-    if (spriteY > ScreenHeight - theSprite.GetHeight())
+    if (hitBottom)
     { //hit bottom
         spriteY = ScreenHeight - theSprite.GetHeight();
         speedY *= -0.95;
@@ -37,9 +37,9 @@ void Player::CollisionCheck()
         spriteH -= 10, isSquished = true;
         isBouncing = true;
     }
-    if (spriteX > ScreenWidth - theSprite.GetWidth() || spriteX < 0)
+    if (hitSide)
     { //hit side
-        if (spriteX < NULL) // left
+        if (hitSideL) // left
         {
             spriteX = NULL;
             speedX *= -0.8;
@@ -83,7 +83,7 @@ void Player::hpCheck(bool &isPlaying)
             // return;
         }
     }
-    assert(health < maxHP && "health fucked up");
+    // assert(health < maxHP && "health fucked up");
 }
 
 const int32_t Player::getHP()

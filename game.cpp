@@ -3,29 +3,25 @@
 #include "surface.h"
 #include "template.h"
 
+constexpr float HalfW = (ScreenWidth / 2);
+constexpr float HalfH = (ScreenHeight / 2);
+
 constexpr Pixel WHITE = 0xFFFFFF;
 constexpr Pixel RED = 0xFF0000;
 constexpr Pixel GREEN = 0x00FF00;
 constexpr Pixel BLUE = 0x0000FF;
 
-constexpr float HalfW = (ScreenWidth / 2);
-constexpr float HalfH = (ScreenHeight / 2);
-
 constexpr float spriteSize = 25;
 constexpr float entitySize = 32;
 
+constexpr int32_t lastBgValue = -3840;
+constexpr int32_t loopBgValue = -1281;
+
 namespace Tmpl8
 {
-    void Game::Init()
-    {
-    }
+    void Game::Init() {}
 
     void Game::Shutdown() {}
-    // Surface tiles("assets/rogueDBtiles.png");
-    Sprite opacityBg(new Surface("assets/halfOpacityBackground.png"), 1);
-    Sprite grass(new Surface("assets/grassSprite.png"), 1);
-    Sprite spike(new Surface("assets/spikeTile.png"), 1);
-    Sprite coin(new Surface("assets/coinSpriteTest.png"), 1);
 
     void Game::Tick(float deltaTime)
     {
@@ -37,10 +33,9 @@ namespace Tmpl8
     void Game::Update()
     {
         bgX--;
-
-        if (bgX < -3841)
+        if (bgX < lastBgValue)
         {
-            bgX = 0;
+            bgX = loopBgValue;
         }
 
         if (!isPlaying)
@@ -52,10 +47,12 @@ namespace Tmpl8
         else
         {
             bg.Draw(screen, bgX, bgY);
-            hud.PrintHUD(screen, &player);
+            map.Draw(screen);
             player.Draw(screen);
             player.Update(isPlaying);
+            entity.Draw(screen);
+            entity.Update();
+            hud.PrintHUD(screen, &player);
         }
-
     }
 }

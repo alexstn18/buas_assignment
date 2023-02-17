@@ -42,6 +42,12 @@ private:
 	float speedX{ 2.0f };
 	float speedY{ 3.0f };
 
+	bool hitTop = spriteY < NULL;
+	bool hitBottom = spriteY > ScreenHeight - theSprite.GetHeight();
+	bool hitSideL = spriteX < 0;
+	bool hitSideR = spriteX > ScreenWidth - theSprite.GetWidth();
+	bool hitSide = hitSideL || hitSideR;
+
 	int16_t bounceCount{ 0 };
 	int16_t deathCount{ 0 };
 	bool isSquished = spriteH < 25 || spriteW < 25;

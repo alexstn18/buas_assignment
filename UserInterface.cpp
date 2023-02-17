@@ -31,6 +31,7 @@ void UserInterface::PrintMenu(Surface* screen, bool &playing, const vec2 &mouseA
             SDL_PushEvent(&e);
         }
     }
+    else exitColor = BLACK;
 }
 
 void UserInterface::PrintHUD(Surface* screen, Player* player)
