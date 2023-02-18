@@ -1,11 +1,12 @@
 #pragma once
 #include "surface.h"
+#include "Entity.h"
 #include "template.h"
 #include <cassert>
 
 using namespace Tmpl8;
-
-class Player
+class Player :
+	public Entity
 {
 public:
 	Player();
@@ -30,7 +31,11 @@ public:
 
 	void Move();
 
+	bool isColliding(const Sprite& sprite, int spriteX, int spriteY, const Sprite& entity, int entityX, int entityY);
+
 	void Update(bool &playing);
+protected:
+	int coinHitCount = 0;
 private:
 	Sprite theSprite{ new Surface("assets/ball.png"), 1 };
 	int spriteW{ theSprite.GetWidth() };
@@ -42,15 +47,15 @@ private:
 	float speedX{ 2.0f };
 	float speedY{ 3.0f };
 
-	bool hitTop = spriteY < NULL;
-	bool hitBottom = spriteY > ScreenHeight - theSprite.GetHeight();
-	bool hitSideL = spriteX < 0;
-	bool hitSideR = spriteX > ScreenWidth - theSprite.GetWidth();
-	bool hitSide = hitSideL || hitSideR;
+	bool hitTop{ false };
+	bool hitBottom{ false };
+	bool hitSideL{ false };
+	bool hitSideR{ false };
+	bool hitSide{ false };
 
 	int16_t bounceCount{ 0 };
 	int16_t deathCount{ 0 };
-	bool isSquished = spriteH < 25 || spriteW < 25;
-	bool isBouncing = false;
-	bool isFlipped = false;
+	bool isSquished{ false };
+	bool isBouncing{ false };
+	bool isFlipped{ false };
 };

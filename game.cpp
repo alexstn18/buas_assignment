@@ -40,6 +40,7 @@ namespace Tmpl8
 
         if (!isPlaying)
         {
+            
             opacityBg.Draw(screen, bgX, bgY);
             hud.PrintMenu(screen, isPlaying, mouseAxis);
             if (isPlaying) player.InitPlayer();

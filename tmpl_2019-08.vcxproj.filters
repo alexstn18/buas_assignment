@@ -10,7 +10,6 @@
     </ClCompile>
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="UserInterface.cpp" />
-    <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Map.cpp" />
   </ItemGroup>
@@ -24,9 +23,9 @@
     </ClInclude>
     <ClInclude Include="Player.h" />
     <ClInclude Include="UserInterface.h" />
-    <ClInclude Include="Collider.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Map.h" />
+    <ClInclude Include="Components.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="template code">

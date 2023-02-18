@@ -9,6 +9,8 @@ class Entity;
 class Map
 {
 public:
+	Map();
+	~Map();
 	void Init();
 	void Draw(Surface* screen);
 private:
