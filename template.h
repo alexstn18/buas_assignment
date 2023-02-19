@@ -28,6 +28,7 @@ inline int IRand( int range ) { return rand() % range; }
 int filesize( FILE* f );
 #define MALLOC64(x) _aligned_malloc(x,64)
 #define FREE64(x) _aligned_free(x)
+#define sCast static_cast
 
 typedef unsigned char uchar;
 typedef unsigned char byte;

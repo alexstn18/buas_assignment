@@ -40,7 +40,6 @@ namespace Tmpl8
 
         if (!isPlaying)
         {
-            
             opacityBg.Draw(screen, bgX, bgY);
             hud.PrintMenu(screen, isPlaying, mouseAxis);
             if (isPlaying) player.InitPlayer();
@@ -50,8 +49,8 @@ namespace Tmpl8
             bg.Draw(screen, bgX, bgY);
             map.Draw(screen);
             player.Draw(screen);
-            player.Update(isPlaying);
-            entity.Draw(screen);
+            player.Update(isPlaying, &entity);
+            entity.Draw(screen, player.getCollected());
             entity.Update();
             hud.PrintHUD(screen, &player);
         }

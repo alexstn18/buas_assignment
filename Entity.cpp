@@ -12,18 +12,16 @@ void Entity::Init()
 {
 }
 
-bool Entity::isUsed(Sprite* sprite)
-{
-	return false;
-}
-
 void Entity::Update()
 {
 }
 
-void Entity::Draw(Surface* screen)
+void Entity::Draw(Surface* screen, bool collected)
 {
 	spike.Draw(screen, 400, 300);
 	grass.Draw(screen, 25, 300);
-	coin.Draw(screen, 600, 500);
+	if (collected == false)
+	{
+		coin.Draw(screen, 600, 500);
+	}
 }

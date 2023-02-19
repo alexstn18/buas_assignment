@@ -21,7 +21,7 @@ public:
 	void Tick( float deltaTime );
 	void MouseUp( int button ) { /* implement if you want to detect mouse button presses */ }
 	void MouseDown(int button) { }
-	void MouseMove(int x, int y) { mouseAxis.x = x; mouseAxis.y = y; }
+	void MouseMove(int x, int y) { mouseAxis.x = sCast<float>(x); mouseAxis.y = sCast<float>(y); }
 	void KeyUp(int key) { /* implement if you want to handle keys */ }
 	void KeyDown(int key) { }
 	void Update();

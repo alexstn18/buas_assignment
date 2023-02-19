@@ -5,8 +5,7 @@
 #include <cassert>
 
 using namespace Tmpl8;
-class Player :
-	public Entity
+class Player
 {
 public:
 	Player();
@@ -17,7 +16,7 @@ public:
 
 	void ReInitPlayer();
 
-	void CollisionCheck();
+	void CollisionCheck(Entity* entity);
 
 	void SquishCheck();
 
@@ -27,15 +26,15 @@ public:
 
 	const int getDeathCount();
 
+	bool getCollected();
+
 	void Draw(Surface* screen);
 
 	void Move();
 
-	bool isColliding(const Sprite& sprite, int spriteX, int spriteY, const Sprite& entity, int entityX, int entityY);
+	bool isColliding(int spriteX, int spriteY, int entityX, int entityY);
 
-	void Update(bool &playing);
-protected:
-	int coinHitCount = 0;
+	void Update(bool &playing, Entity* entity);
 private:
 	Sprite theSprite{ new Surface("assets/ball.png"), 1 };
 	int spriteW{ theSprite.GetWidth() };
@@ -58,4 +57,6 @@ private:
 	bool isSquished{ false };
 	bool isBouncing{ false };
 	bool isFlipped{ false };
+
+	bool hasCollectedCoin = false;
 };

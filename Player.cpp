@@ -21,7 +21,7 @@ void Player::InitPlayer()
 
 void Player::ReInitPlayer() { }
 
-void Player::CollisionCheck()
+void Player::CollisionCheck(Entity* entity)
 {
     hitTop = spriteY < NULL;
     hitBottom = spriteY > ScreenHeight - theSprite.GetHeight();
@@ -38,7 +38,7 @@ void Player::CollisionCheck()
 
     if (hitBottom)
     { //hit bottom
-        spriteY = ScreenHeight - theSprite.GetHeight();
+        spriteY = sCast<float>(ScreenHeight - theSprite.GetHeight());
         speedY *= -0.95;
         bounceCount += 1;
         spriteH -= 10, isSquished = true;
@@ -55,29 +55,30 @@ void Player::CollisionCheck()
         }
         else
         {
-            spriteX = ScreenWidth - theSprite.GetWidth(); //hit right
+            spriteX = sCast<float>(ScreenWidth - theSprite.GetWidth()); //hit right
             speedX *= -0.8;
             bounceCount += 1;
             isBouncing = true, isFlipped = true;
         }
     }
-    if (isColliding(theSprite, static_cast<int>(spriteX), static_cast<int>(spriteY), spike, 400, 300))
+    if (isColliding(sCast<int>(spriteX), sCast<int>(spriteY), 400, 300))
     {
         deathCount += 1;
-        ReInitPlayer(), InitPlayer();
-        //anim = deathAnim;
+        InitPlayer();
         //playAnim(anim);
+        //anim = deathAnim;
     }
-    if (isColliding(theSprite, static_cast<int>(spriteX), static_cast<int>(spriteY), grass, 25, 300))
+    if (isColliding(sCast<int>(spriteX), sCast<int>(spriteY), 25, 300))
     {
         speedY *= -0.99;
         bounceCount += 1;
         spriteH -= 10, isSquished = true;
     }
-    if (isColliding(theSprite, static_cast<int>(spriteX), static_cast<int>(spriteY), coin, 600, 500))
+    if (isColliding(sCast<int>(spriteX), sCast<int>(spriteY), 600, 500))
     {
-        coinHitCount = 1;
-        health += 10;
+        // coinHitCount = 1;
+        hasCollectedCoin = true;
+        health += 5;
     }
 }
 
@@ -105,9 +106,8 @@ void Player::hpCheck(bool &isPlaying)
         {
             health = NULL;
             isPlaying = false;
-            // ReInitPlayer();
-            // return;
         }
+        if (health > maxHP) health = maxHP;
     }
     // assert(health < maxHP && "health fucked up");
 }
@@ -122,9 +122,14 @@ const int Player::getDeathCount()
     return deathCount;
 }
 
+bool Player::getCollected()
+{
+    return hasCollectedCoin;
+}
+
 void Player::Draw(Surface* screen)
 {
-    theSprite.DrawScaled(static_cast<int>(spriteX), static_cast<int>(spriteY), spriteW, spriteH, isFlipped, screen);
+    theSprite.DrawScaled(sCast<int>(spriteX), sCast<int>(spriteY), spriteW, spriteH, isFlipped, screen);
 }
 
 void Player::Move()
@@ -150,16 +155,16 @@ void Player::Move()
     */
 }
 
-bool Player::isColliding(const Sprite& sprite, int spriteX, int spriteY, const Sprite& entity, int entityX, int entityY)
+bool Player::isColliding(int spriteX, int spriteY, int entityX, int entityY)
 {
     return ((spriteX + spriteW) > entityX && (spriteX - spriteW) < entityX) &&
            ((spriteY + spriteH) > entityY && (spriteY - spriteH) < entityY);
 }
 
-void Player::Update(bool &playing)
+void Player::Update(bool &playing, Entity* entity)
 {
     hpCheck(playing);
-    CollisionCheck();
+    CollisionCheck(entity);
     SquishCheck();
     Move();
 }
