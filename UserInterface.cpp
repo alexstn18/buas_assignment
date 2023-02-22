@@ -1,7 +1,12 @@
 #include "UserInterface.h"
 
+// used colors
+
 constexpr Pixel BLACK = 0x0;
 constexpr Pixel WHITE = 0xFFFFFF;
+
+// logo values
+
 constexpr short logoX = 240;
 constexpr short logoY = 50;
 
@@ -34,12 +39,14 @@ void UserInterface::PrintMenu(Surface* screen, bool &playing, const vec2 &mouseA
     else exitColor = BLACK;
 }
 
-void UserInterface::PrintHUD(Surface* screen, Player* player)
+void UserInterface::PrintHUD(Surface* screen, Player* player, const vec2& mouseAxis)
 {
     healthString = std::to_string(player->getHP());
     deathCountString = std::to_string(player->getDeathCount());
+    
     hpIcon.DrawScaled(NULL, NULL, hpIcon.GetWidth() * 5, hpIcon.GetHeight() * 5, 0, screen);
     screen->Print(healthString.c_str(), NULL + 50, NULL + 10, WHITE, 5);
     deathIcon.DrawScaled(0, 50, deathIcon.GetWidth() * 5, deathIcon.GetHeight() * 5, 0, screen);
     screen->Print(deathCountString.c_str(), NULL + 50, NULL + 60, WHITE, 5);
+
 }

@@ -18,7 +18,7 @@ namespace Tmpl8
 
         void PrintMenu(Surface* screen, bool& playing, const vec2& mouseAxis);
 
-        void PrintHUD(Surface* screen, Player* player);
+        void PrintHUD(Surface* screen, Player* player, const vec2& mouseAxis);
     private:
         uint32_t color;
         uint32_t textColor{ 0x0 };

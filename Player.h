@@ -3,6 +3,7 @@
 #include "Entity.h"
 #include "template.h"
 #include <cassert>
+#include <Windows.h>
 
 using namespace Tmpl8;
 class Player
@@ -20,21 +21,33 @@ public:
 
 	void SquishCheck();
 
+	void mouseCheck(const vec2 &mouseAxis);
+
 	void hpCheck(bool &isPlaying);
+
+	const int getWidth();
+
+	const int getHeight();
 
 	const int32_t getHP();
 
 	const int getDeathCount();
 
+	const int getX();
+
+	const int getY();
+
 	bool getCollected();
+
+	void DrawDirection(Surface* screen, const vec2& mouseAxis);
 
 	void Draw(Surface* screen);
 
-	void Move();
+	void Move(const vec2& mouseAxis);
 
 	bool isColliding(int spriteX, int spriteY, int entityX, int entityY);
 
-	void Update(bool &playing, Entity* entity);
+	void Update(bool &playing, Entity* entity, const vec2& mAxis);
 private:
 	Sprite theSprite{ new Surface("assets/ball.png"), 1 };
 	int spriteW{ theSprite.GetWidth() };
@@ -42,7 +55,6 @@ private:
 	int32_t health{ 100 };
 	float spriteX{ 5.0f };
 	float spriteY{ 5.0f };
-	float friction{ 0.0f };
 	float speedX{ 2.0f };
 	float speedY{ 3.0f };
 
@@ -57,6 +69,9 @@ private:
 	bool isSquished{ false };
 	bool isBouncing{ false };
 	bool isFlipped{ false };
+	bool isReleased{ false };
 
-	bool hasCollectedCoin = false;
+	bool readyForLaunch;
+
+	bool hasCollectedCoin{ false };
 };
