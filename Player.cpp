@@ -130,37 +130,37 @@ void Player::hpCheck(bool &isPlaying)
     // assert(health < maxHP && "health fucked up");
 }
 
-const int Player::getWidth()
+int Player::getWidth() const
 {
     return theSprite.GetWidth();
 }
 
-const int Player::getHeight()
+int Player::getHeight() const
 {
     return theSprite.GetHeight();
 }
 
-const int32_t Player::getHP()
+int Player::getHP() const
 {
     return health;
 }
 
-const int Player::getDeathCount()
+int Player::getDeathCount() const
 {
     return deathCount;
 }
 
-const int Player::getX()
+int Player::getX() const
 {
     return spriteX;
 }
 
-const int Player::getY()
+int Player::getY() const
 {
     return spriteY;
 }
 
-bool Player::getCollected()
+bool Player::getCollected() const
 {
     return hasCollectedCoin;
 }

@@ -64,7 +64,7 @@ namespace Tmpl8
         if (!isPlaying)
         {
             opacityBg.Draw(screen, bgX, bgY);
-            hud.PrintMenu(screen, isPlaying, mouseAxis);
+            hud.PrintMenu(*screen, isPlaying, mouseAxis);
             if (isPlaying) player.InitPlayer();
         }
         else
@@ -76,7 +76,7 @@ namespace Tmpl8
             player.Update(isPlaying, &entity, mouseAxis);
             entity.Draw(screen, player.getCollected());
             entity.Update();
-            hud.PrintHUD(screen, &player, mouseAxis);
+            hud.PrintHUD(*screen, player, mouseAxis);
         }
     }
 }

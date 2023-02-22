@@ -9,6 +9,7 @@ using namespace Tmpl8;
 class Player
 {
 public:
+	// !! organize functions by grouping them
 	Player();
 
 	~Player();
@@ -25,19 +26,19 @@ public:
 
 	void hpCheck(bool &isPlaying);
 
-	const int getWidth();
+	int getWidth() const;
 
-	const int getHeight();
+	int getHeight() const;
 
-	const int32_t getHP();
+	int getHP() const;
 
-	const int getDeathCount();
+	int getDeathCount() const;
 
-	const int getX();
+	int getX() const;
 
-	const int getY();
+	int getY() const;
 
-	bool getCollected();
+	bool getCollected() const;
 
 	void DrawDirection(Surface* screen, const vec2& mouseAxis);
 
@@ -52,7 +53,7 @@ private:
 	Sprite theSprite{ new Surface("assets/ball.png"), 1 };
 	int spriteW{ theSprite.GetWidth() };
 	int spriteH{ theSprite.GetHeight() };
-	int32_t health{ 100 };
+	int health{ 100 };
 	float spriteX{ 5.0f };
 	float spriteY{ 5.0f };
 	float speedX{ 2.0f };
@@ -64,8 +65,8 @@ private:
 	bool hitSideR{ false };
 	bool hitSide{ false };
 
-	int16_t bounceCount{ 0 };
-	int16_t deathCount{ 0 };
+	int bounceCount{ 0 };
+	int deathCount{ 0 };
 	bool isSquished{ false };
 	bool isBouncing{ false };
 	bool isFlipped{ false };
