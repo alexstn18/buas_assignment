@@ -34,6 +34,7 @@ private:
 	Map map;
 	Sprite bg{ new Surface("assets/bgScroll.png"), 1 };
 	Sprite opacityBg{ new Surface("assets/halfOpacityBackground.png"), 1 };
+	Sprite m_map{ new Surface("assets/tutorialTileMap.png"), 1 };
 	// Surface tiles("assets/rogueDBtiles.png");
 
 	int bgX{ 0 };

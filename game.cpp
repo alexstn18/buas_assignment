@@ -70,11 +70,12 @@ namespace Tmpl8
         else
         {
             bg.Draw(screen, bgX, bgY);
-            map.Draw(screen);
-            if (mouseDown) player.DrawDirection(screen, mouseAxis);
-            player.Draw(screen);
+            // map.Draw(screen);
+            m_map.Draw(screen, 0, 0);
+            if (mouseDown) player.DrawDirection(*screen, mouseAxis);
+            player.Draw(*screen);
             player.Update(isPlaying, &entity, mouseAxis);
-            entity.Draw(screen, player.getCollected());
+            entity.Draw(*screen, player.getCollected());
             entity.Update();
             hud.PrintHUD(*screen, player, mouseAxis);
         }

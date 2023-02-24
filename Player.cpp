@@ -71,6 +71,7 @@ void Player::CollisionCheck(Entity* entity)
     {
         deathCount += 1;
         InitPlayer();
+        // isReleased = true;
         //playAnim(anim);
         //anim = deathAnim;
     }
@@ -152,12 +153,12 @@ int Player::getDeathCount() const
 
 int Player::getX() const
 {
-    return spriteX;
+    return sCast<int>(spriteX);
 }
 
 int Player::getY() const
 {
-    return spriteY;
+    return sCast<int>(spriteY);
 }
 
 bool Player::getCollected() const
@@ -165,14 +166,14 @@ bool Player::getCollected() const
     return hasCollectedCoin;
 }
 
-void Player::DrawDirection(Surface* screen, const vec2 &mouseAxis)
+void Player::DrawDirection(Surface& screen, const vec2 &mouseAxis)
 {
-    screen->Line(spriteX + (theSprite.GetWidth() / 2), spriteY + theSprite.GetHeight() - 3, mouseAxis.x, mouseAxis.y, 0xFFFFFF);
+    screen.Line(spriteX + (theSprite.GetWidth() / 2.0f), spriteY + theSprite.GetHeight() - 3.0f, mouseAxis.x, mouseAxis.y, 0xFFFFFF);
 }
 
-void Player::Draw(Surface* screen)
+void Player::Draw(Surface& screen)
 {
-    theSprite.DrawScaled(sCast<int>(spriteX), sCast<int>(spriteY), spriteW, spriteH, isFlipped, screen);
+    theSprite.DrawScaled(sCast<int>(spriteX), sCast<int>(spriteY), spriteW, spriteH, isFlipped, &screen);
 }
 
 void Player::Move(const vec2 &mouseAxis)
