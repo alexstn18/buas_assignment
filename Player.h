@@ -18,9 +18,9 @@ public:
 
 	void ReInitPlayer();
 
-	void Update(bool &playing, Entity* entity, const vec2& mAxis);
+	void Update(bool &playing, Entity* entity, const vec2& mAxis, float dt);
 
-	void Move(const vec2& mouseAxis);
+	void Move(const vec2& mouseAxis, float dt);
 
 	void CollisionCheck(Entity* entity);
 
@@ -57,11 +57,12 @@ private:
 	int health{ 100 };
 	int bounceCount{ 0 };
 	int deathCount{ 0 };
+	
+	float gravity{ 100.0f };
 
-	float spriteX{ 5.0f };
-	float spriteY{ 5.0f };
-	float speedX{ 2.0f };
-	float speedY{ 3.0f };
+	vec2 pos{ 5.0f, 5.0f };
+	vec2 speed{ 2.0f, 3.0f };
+	vec2 launchForce{ 50.0f, 50.0f };
 
 	bool hitTop{ false };
 	bool hitBottom{ false };

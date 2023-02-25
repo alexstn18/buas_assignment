@@ -12,6 +12,7 @@
     <ClCompile Include="UserInterface.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Map.cpp" />
+    <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -26,6 +27,7 @@
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Components.h" />
+    <ClInclude Include="Timer.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="template code">

@@ -17,9 +17,13 @@ UserInterface::~UserInterface() {}
 // !! remove playing and make the function return a true value
 void UserInterface::PrintMenu(Surface& screen, bool &playing, const vec2 &mouseAxis)
 {
+    bool isHoveringPlay = mouseAxis.x > (menuTextX - 25) && mouseAxis.x < (menuTextX - 25) + 115 && mouseAxis.y >(menuTextY - 25) && mouseAxis.y < (menuTextY - 25) + 25;
+    bool isHoveringExit = mouseAxis.x > (menuTextX - 25) && mouseAxis.x < (menuTextX - 25) + 115 && mouseAxis.y >(menuTextY + 50) && mouseAxis.y < (menuTextY + 50) + 25;
+
     logo.Draw(&screen, logoX, logoY);
+
     screen.Print("PLAY", menuTextX - 25, menuTextY - 25, textColor, textSize);
-    if (mouseAxis.x > (menuTextX - 25) && mouseAxis.x < (menuTextX - 25) + 115 && mouseAxis.y >(menuTextY - 25) && mouseAxis.y < (menuTextY - 25) + 25)
+    if (isHoveringPlay)
     {
         textColor = WHITE;
         if (GetAsyncKeyState(VK_LBUTTON)) playing = true;
@@ -27,12 +31,12 @@ void UserInterface::PrintMenu(Surface& screen, bool &playing, const vec2 &mouseA
     else textColor = BLACK;
 
     screen.Print("EXIT", (ScreenWidth / 2) - 25, (ScreenHeight / 2) + 50, exitColor, textSize);
-    if (mouseAxis.x > (menuTextX - 25) && mouseAxis.x < (menuTextX - 25) + 115 && mouseAxis.y >(menuTextY + 50) && mouseAxis.y < (menuTextY + 50) + 25)
+    if (isHoveringExit)
     {
         exitColor = WHITE;
         if (GetAsyncKeyState(VK_LBUTTON))
         {
-            SDL_Event e;
+            SDL_Event e{};
             e.type = SDL_QUIT;
             SDL_PushEvent(&e);
         }

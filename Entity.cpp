@@ -1,12 +1,8 @@
 #include "Entity.h"
 
-Entity::Entity()
-{
-}
+Entity::Entity() {}
 
-Entity::~Entity()
-{
-}
+Entity::~Entity() {}
 
 void Entity::Init()
 {
@@ -18,10 +14,11 @@ void Entity::Update()
 
 void Entity::Draw(Surface& screen, bool collected)
 {
-	spike.Draw(&screen, 400, 300);
-	grass.Draw(&screen, 25, 300);
+	spike.Draw(&screen, sCast<int>(spikePos.x), sCast<int>(spikePos.y));
+	grass.Draw(&screen, sCast<int>(grassPos.x), sCast<int>(grassPos.y));
+
 	if (collected == false)
 	{
-		coin.Draw(&screen, 600, 500);
+		coin.Draw(&screen, sCast<int>(coinPos.x), sCast<int>(coinPos.y));
 	}
 }

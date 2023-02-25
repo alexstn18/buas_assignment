@@ -1,11 +1,14 @@
 #include "Player.h"
+
 // health values
-const int damage = 5;
-const int maxHP = 100;
+constexpr int damage = 5;
+constexpr int maxHP = 100;
+
 // sprite SET width
-const int spriteSetWidth = 25;
+constexpr int spriteSetWidth = 25;
+
 // sprite SET starting point
-const float startingPoint = 5.0f;
+constexpr float startingPoint = 5.0f;
 
 Player::Player()
 {
@@ -18,10 +21,10 @@ Player::~Player() {}
 void Player::InitPlayer()
 {
     health = maxHP;
-    spriteX = startingPoint;
-    spriteY = startingPoint;
-    speedX = 2.0f;
-    speedY = 3.0f;
+    pos.x = startingPoint;
+    pos.y = startingPoint;
+    speed.x = 2.0f;
+    speed.y = 3.0f;
     isFlipped = false;
 }
 
@@ -29,23 +32,24 @@ void Player::ReInitPlayer() { }
 
 void Player::CollisionCheck(Entity* entity)
 {
-    hitTop = spriteY < NULL;
-    hitBottom = spriteY > ScreenHeight - theSprite.GetHeight();
-    hitSideL = spriteX < 0;
-    hitSideR = spriteX > ScreenWidth - theSprite.GetWidth();
+    hitTop = pos.y < NULL;
+    hitBottom = pos.y > ScreenHeight - theSprite.GetHeight();
+    hitSideL = pos.x < 0;
+    hitSideR = pos.x > ScreenWidth - theSprite.GetWidth();
     hitSide = hitSideL || hitSideR;
 
     isBouncing = false;
+
     if (hitTop)
     {
-        spriteY = NULL;
-        speedY *= -0.95;
+        pos.y = NULL;
+        speed.y *= -0.95;
     }
 
     if (hitBottom)
     { //hit bottom
-        spriteY = sCast<float>(ScreenHeight - theSprite.GetHeight());
-        speedY *= -0.95;
+        pos.y = sCast<float>(ScreenHeight - theSprite.GetHeight());
+        speed.y *= -0.95;
         bounceCount += 1;
         spriteH -= 10, isSquished = true;
         isBouncing = true;
@@ -54,20 +58,20 @@ void Player::CollisionCheck(Entity* entity)
     { //hit side
         if (hitSideL) // left
         {
-            spriteX = NULL;
-            speedX *= -0.8;
+            pos.x = NULL;
+            speed.x *= -0.8;
             bounceCount += 1;
             isBouncing = true, isFlipped = false;
         }
         else
         {
-            spriteX = sCast<float>(ScreenWidth - theSprite.GetWidth()); //hit right
-            speedX *= -0.8;
+            pos.x = sCast<float>(ScreenWidth - theSprite.GetWidth()); //hit right
+            speed.x *= -0.8;
             bounceCount += 1;
             isBouncing = true, isFlipped = true;
         }
     }
-    if (isColliding(sCast<int>(spriteX), sCast<int>(spriteY), 400, 300))
+    if (isColliding(sCast<int>(pos.x), sCast<int>(pos.y), 400, 300))
     {
         deathCount += 1;
         InitPlayer();
@@ -75,13 +79,13 @@ void Player::CollisionCheck(Entity* entity)
         //playAnim(anim);
         //anim = deathAnim;
     }
-    if (isColliding(sCast<int>(spriteX), sCast<int>(spriteY), 25, 300))
+    if (isColliding(sCast<int>(pos.x), sCast<int>(pos.y), 25, 300))
     {
-        speedY *= -0.99;
+        speed.y *= -0.99;
         bounceCount += 1;
         spriteH -= 10, isSquished = true;
     }
-    if (isColliding(sCast<int>(spriteX), sCast<int>(spriteY), 600, 500))
+    if (isColliding(sCast<int>(pos.x), sCast<int>(pos.y), 600, 500))
     {
         // coinHitCount = 1;
         if (hasCollectedCoin == false) health += 5;
@@ -107,11 +111,12 @@ void Player::SquishCheck()
 void Player::mouseCheck(const vec2& mouseAxis)
 {
     bool initialFlipped;
+
     initialFlipped = isFlipped;
     if (isReleased == false)
     {
-        if (mouseAxis.x < spriteX) isFlipped = true;
-        else if (mouseAxis.x > spriteX) isFlipped = false;
+        if (mouseAxis.x < pos.x) isFlipped = true;
+        else if (mouseAxis.x > pos.x) isFlipped = false;
     }
     else isFlipped = initialFlipped;
 }
@@ -153,12 +158,12 @@ int Player::getDeathCount() const
 
 int Player::getX() const
 {
-    return sCast<int>(spriteX);
+    return sCast<int>(pos.x);
 }
 
 int Player::getY() const
 {
-    return sCast<int>(spriteY);
+    return sCast<int>(pos.y);
 }
 
 bool Player::getCollected() const
@@ -168,30 +173,30 @@ bool Player::getCollected() const
 
 void Player::DrawDirection(Surface& screen, const vec2 &mouseAxis)
 {
-    screen.Line(spriteX + (theSprite.GetWidth() / 2.0f), spriteY + theSprite.GetHeight() - 3.0f, mouseAxis.x, mouseAxis.y, 0xFFFFFF);
+    screen.Line(pos.x + (theSprite.GetWidth() / 2.0f), pos.y + theSprite.GetHeight() - 3.0f, mouseAxis.x, mouseAxis.y, 0xFFFFFF);
 }
 
 void Player::Draw(Surface& screen)
 {
-    theSprite.DrawScaled(sCast<int>(spriteX), sCast<int>(spriteY), spriteW, spriteH, isFlipped, &screen);
+    theSprite.DrawScaled(sCast<int>(pos.x), sCast<int>(pos.y), spriteW, spriteH, isFlipped, &screen);
 }
 
-void Player::Move(const vec2 &mouseAxis)
+void Player::Move(const vec2 &mouseAxis, float dt)
 {
-    //spriteX += speedX;
-    //spriteY += speedY;
+    //pos.x += speedX;
+    //pos.y += speedY;
     // speedY++;
-    isReleased = true;
     vec2 ballDirection;
+    isReleased = true;
     
     if (GetAsyncKeyState(VK_LBUTTON))
     {
         isReleased = false;
         if (!isReleased)
         {
-            ballDirection = vec2(mouseAxis.x - spriteX, mouseAxis.y - spriteY).normalized();
-            spriteX += (ballDirection.x * speedX) * 0.8f;
-            spriteY += (ballDirection.y * -(speedY)) * 0.8f;
+            ballDirection = vec2(mouseAxis.x - pos.x, mouseAxis.y - pos.y).normalized();
+            pos.x += ((ballDirection.x * speed.x) * 0.8f) * dt;
+            pos.y += ((ballDirection.y * -(speed.y)) * 0.8f) * dt;
             readyForLaunch = true;
         }
     }
@@ -199,16 +204,17 @@ void Player::Move(const vec2 &mouseAxis)
     {
         isReleased = true;
     }
+
     if (readyForLaunch)
     {
-        speedX += 1.2f;
-        speedY -= 1.2f;
+        speed.x = launchForce.x;
+        speed.y = launchForce.y;
         readyForLaunch = false;
     }
     else
     {
-        speedX = 2.0f;
-        speedY = 3.0f;
+        speed.x = 2.0f;
+        speed.y = 3.0f;
     }
 }
 
@@ -218,11 +224,11 @@ bool Player::isColliding(int spriteX, int spriteY, int entityX, int entityY)
            ((spriteY + spriteH) > entityY && (spriteY - spriteH) < entityY);
 }
 
-void Player::Update(bool &playing, Entity* entity, const vec2 &mAxis)
+void Player::Update(bool &playing, Entity* entity, const vec2 &mAxis, float dt)
 {
     hpCheck(playing);
     CollisionCheck(entity);
     SquishCheck();
     mouseCheck(mAxis);
-    Move(mAxis);
+    Move(mAxis, dt);
 }

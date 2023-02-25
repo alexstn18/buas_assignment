@@ -1,6 +1,7 @@
 #pragma once
 #include "template.h"
 #include "Components.h"
+#include "Timer.h"
 #include <Windows.h>
 #include <SDL.h>
 #include <iostream>
@@ -25,26 +26,30 @@ public:
 	vec2 getMouseAxis();
 	void KeyUp(int key) { /* implement if you want to handle keys */ }
 	void KeyDown(int key) { }
-	void Update();
+	void Update(float);
 private:
 	Surface* screen;
+
+	Timer* timer{ nullptr };
+
 	Player player;
 	UserInterface hud;
 	Entity entity;
 	Map map;
+
 	Sprite bg{ new Surface("assets/bgScroll.png"), 1 };
 	Sprite opacityBg{ new Surface("assets/halfOpacityBackground.png"), 1 };
 	Sprite m_map{ new Surface("assets/tutorialTileMap.png"), 1 };
-	// Surface tiles("assets/rogueDBtiles.png");
 
 	int bgX{ 0 };
 	int bgY{ 0 };
 	int coinHitCount{ 0 };
+	
+	vec2 mouseAxis{};
 
 	bool isPlaying{ false };
 	bool mouseDown{ false };
 
-	vec2 mouseAxis{};
 };
 
 } // namespace Tmpl8
