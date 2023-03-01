@@ -5,10 +5,10 @@ Timer::Timer()
     Reset();
 }
 
-Timer::~Timer() {}
-
 Timer& Timer::Get()
 {
+    // someone else added this function
+    // NOT JEREMIAH!!!!!!!!!!!!1111
     static Timer t;
     return t;
 }

@@ -7,7 +7,6 @@ class Timer
 {
 public:
 	Timer();
-	~Timer();
 
 	static Timer& Get();
 
@@ -21,7 +20,7 @@ public:
 	double TotalTimeMs() const;
 
 private:
-	high_resolution_clock::time_point m_t0, m_t1;
+	std::chrono::high_resolution_clock::time_point m_t0, m_t1;
 
 	double m_elapsedTime;
 	double m_totalTime;

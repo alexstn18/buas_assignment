@@ -17,6 +17,7 @@ UserInterface::~UserInterface() {}
 // !! remove playing and make the function return a true value
 void UserInterface::PrintMenu(Surface& screen, bool &playing, const vec2 &mouseAxis)
 {
+    bool isPressingMouse1 = GetAsyncKeyState(VK_LBUTTON);
     bool isHoveringPlay = mouseAxis.x > (menuTextX - 25) && mouseAxis.x < (menuTextX - 25) + 115 && mouseAxis.y >(menuTextY - 25) && mouseAxis.y < (menuTextY - 25) + 25;
     bool isHoveringExit = mouseAxis.x > (menuTextX - 25) && mouseAxis.x < (menuTextX - 25) + 115 && mouseAxis.y >(menuTextY + 50) && mouseAxis.y < (menuTextY + 50) + 25;
 
@@ -26,7 +27,8 @@ void UserInterface::PrintMenu(Surface& screen, bool &playing, const vec2 &mouseA
     if (isHoveringPlay)
     {
         textColor = WHITE;
-        if (GetAsyncKeyState(VK_LBUTTON)) playing = true;
+        // PLEASE HELP
+        if (isPressingMouse1) playing = true;
     }
     else textColor = BLACK;
 
@@ -34,7 +36,7 @@ void UserInterface::PrintMenu(Surface& screen, bool &playing, const vec2 &mouseA
     if (isHoveringExit)
     {
         exitColor = WHITE;
-        if (GetAsyncKeyState(VK_LBUTTON))
+        if (isPressingMouse1)
         {
             SDL_Event e{};
             e.type = SDL_QUIT;
@@ -50,7 +52,7 @@ void UserInterface::PrintHUD(Surface& screen, Player& player, const vec2& mouseA
     deathCountString = std::to_string(player.getDeathCount());
     
     hpIcon.DrawScaled(0, 0, hpIcon.GetWidth() * 5, hpIcon.GetHeight() * 5, false, &screen);
-    screen.Print(healthString.c_str(), NULL + 50, NULL + 10, WHITE, 5);
+    screen.Print(healthString.c_str(), 0 + 50, 0 + 10, WHITE, 5);
     deathIcon.DrawScaled(0, 50, deathIcon.GetWidth() * 5, deathIcon.GetHeight() * 5, false, &screen);
-    screen.Print(deathCountString.c_str(), NULL + 50, NULL + 60, WHITE, 5);
+    screen.Print(deathCountString.c_str(), 0 + 50, 0 + 60, WHITE, 5);
 }

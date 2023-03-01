@@ -1,5 +1,6 @@
 #pragma once
 #include "template.h"
+#include "surface.h"
 #include "Components.h"
 #include "Timer.h"
 #include <Windows.h>
@@ -19,18 +20,15 @@ public:
 	void SetTarget( Surface* surface ) { screen = surface; }
 	void Init();
 	void Shutdown();
-	void Tick( float deltaTime );
+	void Tick(float);
 	void MouseUp(int button);
 	void MouseDown(int button);
 	void MouseMove(int x, int y) { mouseAxis.x = sCast<float>(x); mouseAxis.y = sCast<float>(y); }
 	vec2 getMouseAxis();
 	void KeyUp(int key) { /* implement if you want to handle keys */ }
 	void KeyDown(int key) { }
-	void Update(float);
 private:
 	Surface* screen;
-
-	Timer* timer{ nullptr };
 
 	Player player;
 	UserInterface hud;
@@ -49,6 +47,7 @@ private:
 
 	bool isPlaying{ false };
 	bool mouseDown{ false };
+	bool mouseUp{ false };
 
 };
 

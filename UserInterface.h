@@ -12,11 +12,9 @@ namespace Tmpl8
     {
     public:
         UserInterface();
-        
         ~UserInterface();
 
         void PrintMenu(Surface& screen, bool& playing, const vec2& mouseAxis);
-
         void PrintHUD(Surface& screen, Player& player, const vec2& mouseAxis);
     private:
         Sprite hpIcon{ new Surface("assets/heart_shaded.png"), 1 };

@@ -7,8 +7,10 @@ class Entity
 public:
     Entity();
     ~Entity();
+
     void Init();
     void Update();
+
     void Draw(Surface& screen, bool collected);
 private:
     Surface grassSurface{ "assets/grassSprite.png" };
