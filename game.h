@@ -42,12 +42,14 @@ private:
 	int bgX{ 0 };
 	int bgY{ 0 };
 	int coinHitCount{ 0 };
+	int readyTextTime{ 0 };
 	
 	vec2 mouseAxis{};
 
 	bool isPlaying{ false };
 	bool mouseDown{ false };
 	bool mouseUp{ false };
+	bool readyTextChecker{ false };
 
 };
 

@@ -13,13 +13,18 @@ constexpr short textSize = 5;
 
 UserInterface::UserInterface() { color = WHITE; }
 
-UserInterface::~UserInterface() {}
 // !! remove playing and make the function return a true value
 void UserInterface::PrintMenu(Surface& screen, bool &playing, const vec2 &mouseAxis)
 {
     bool isPressingMouse1 = GetAsyncKeyState(VK_LBUTTON);
-    bool isHoveringPlay = mouseAxis.x > (menuTextX - 25) && mouseAxis.x < (menuTextX - 25) + 115 && mouseAxis.y >(menuTextY - 25) && mouseAxis.y < (menuTextY - 25) + 25;
-    bool isHoveringExit = mouseAxis.x > (menuTextX - 25) && mouseAxis.x < (menuTextX - 25) + 115 && mouseAxis.y >(menuTextY + 50) && mouseAxis.y < (menuTextY + 50) + 25;
+    bool isHoveringPlay = mouseAxis.x > (menuTextX - 25)
+                          && mouseAxis.x < (menuTextX - 25) + 115
+                          && mouseAxis.y >(menuTextY - 25)
+                          && mouseAxis.y < (menuTextY - 25) + 25;
+    bool isHoveringExit = mouseAxis.x > (menuTextX - 25) 
+                          && mouseAxis.x < (menuTextX - 25) + 115
+                          && mouseAxis.y >(menuTextY + 50)
+                          && mouseAxis.y < (menuTextY + 50) + 25;
 
     logo.Draw(&screen, logoX, logoY);
 
@@ -28,7 +33,11 @@ void UserInterface::PrintMenu(Surface& screen, bool &playing, const vec2 &mouseA
     {
         textColor = WHITE;
         // PLEASE HELP
-        if (isPressingMouse1) playing = true;
+        if (isPressingMouse1)
+        {
+            Sleep(200);
+            playing = true;
+        }
     }
     else textColor = BLACK;
 

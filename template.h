@@ -82,7 +82,7 @@ class vec2 // adapted from https://github.com/dcow/RayTracer
 {
 public:
 	union { struct { float x, y; }; float cell[2]; };
-	vec2() {}
+	vec2() : x( 0 ), y( 0 ) {}
 	vec2( float v ) : x( v ), y( v ) {}
 	vec2( float x, float y ) : x( x ), y( y ) {}
 	vec2 operator - () const { return vec2( -x, -y ); }
@@ -136,10 +136,10 @@ class vec4
 {
 public:
 	union { struct { float x, y, z, w; }; struct { vec3 xyz; float w2; }; float cell[4]; };
-	vec4() {}
-	vec4( float v ) : x( v ), y( v ), z( v ), w( v ) {}
-	vec4( float x, float y, float z, float w ) : x( x ), y( y ), z( z ), w( w ) {}
-	vec4( vec3 a, float b ) : x( a.x ), y( a.y ), z( a.z ), w( b ) {}
+	vec4() : x( 0 ), y( 0 ), z( 0 ), w2( 0 ) {}
+	vec4( float v ) : x( v ), y( v ), z( v ), w( v ), w2( v ) {}
+	vec4( float x, float y, float z, float w ) : x( x ), y( y ), z( z ), w( w ), w2( w ) {}
+	vec4( vec3 a, float b ) : x( a.x ), y( a.y ), z( a.z ), w( b ), w2( b ) {}
 	vec4 operator - () const { return vec4( -x, -y, -z, -w ); }
 	vec4 operator + ( const vec4& addOperand ) const { return vec4( x + addOperand.x, y + addOperand.y, z + addOperand.z, w + addOperand.w ); }
 	vec4 operator - ( const vec4& operand ) const { return vec4( x - operand.x, y - operand.y, z - operand.z, w - operand.w ); }

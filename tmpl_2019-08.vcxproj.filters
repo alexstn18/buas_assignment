@@ -13,6 +13,8 @@
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="AnimationPlayer.cpp" />
+    <ClCompile Include="Collider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -28,6 +30,8 @@
     <ClInclude Include="Map.h" />
     <ClInclude Include="Components.h" />
     <ClInclude Include="Timer.h" />
+    <ClInclude Include="AnimationPlayer.h" />
+    <ClInclude Include="Collider.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="template code">

@@ -9,20 +9,27 @@ class Entity;
 class Map
 {
 public:
-	Map();
-	~Map();
 	void Init();
-	void DrawTile(int tilex, int tiley, Surface& screen, int x, int y);
-	void Draw(Surface& screen);
+	void Render(Surface& screen);
 private:
+	void DrawTile(int tilex, int tiley, Surface& screen, int x, int y);
 	Surface m_tiles{ "assets/myTiles.png" };
+
+	enum Levels
+	{
+		level1,
+		level2,
+		level3
+	};
+
+	Levels levels;
 
 	// this is just for a test
 	char map[5][30] = {
-	 "kc kc kc kc kc kc kc kc kc kc",
-	 "kc fb fb fb kc kc kc kc kc kc",
-	 "kc fb fb fb fb fb kc kc kc kc",
-	 "kc lc lc fb fb fb kc kc kc kc",
-	 "kc kc kc lc lc lc kc kc kc kc"
+	 "aa aa aa aa aa aa aa aa aa aa",
+	 "aa fb fb fb aa aa aa aa aa aa",
+	 "aa fb fb fb fb fb aa aa aa aa",
+	 "aa lc lc fb fb fb aa aa aa aa",
+	 "aa aa aa lc lc lc aa aa aa aa"
 	};
 };

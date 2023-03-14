@@ -1,9 +1,5 @@
 #include "Entity.h"
 
-Entity::Entity() {}
-
-Entity::~Entity() {}
-
 void Entity::Init()
 {
 }
@@ -12,7 +8,7 @@ void Entity::Update()
 {
 }
 
-void Entity::Draw(Surface& screen, bool collected)
+void Entity::Render(Surface& screen, bool collected)
 {
 	spike.Draw(&screen, sCast<int>(spikePos.x), sCast<int>(spikePos.y));
 	//debug collision box for spike

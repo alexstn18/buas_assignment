@@ -5,14 +5,6 @@ constexpr int tileSize = 32;
 constexpr int linii = 10;
 constexpr int coloane = 5;
 
-Map::Map()
-{
-}
-
-Map::~Map()
-{
-}
-
 void Map::Init()
 {
 }
@@ -30,7 +22,7 @@ void Map::DrawTile(int tilex, int tiley, Surface& screen, int x, int y)
 	}
 }
 // credits: https://www.3dgep.com/cpp-fast-track-11-tiles/
-void Map::Draw(Surface& screen)
+void Map::Render(Surface& screen)
 {
 	for (int y = 0; y < coloane; y++)
 	{
@@ -38,7 +30,11 @@ void Map::Draw(Surface& screen)
 		{
 			int tilex = map[y][x * 3] - 'a';
 			int tiley = map[y][x * 3 + 1] - 'a';
-			DrawTile(tilex, tiley, screen, x * tileSize, y * tileSize);
+			DrawTile(tilex,
+					 tiley,
+					 screen,
+					 x * tileSize,
+					 y * tileSize);
 		}
 	}
 }

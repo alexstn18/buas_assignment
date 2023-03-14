@@ -1,17 +1,16 @@
 #pragma once
 #include "Surface.h"
 #include "template.h"
+
 using namespace Tmpl8;
+
 class Entity
 {
 public:
-    Entity();
-    ~Entity();
-
     void Init();
     void Update();
 
-    void Draw(Surface& screen, bool collected);
+    void Render(Surface& screen, bool collected);
 private:
     Surface grassSurface{ "assets/grassSprite.png" };
     Surface spikeSurface{ "assets/spikeTile.png" };
