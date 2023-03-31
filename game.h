@@ -6,6 +6,7 @@
 #include <Windows.h>
 #include <SDL.h>
 #include <iostream>
+#include <vector>
 #include <cmath>
 #include <algorithm>
 #include <string>
@@ -24,6 +25,7 @@ public:
 	void MouseUp(int button);
 	void MouseDown(int button);
 	void MouseMove(int x, int y) { mouseAxis.x = sCast<float>(x); mouseAxis.y = sCast<float>(y); }
+	bool getState();
 	vec2 getMouseAxis();
 	void KeyUp(int key) { /* implement if you want to handle keys */ }
 	void KeyDown(int key) { }
@@ -31,13 +33,18 @@ private:
 	Surface* screen;
 
 	Player player;
-	UserInterface hud;
-	Entity entity;
+	Menu menu;
+	HUD hud;
+	std::vector<Entity*> entities;
 	Map map;
 
 	Sprite bg{ new Surface("assets/bgScroll.png"), 1 };
 	Sprite opacityBg{ new Surface("assets/halfOpacityBackground.png"), 1 };
 	Sprite m_map{ new Surface("assets/tutorialTileMap.png"), 1 };
+	Surface coinSurface{ "assets/coinSpriteTest.png" };
+	Sprite coin{ &coinSurface, 1 };
+
+	// vec2 coinPos{ 600.0f, 500.0f };
 
 	int bgX{ 0 };
 	int bgY{ 0 };

@@ -1,26 +1,24 @@
 #pragma once
 #include "Surface.h"
 #include "template.h"
+#include "BoundingBox.h"
 
 using namespace Tmpl8;
 
 class Entity
 {
 public:
+    BoundingBox bndBox;
+    
     void Init();
-    void Update();
+    virtual void Update();
 
-    void Render(Surface& screen, bool collected);
+    virtual void Render(Surface& screen);
+
+    void setPos(vec2 pos);
+    void setSize(vec2 size);
 private:
-    Surface grassSurface{ "assets/grassSprite.png" };
-    Surface spikeSurface{ "assets/spikeTile.png" };
-    Surface coinSurface{ "assets/coinSpriteTest.png" };
-
-    Sprite grass{ &grassSurface, 1 };
-    Sprite spike{ &spikeSurface, 1 };
-    Sprite coin{ &coinSurface, 1 };
-
-    vec2 spikePos{ 400.0f, 300.0f };
-    vec2 grassPos{ 25.0f, 300.0f };
-    vec2 coinPos{ 600.0f, 500.0f };
+    vec2 pos{ };
+    vec2 size{ };
+    
 };

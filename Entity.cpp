@@ -6,21 +6,23 @@ void Entity::Init()
 
 void Entity::Update()
 {
+	bndBox.left = pos.x;
+	bndBox.right = pos.x + size.x;
+	bndBox.top = pos.y;
+	bndBox.bottom = pos.y + size.y;
 }
 
-void Entity::Render(Surface& screen, bool collected)
+void Entity::Render(Surface& screen)
 {
-	spike.Draw(&screen, sCast<int>(spikePos.x), sCast<int>(spikePos.y));
-	//debug collision box for spike
-	screen.Box(sCast<int>(spikePos.x), sCast<int>(spikePos.y), sCast<int>(spikePos.x) + spike.GetWidth(), sCast<int>(spikePos.y) + spike.GetHeight(), 0xFFFFFF);
-	grass.Draw(&screen, sCast<int>(grassPos.x), sCast<int>(grassPos.y));
-	//debug collision box for grass
-	screen.Box(sCast<int>(grassPos.x), sCast<int>(grassPos.y), sCast<int>(grassPos.x) + grass.GetWidth(), sCast<int>(grassPos.y) + grass.GetHeight(), 0xFFFFFF);
+	screen.Box(bndBox.left, bndBox.top, bndBox.right, bndBox.bottom, 0xFFFFFF);
+}
 
-	if (collected == false)
-	{
-		coin.Draw(&screen, sCast<int>(coinPos.x), sCast<int>(coinPos.y));
-		//debug collision box for coin
-		screen.Box(sCast<int>(coinPos.x), sCast<int>(coinPos.y), sCast<int>(coinPos.x) + coin.GetWidth(), sCast<int>(coinPos.y) + coin.GetHeight(), 0xFFFFFF);
-	}
+void Entity::setPos(vec2 pos)
+{
+	this->pos = pos;
+}
+
+void Entity::setSize(vec2 size)
+{
+	this->size = size;
 }

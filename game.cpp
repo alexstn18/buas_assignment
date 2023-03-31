@@ -57,63 +57,78 @@ namespace Tmpl8
 }
     */
 
-    void Game::Init() {}
+    void Game::Init()
+    {
+        Entity* ground{ new Entity() };
+        ground->setPos({ 0, 560 });
+        ground->setSize({ 1024, 160 });
+        entities.push_back(ground);
+        Entity* stonePlatform1{ new Entity() };
+        stonePlatform1->setPos({ 0, 147 });
+        stonePlatform1->setSize({ 384, 32 });
+        entities.push_back(stonePlatform1);
+        Entity* stonePlatform2{ new Entity() };
+        stonePlatform2->setPos({ 226, 415 });
+        stonePlatform2->setSize({ 384, 32 });
+        entities.push_back(stonePlatform2);
+    }
 
     void Game::Shutdown() {}
 
     void Game::Tick(float)
     {
         Timer::Get().Tick();
+        isPlaying = sCast<bool>(gameState);
         bool bgLoopCheck = bgX < lastBgValue;
 
         bgX -= sCast<int>(100 * Timer::Get().getElapsedS());
-        // std::cout << player.getVel().x << " " << player.getVel().y << "\n";
         if (bgLoopCheck)
         {
             bgX = loopBgValue;
         }
 
         // if (!isPlaying)
-        if(gameState == GameState::Menu)
+        if (gameState == GameState::Menu)
         {
             opacityBg.Draw(screen, bgX, bgY);
-            hud.PrintMenu(*screen, isPlaying, mouseAxis);
-            if (gameState == GameState::Playing) player.InitPlayer();
+            menu.Render(screen);
+            menu.Update(mouseAxis, isPlaying);
+            if (isPlaying == true) gameState = GameState::Playing;
         }
         else
         {
+            player.InitPlayer();
             bg.Draw(screen, bgX, bgY);
             // map.Render(*screen);
             m_map.Draw(screen, 0, 0);
-            screen->Line(0, 178, 383, 178, 0xFFFFFF); // first line top
-            screen->Line(0, 560, 1023, 560, 0xFFFFFF);
-            screen->Line(226, 415, 609, 415, 0xFFFFFF); // box around thing
-            screen->Line(226, 446, 609, 446, 0xFFFFFF); // box around thing
-            screen->Line(226, 416, 226, 445, 0xFFFFFF); // box around thing
-            screen->Line(609, 416, 609, 445, 0xFFFFFF); // grass line
             if (buttonState == ButtonState::Pressed)
             {
+                
                 player.DrawDirection(*screen, mouseAxis);
             }
             // if (mouseUp) player.mouseRelease(mouseAxis, Timer::Get().getElapsedS());
-            player.Update(isPlaying, &entity, mouseAxis, sCast<float>(Timer::Get().getElapsedS()));
+            player.Update(isPlaying, mouseAxis, sCast<float>(Timer::Get().getElapsedS()));
             player.Render(*screen);
+            hud.Update(&player);
             if(readyTextChecker == true) readyTextTime += Timer::Get().getElapsedS();
             if (readyTextTime <= 3)
             {
                 readyTextChecker = false;
-                screen->Print("READY", ScreenWidth / 2, ScreenHeight / 2, 0x0, 2);
+                // screen->Print("READY", ScreenWidth / 2, ScreenHeight / 2, 0x0, 2);
                 readyTextTime = 0;
             }
             if (player.getDeathCount() >= 10)
             {
-                
                 isPlaying = false;
-                gameState = GameState::Menu;
+                if(isPlaying == false) gameState = GameState::Menu;
             }
-            entity.Update();
-            entity.Render(*screen, player.getCollected());
-            hud.PrintHUD(*screen, player, mouseAxis);
+            for (auto& e : entities)
+            {
+                e->Update();
+                e->Render(*screen);
+                Collider::CheckCollisions(player, *e);
+            }
+            hud.Render(screen);
         }
     }
 
@@ -139,6 +154,13 @@ namespace Tmpl8
         // player.DrawDirection(*screen, mouseAxis);
         mouseDown = true;
         buttonState = ButtonState::Pressed;
+    }
+
+    bool Game::getState()
+    {
+        if (gameState == GameState::Menu) return false;
+        else if (gameState == GameState::Playing) return true;
+        else if (gameState == GameState::Paused) return false;
     }
 
     vec2 Game::getMouseAxis()

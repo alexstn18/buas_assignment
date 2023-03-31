@@ -1,10 +1,12 @@
 #pragma once
+#include "Player.h"
+#include "Entity.h"
+#include "BoundingBox.h"
+
 class Collider
 {
 public:
-	void Init();
-	void Update();
-private:
 
+	static void CheckCollisions(Player& player, Entity& entity);
+	static void EdgeCheck(Player& player, Entity& entity);
 };
-
