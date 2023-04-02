@@ -39,8 +39,10 @@ public:
 	void setPos(vec2 pos);
 	void setVel(vec2 vel);
 	void setDirColor(Pixel color);
-	void setBounceCount(int count);
+	void setBounceCount();
 	void setState(State newState);
+
+	bool checkState(State state);
 
 	bool isColliding(int spriteX, int spriteY, int entityX, int entityY);
 private:
@@ -54,7 +56,7 @@ private:
 	void startState(State newState);
 	void endState(State oldState);
 
-	State state = State::Grounded;
+	State state;
 
 	Sprite theSprite{ new Surface("assets/ball.png"), 1 };
 	
@@ -68,7 +70,7 @@ private:
 	float launchImpulse{ 200.0f };
 
 	vec2 spriteSize{ sCast<float>(theSprite.GetWidth(), sCast<float>(theSprite.GetHeight())) };
-	vec2 pos{ 0.0f, 175.0f };
+	vec2 pos{ 0.0f, 200.0f };
 	vec2 ballDirection{ 0.0f };
 	vec2 velocity{ 0.0f };
 	vec2 speed{ 200.0f, 300.0f };

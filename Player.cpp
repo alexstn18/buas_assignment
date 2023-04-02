@@ -1,5 +1,6 @@
 #include "Player.h"
 #include <string>
+#include <iostream>
 
 // health values
 constexpr int damage = 5;
@@ -10,6 +11,8 @@ constexpr int spriteSetWidth = 25;
 
 // sprite SET starting point
 constexpr float startingPoint = 0.0f;
+
+class Game;
 
 void Player::InitPlayer()
 {
@@ -32,93 +35,25 @@ void Player::Physics(float dt)
     velocity.y += gravity * dt;
     pos += velocity * dt;
 
+    std::cout << velocity.x << " " << velocity.y << std::endl;
     UpdateBoundingBox();
 }
 
 void Player::CollisionCheck(float dt)
 {
-    // hitTop = pos.y < 0;
-    // hitBottom = pos.y > ScreenHeight - theSprite.GetHeight();
-    // hitSideL = pos.x < 0;
-    // hitSideR = pos.x > ScreenWidth - theSprite.GetWidth();
-    // hitSide = hitSideL || hitSideR;
+    if (pos.x < 0)
+    {
+        pos.x = ScreenWidth - theSprite.GetWidth() + 1;
+    }
+    else if (pos.x > ScreenWidth)
+    {
+        pos.x = 0 + theSprite.GetWidth();
+    }
 
-    // isBouncing = false;
-    // state = State::Grounded;
-    /*
-    if (hitTop)
+    if (pos.y > ScreenHeight)
     {
         pos.y = 0;
-        velocity.y = velocity.y / 1.75f;
     }
-    
-    if (hitBottom)
-    { //hit bottom
-        isSquished = true;
-        pos.y = sCast<float>(ScreenHeight - theSprite.GetHeight());
-        // velocity.y = -launchForce.y;
-        velocity.x *= 0.98f;
-        spriteSize.y -= 250 * dt;
-        state = State::Bouncing;
-
-        switch (bounceCount)
-        {
-        case 0:
-            velocity.y = -velocity.y / 1.5f;
-            break;
-        case 1:
-            velocity.y = -velocity.y / 1.75f;
-            break;
-        case 2:
-            velocity.y = -velocity.y / 2.0f;
-            break;
-        default:
-            velocity.y = 0;
-            state = State::Grounded;
-            // velocity.x = 0;
-            break;
-        }
-        bounceCount += 1;
-    }
-    if (hitSide)
-    { //hit side
-        state = State::Bouncing;
-        if (hitSideL) // left
-        {
-            pos.x = 0;
-            velocity.x = velocity.x / 1.5f;
-            // bounceCount += 1;
-            isFlipped = false;
-        }
-        else
-        {
-            pos.x = sCast<float>(ScreenWidth - theSprite.GetWidth()); //hit right
-            velocity.x = -velocity.x / 1.5f;
-            // bounceCount += 1;
-            isFlipped = true;
-        }
-    }
-    if (isColliding(sCast<int>(pos.x), sCast<int>(pos.y), 400, 300))
-    {
-        deathCount += 1;
-        InitPlayer();
-        // isReleased = true;
-        //playAnim(anim);
-        //anim = deathAnim;
-    }
-    if (isColliding(sCast<int>(pos.x), sCast<int>(pos.y), 25, 300))
-    {
-        velocity.y = -velocity.y / 1.25f;
-        // bounceCount += 1;
-        spriteSize.y -= 100 * dt, isSquished = true;
-    }
-    if (isColliding(sCast<int>(pos.x), sCast<int>(pos.y), 600, 500))
-    {
-        // coinHitCount = 1;
-        if (hasCollectedCoin == false) health += 5;
-        hasCollectedCoin = true;
-    }
-    */
 }
 
 void Player::startState(State newState)
@@ -126,6 +61,8 @@ void Player::startState(State newState)
     switch (newState)
     {
     case State::Grounded:
+        velocity.x = 0;
+        velocity.y = 0;
         break;
     case State::Bouncing:
         break;
@@ -171,7 +108,8 @@ void Player::mouseCheck(const vec2& mouseAxis)
 
 void Player::mouseRelease(const vec2& mouseAxis)
 {
-    state = State::Bouncing;
+    // if(Game::GameState::Playing)
+        setState(State::Bouncing);
 
     ballDirection = vec2(mouseAxis.x - pos.x, mouseAxis.y - pos.y).normalized();
     velocity = ballDirection * launchImpulse;
@@ -227,8 +165,9 @@ void Player::setDirColor(Pixel color)
     dirColor = color;
 }
 
-void Player::setBounceCount(int count)
+void Player::setBounceCount()
 {
+    bounceCount++;
 }
 
 void Player::setState(State newState)
@@ -239,6 +178,12 @@ void Player::setState(State newState)
         startState(newState);
         state = newState;
     }
+}
+
+bool Player::checkState(State state)
+{
+    if (state == this->state) return true;
+    else return false;
 }
 
 void Player::setPos(vec2 pos)

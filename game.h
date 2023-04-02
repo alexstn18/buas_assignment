@@ -18,6 +18,15 @@ class UserInterface;
 class Game
 {
 public:
+	enum class GameState
+	{
+		Menu,
+		Playing,
+		Paused
+	};
+
+	GameState gameState;
+
 	void SetTarget( Surface* surface ) { screen = surface; }
 	void Init();
 	void Shutdown();

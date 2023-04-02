@@ -8,12 +8,6 @@ constexpr int loopBgValue = -1281;
 namespace Tmpl8
 {
     // use another class for all elements of game state
-    enum class GameState
-    {
-        Menu,
-        Playing,
-        Paused
-    };
     
     enum class ButtonState
     {
@@ -22,7 +16,6 @@ namespace Tmpl8
         Held
     };
 
-    GameState gameState;
     ButtonState buttonState;
 
     /* FROM THEMPERROR
@@ -71,6 +64,10 @@ namespace Tmpl8
         stonePlatform2->setPos({ 226, 415 });
         stonePlatform2->setSize({ 384, 32 });
         entities.push_back(stonePlatform2);
+        Entity* portal{ new Entity() };
+        portal->setPos({ 992, 528 });
+        portal->setSize({ 32, 32 });
+        entities.push_back(portal);
     }
 
     void Game::Shutdown() {}
