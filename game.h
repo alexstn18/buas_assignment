@@ -2,6 +2,7 @@
 #include "template.h"
 #include "surface.h"
 #include "Components.h"
+#include "Level.h"
 #include "Timer.h"
 #include <Windows.h>
 #include <SDL.h>

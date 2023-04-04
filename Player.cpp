@@ -34,8 +34,9 @@ void Player::Physics(float dt)
 
     velocity.y += gravity * dt;
     pos += velocity * dt;
-
+#ifdef _DEBUG
     std::cout << velocity.x << " " << velocity.y << std::endl;
+#endif
     UpdateBoundingBox();
 }
 
@@ -160,6 +161,11 @@ bool Player::getCollected() const
     return hasCollectedCoin;
 }
 
+bool Player::getPortalChecker() const
+{
+    return hasHitPortal;
+}
+
 void Player::setDirColor(Pixel color)
 {
     dirColor = color;
@@ -178,6 +184,16 @@ void Player::setState(State newState)
         startState(newState);
         state = newState;
     }
+}
+
+void Player::setSquished(bool squished)
+{
+    isSquished = squished;
+}
+
+void Player::setPortalChecker(bool portalChecker)
+{
+    this->hasHitPortal = portalChecker;
 }
 
 bool Player::checkState(State state)
@@ -203,21 +219,11 @@ void Player::DrawDirection(Surface& screen, const vec2 &mouseAxis)
 
 void Player::Render(Surface& screen)
 {
-    std::string stateText;
-    switch (state)
-    {
-    case State::Grounded:
-        stateText = "stopped";
-        break;
-    case State::Bouncing:
-        stateText = "bouncing";
-        break;
-    }
-
     theSprite.DrawScaled(sCast<int>(pos.x), sCast<int>(pos.y), sCast<int>(spriteSize.x), sCast<int>(spriteSize.y), isFlipped, &screen);
     //debugging collision box for player
+#ifdef _DEBUG
     screen.Box(sCast<int>(pos.x), sCast<int>(pos.y), sCast<int>(pos.x) + sCast<int>(spriteSize.x), sCast<int>(pos.y) + sCast<int>(spriteSize.y), 0xFFFFFF);
-    // screen.Print(stateText.c_str(), pos.x - 10, pos.y - 10, 0xFFFFFF, 2);
+#endif    
 }
 
 bool Player::isColliding(int spriteX, int spriteY, int entityX, int entityY)

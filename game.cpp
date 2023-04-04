@@ -52,6 +52,7 @@ namespace Tmpl8
 
     void Game::Init()
     {
+        // ! define these in a json file
         Entity* ground{ new Entity() };
         ground->setPos({ 0, 560 });
         ground->setSize({ 1024, 160 });

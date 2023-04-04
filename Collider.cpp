@@ -34,6 +34,7 @@ void Collider::EdgeCheck(Player& player, Entity& entity)
 			// velocity.x = 0;
 			break;
 		}
+		player.setSquished(true);
 		return;
 	}
 

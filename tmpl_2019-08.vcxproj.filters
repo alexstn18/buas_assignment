@@ -16,7 +16,7 @@
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="HUD.cpp" />
-    <ClCompile Include="LevelManager.cpp" />
+    <ClCompile Include="Level.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -37,7 +37,6 @@
     <ClInclude Include="HUD.h" />
     <ClInclude Include="BoundingBox.h" />
     <ClInclude Include="Line.h" />
-    <ClInclude Include="LevelManager.h" />
     <ClInclude Include="Level.h" />
   </ItemGroup>
   <ItemGroup>

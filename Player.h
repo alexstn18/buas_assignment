@@ -35,16 +35,20 @@ public:
 	vec2 getPos() const;
 	vec2 getVel() const;
 	bool getCollected() const;
+	bool getPortalChecker() const;
 
 	void setPos(vec2 pos);
 	void setVel(vec2 vel);
 	void setDirColor(Pixel color);
 	void setBounceCount();
 	void setState(State newState);
+	void setSquished(bool squished);
+	void setPortalChecker(bool portalChecker);
 
 	bool checkState(State state);
 
 	bool isColliding(int spriteX, int spriteY, int entityX, int entityY);
+	
 private:
 	void Physics(float dt);
 	void SquishCheck(float dt);
@@ -87,4 +91,5 @@ private:
 	bool initialFlipped{ false };
 	bool readyForLaunch{ false };
 	bool hasCollectedCoin{ false };
+	bool hasHitPortal{ false };
 };

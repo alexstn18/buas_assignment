@@ -14,7 +14,9 @@ void Entity::Update()
 
 void Entity::Render(Surface& screen)
 {
+#ifdef _DEBUG
 	screen.Box(bndBox.left, bndBox.top, bndBox.right, bndBox.bottom, 0xFFFFFF);
+#endif
 }
 
 void Entity::setPos(vec2 pos)
