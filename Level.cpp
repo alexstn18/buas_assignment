@@ -2,84 +2,123 @@
 
 Level::Level()
 {
-	level = Levels::STAGE_1;
+	Init(Stage::ONE);
+	entities.push_back(ground);
+	entities.push_back(stonePlatform1);
+	entities.push_back(stonePlatform2);
+	entities.push_back(portal);
 }
 
-void Level::Init(Entity* ground, std::vector<Entity*>stonePlatforms, std::vector<Entity*>spikes, Entity* portal)
+void Level::Init(Stage level)
 {
-	Entity* stonePlatform1{ new Entity() };
-	Entity* stonePlatform2{ new Entity() };
-	stonePlatforms.push_back(stonePlatform1);
-	stonePlatforms.push_back(stonePlatform2); 
 	// Entity* spike1{ new Entity() };
-	if (level == Levels::STAGE_1)
+	switch (level)
 	{
-		ground->setPos({ 0, 560 });
-		ground->setSize({ 1024, 160 });  
-		stonePlatform1->setPos({ 0, 147 }); 
-		stonePlatform1->setSize({ 384, 32 });
-		stonePlatform2->setPos({ 226, 415 }); 
-		stonePlatform2->setSize({ 384, 32 }); 
-		portal->setPos({ 992, 528 }); 
-		portal->setSize({ 32, 32 }); 
+	case Stage::ONE:
+		LoadFirstLevel();
+		levelID = 1;
+		break;
+	case Stage::TWO:
+		LoadSecondLevel();
+		levelID = 2;
+		break;
+	case Stage::THREE:
+		LoadThirdLevel();
+		levelID = 3;
+		break;
+	default:
+		break;
 	}
-	else if (level == Levels::STAGE_2)
-	{
-		ground->setPos({ 0, 560 });
-		ground->setSize({ 1024, 160 });
-		stonePlatform1->setPos({ 0, 147 });
-		stonePlatform1->setSize({ 384, 32 });
-		stonePlatform2->setPos({ 226, 415 });
-		stonePlatform2->setSize({ 384, 32 });
-		portal->setPos({ 992, 528 });
-		portal->setSize({ 32, 32 });
-	}
-	else if (level == Levels::STAGE_3)
-	{
-		ground->setPos({ 0, 560 });
-		ground->setSize({ 1024, 160 });
-		stonePlatform1->setPos({ 0, 147 });
-		stonePlatform1->setSize({ 384, 32 });
-		stonePlatform2->setPos({ 226, 415 });
-		stonePlatform2->setSize({ 384, 32 });
-		portal->setPos({ 992, 528 });
-		portal->setSize({ 32, 32 });
-	}
+	// please replace this with a switch statement
+	// + refactor this into functions
 }
 
-
-void Level::Update(Game& game, Player& player)
+void Level::Render(Stage level, Surface* screen)
 {
-	if (level == Levels::STAGE_1 && player.getPortalChecker() == true)
+	switch (level)
 	{
-		level = Levels::STAGE_2;
-		player.setPortalChecker(false);
-	}
-	else if (level == Levels::STAGE_2 && player.getPortalChecker() == true)
-	{
-		level = Levels::STAGE_3;
-		player.setPortalChecker(false);
-		player.InitPlayer();
-	}
-	else if (level == Levels::STAGE_3 && player.getPortalChecker() == true)
-	{
-		game.gameState = Game::GameState::Menu;
-		player.setPortalChecker(false);
-	}
-}
-
-void Level::Render(Surface* screen)
-{
-	if (level == Levels::STAGE_1) 
-	{
+	case Stage::ONE:
 		map_level_one.Draw(screen, 0, 0);
+		break;
+	case Stage::TWO:
+		map_level_two.Draw(screen, 0, 0);
+		break;
+	case Stage::THREE:
+		map_level_one.Draw(screen, 0, 0);
+		break;
 	}
-	else if (level == Levels::STAGE_2) 
+}
+
+int Level::getLevelID() const
+{
+	return levelID;
+}
+
+vec2 Level::getSpawnPoint(Stage level) const
+{
+	switch (level)
 	{
-		// map_level_two.Draw(screen, 0, 0);
+	case Stage::ONE:
+		return { 0, 0 };
+	case Stage::TWO:
+		return { 0, 0 };
+	case Stage::THREE:
+		return { 0, 0 };
 	}
-	else if (level == Levels::STAGE_3)
-	{
-		// map_level_three.Draw(screen, 0, 0);
-	}
+	return { 0, 0 };
+}
+
+std::vector<Entity>& Level::getEntities()
+{
+	return entities;
+}
+
+void Level::LoadFirstLevel()
+{
+	entities.push_back(ground);
+	entities.push_back(stonePlatform1);
+	entities.push_back(stonePlatform2);
+	entities.push_back(portal);
+	
+	entities[0].setPos({ 0, 560 });
+	entities[0].setSize({ 1024, 160 });
+	
+	entities[1].setPos({ 0, 147 });
+	entities[1].setSize({ 384, 32 });
+
+	entities[2].setPos({ 226, 415 });
+	entities[2].setSize({ 384, 32 });
+	
+	entities[3].setPos({ 992, 496 });
+	entities[3].setSize({ 32, 64 });
+}
+
+void Level::LoadSecondLevel()
+{
+	entities[0].setPos({ 0, 688 });
+	entities[0].setSize({ 1280, 32 });
+
+	entities[1].setPos({ 0, 352 });
+	entities[1].setSize({ 736, 32 });
+	
+	entities[2].setPos({ 704, 416 });
+	entities[2].setSize({ 256, 32 });
+
+	entities[3].setPos({64, 624});
+	entities[3].setSize({32, 64});
+}
+
+void Level::LoadThirdLevel()
+{
+	entities[0].setPos({ 100, 400 });
+	entities[0].setSize({ 1024, 160 });
+
+	stonePlatform1.setPos({ 100, 247 });
+	stonePlatform1.setSize({ 384, 32 });
+
+	stonePlatform2.setPos({ 326, 515 });
+	stonePlatform2.setSize({ 384, 32 });
+
+	portal.setPos({ 992, 528 });
+	portal.setSize({ 32, 32 });
 }

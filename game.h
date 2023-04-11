@@ -8,6 +8,7 @@
 #include <SDL.h>
 #include <iostream>
 #include <vector>
+#include <array>
 #include <cmath>
 #include <algorithm>
 #include <string>
@@ -32,21 +33,26 @@ public:
 	void Init();
 	void Shutdown();
 	void Tick(float);
+	void CheckLevel();
 	void MouseUp(int button);
 	void MouseDown(int button);
 	void MouseMove(int x, int y) { mouseAxis.x = sCast<float>(x); mouseAxis.y = sCast<float>(y); }
 	bool getState();
 	vec2 getMouseAxis();
+	Level::Stage getCurrentLevel();
 	void KeyUp(int key) { /* implement if you want to handle keys */ }
 	void KeyDown(int key) { }
 private:
 	Surface* screen;
 
 	Player player;
+	Level level;
 	Menu menu;
 	HUD hud;
-	std::vector<Entity*> entities;
+	// std::vector<Entity*> entities;
 	Map map;
+
+	Level::Stage currentLevel{ Level::Stage::ONE };
 
 	Sprite bg{ new Surface("assets/bgScroll.png"), 1 };
 	Sprite opacityBg{ new Surface("assets/halfOpacityBackground.png"), 1 };

@@ -1,8 +1,7 @@
 #include "Entity.h"
 
-void Entity::Init()
-{
-}
+Entity::Entity(Type type, int ID) :
+	type{ type }, ID{ ID } {}
 
 void Entity::Update()
 {
@@ -15,7 +14,7 @@ void Entity::Update()
 void Entity::Render(Surface& screen)
 {
 #ifdef _DEBUG
-	screen.Box(bndBox.left, bndBox.top, bndBox.right, bndBox.bottom, 0xFFFFFF);
+	screen.Box(bndBox.left, bndBox.top, bndBox.right, bndBox.bottom, 0xFF0000);
 #endif
 }
 

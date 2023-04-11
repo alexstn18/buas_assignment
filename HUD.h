@@ -2,6 +2,7 @@
 #include "surface.h"
 #include "template.h"
 #include "Player.h"
+#include "Level.h"
 #include <string>
 
 using namespace Tmpl8;
@@ -10,12 +11,13 @@ class HUD
 {
 public:
 	void Render(Surface* screen);
-	void Update(Player* player);
+	void Update(Player* player, Level& level);
 private:
 	Sprite hpIcon{ new Surface("assets/heart_shaded.png"), 1 };
 	Sprite deathIcon{ new Surface("assets/skullSprite.png"), 1 };
-
+	
 	std::string healthString;
 	std::string deathCountString;
+	std::string levelString;
 };
 

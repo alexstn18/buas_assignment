@@ -32,7 +32,7 @@ void Menu::ButtonChecker(const vec2& mouseAxis, bool& playing)
         && mouseAxis.x < (menuTextX - 25) + 115
         && mouseAxis.y >(menuTextY + 50)
         && mouseAxis.y < (menuTextY + 50) + 25;
-
+    
     if (isHoveringPlay)
     {
         textColor = 0xFFFFFF;

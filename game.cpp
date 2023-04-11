@@ -49,28 +49,13 @@ namespace Tmpl8
         //Logic that happens every frame we hold the button down
 }
     */
-
+    
     void Game::Init()
     {
-        // ! define these in a json file
-        Entity* ground{ new Entity() };
-        ground->setPos({ 0, 560 });
-        ground->setSize({ 1024, 160 });
-        entities.push_back(ground);
-        Entity* stonePlatform1{ new Entity() };
-        stonePlatform1->setPos({ 0, 147 });
-        stonePlatform1->setSize({ 384, 32 });
-        entities.push_back(stonePlatform1);
-        Entity* stonePlatform2{ new Entity() };
-        stonePlatform2->setPos({ 226, 415 });
-        stonePlatform2->setSize({ 384, 32 });
-        entities.push_back(stonePlatform2);
-        Entity* portal{ new Entity() };
-        portal->setPos({ 992, 528 });
-        portal->setSize({ 32, 32 });
-        entities.push_back(portal);
+        // entities = level.getVector();
+        level.Init(currentLevel);
     }
-
+   
     void Game::Shutdown() {}
 
     void Game::Tick(float)
@@ -91,23 +76,29 @@ namespace Tmpl8
             opacityBg.Draw(screen, bgX, bgY);
             menu.Render(screen);
             menu.Update(mouseAxis, isPlaying);
-            if (isPlaying == true) gameState = GameState::Playing;
+            if (isPlaying == true)
+            {
+                gameState = GameState::Playing;
+                player.InitPlayer();
+            }
         }
         else
         {
-            player.InitPlayer();
+            CheckLevel();
+            // player.InitPlayer();
             bg.Draw(screen, bgX, bgY);
             // map.Render(*screen);
-            m_map.Draw(screen, 0, 0);
+            level.Render(currentLevel, screen);
+            // level.Update(isPlaying, player);
+            // level.Render(screen);
             if (buttonState == ButtonState::Pressed)
             {
-                
                 player.DrawDirection(*screen, mouseAxis);
             }
             // if (mouseUp) player.mouseRelease(mouseAxis, Timer::Get().getElapsedS());
             player.Update(isPlaying, mouseAxis, sCast<float>(Timer::Get().getElapsedS()));
             player.Render(*screen);
-            hud.Update(&player);
+            hud.Update(&player, level);
             if(readyTextChecker == true) readyTextTime += Timer::Get().getElapsedS();
             if (readyTextTime <= 3)
             {
@@ -120,13 +111,39 @@ namespace Tmpl8
                 isPlaying = false;
                 if(isPlaying == false) gameState = GameState::Menu;
             }
-            for (auto& e : entities)
+            for (auto& e : level.getEntities())
             {
-                e->Update();
-                e->Render(*screen);
-                Collider::CheckCollisions(player, *e);
+                e.Update();
+                e.Render(*screen);
+                Collider::CheckCollisions(player, e);
             }
             hud.Render(screen);
+        }
+    }
+
+    void Game::CheckLevel()
+    {
+        if (currentLevel == Level::Stage::ONE && player.getPortalChecker() == true)
+        {
+            currentLevel = Level::Stage::TWO;
+            level.Init(currentLevel);
+            player.InitPlayer();
+            // player.setPortalChecker(false);
+        }
+        else if (currentLevel == Level::Stage::TWO && player.getPortalChecker() == true)
+        {
+            currentLevel = Level::Stage::THREE;
+            level.Init(currentLevel);
+            player.InitPlayer();
+            // player.setPortalChecker(false);
+        }
+        else if (currentLevel == Level::Stage::THREE && player.getPortalChecker() == true)
+        {
+            isPlaying = false;
+            gameState = GameState::Menu;
+            currentLevel = Level::Stage::ONE;
+            player.InitPlayer();
+            // player.setPortalChecker(false);
         }
     }
 
@@ -164,5 +181,9 @@ namespace Tmpl8
     vec2 Game::getMouseAxis()
     {
         return mouseAxis;
+    }
+    Level::Stage Game::getCurrentLevel()
+    {
+        return currentLevel;
     }
 }

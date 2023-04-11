@@ -19,7 +19,7 @@ namespace Tmpl8
 		Pixel textColor{ 0x0 };
 		Pixel exitColor{ 0x0 };
 
-		int menuTextX{ (ScreenWidth / 2) };
+		int menuTextX{ ScreenWidth / 2 };
 		int menuTextY{ ScreenHeight / 2 };
 	};
 }

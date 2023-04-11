@@ -18,9 +18,12 @@ void Player::InitPlayer()
 {
     // state = State::Grounded;
     health = maxHP;
+    pos.x = startingPoint;
+    pos.y = 200.0f;
     speed.x = 200.0f;
     speed.y = 300.0f;
     isFlipped = false;
+    hasHitPortal = false;
     // do a flow chart of 
 }
 
@@ -53,7 +56,7 @@ void Player::CollisionCheck(float dt)
 
     if (pos.y > ScreenHeight)
     {
-        pos.y = 0;
+        InitPlayer();
     }
 }
 
