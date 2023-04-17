@@ -14,17 +14,16 @@ constexpr float startingPoint = 0.0f;
 
 class Game;
 
-void Player::InitPlayer()
+void Player::InitPlayer(vec2 spawnPoint)
 {
-    // state = State::Grounded;
+    state = State::Bouncing;
     health = maxHP;
-    pos.x = startingPoint;
-    pos.y = 200.0f;
-    speed.x = 200.0f;
-    speed.y = 300.0f;
-    isFlipped = false;
+    pos = spawnPoint;
+    velocity = 0;
+    bounceCount = 0;
     hasHitPortal = false;
-    // do a flow chart of 
+    hasHitSpike = false;
+    isFlipped = false;
 }
 
 void Player::Physics(float dt)
@@ -45,19 +44,7 @@ void Player::Physics(float dt)
 
 void Player::CollisionCheck(float dt)
 {
-    if (pos.x < 0)
-    {
-        pos.x = ScreenWidth - theSprite.GetWidth() + 1;
-    }
-    else if (pos.x > ScreenWidth)
-    {
-        pos.x = 0 + theSprite.GetWidth();
-    }
 
-    if (pos.y > ScreenHeight)
-    {
-        InitPlayer();
-    }
 }
 
 void Player::startState(State newState)
@@ -112,12 +99,13 @@ void Player::mouseCheck(const vec2& mouseAxis)
 
 void Player::mouseRelease(const vec2& mouseAxis)
 {
-    // if(Game::GameState::Playing)
         setState(State::Bouncing);
 
-    ballDirection = vec2(mouseAxis.x - pos.x, mouseAxis.y - pos.y).normalized();
-    velocity = ballDirection * launchImpulse;
+        ballDirection = vec2(mouseAxis.x - pos.x, mouseAxis.y - pos.y).normalized();
+        velocity = ballDirection * launchImpulse;
+        pos.y -= 6;
     
+
     bounceCount = 0;
 }
 
@@ -169,6 +157,11 @@ bool Player::getPortalChecker() const
     return hasHitPortal;
 }
 
+bool Player::getSpikeChecker() const
+{
+    return hasHitSpike;
+}
+
 void Player::setDirColor(Pixel color)
 {
     dirColor = color;
@@ -177,6 +170,16 @@ void Player::setDirColor(Pixel color)
 void Player::setBounceCount()
 {
     bounceCount++;
+}
+
+void Player::setDeathCount()
+{
+    deathCount++;
+}
+
+void Player::resetDeathCount()
+{
+    deathCount = 0;
 }
 
 void Player::setState(State newState)
@@ -199,6 +202,11 @@ void Player::setPortalChecker(bool portalChecker)
     this->hasHitPortal = portalChecker;
 }
 
+void Player::setSpikeChecker(bool spikeChecker)
+{
+    hasHitSpike = spikeChecker;
+}
+
 bool Player::checkState(State state)
 {
     if (state == this->state) return true;
@@ -217,6 +225,7 @@ void Player::setVel(vec2 vel)
 
 void Player::DrawDirection(Surface& screen, const vec2 &mouseAxis)
 {
+    // CHANGE (FIX) OTHER TIME :)
     screen.Line(pos.x + (theSprite.GetWidth() / 2.0f), pos.y + theSprite.GetHeight() - 3.0f, mouseAxis.x, mouseAxis.y, dirColor);
 }
 
@@ -247,7 +256,6 @@ void Player::StorePosition()
 
 void Player::Update(bool &playing, const vec2 &mAxis, float dt)
 {
-    // only use update for states
     Physics(dt);
     // hpCheck(playing);
     CollisionCheck(dt);

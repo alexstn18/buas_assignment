@@ -1,5 +1,4 @@
 #include "Collider.h"
-// #include <iostream>
 
 constexpr float velMultiplier = 0.8f;
 
@@ -15,16 +14,21 @@ void Collider::CheckCollisions(Player& player, Entity& entity)
 void Collider::EdgeCheck(Player& player, Entity& entity)
 {
 	int bounceCount = player.getBounceCount();
-	// std::cout << bounceCount << " ";
 	
 	if (entity.type == Entity::Type::portal)
 	{
 		player.setPortalChecker(true);
 		return;
 	}
+
+	if (entity.type == Entity::Type::spike)
+	{
+		player.setSpikeChecker(true);
+		player.setDeathCount();
+	}
 	
-	if (player.bndBox.previousBottom < entity.bndBox.top // Reverse check of IsOverlap (no overlap) using previous position.
-		&& player.bndBox.bottom >= entity.bndBox.top) // Same check as in IsOverlap
+	if (player.bndBox.previousBottom < entity.bndBox.top 
+		&& player.bndBox.bottom >= entity.bndBox.top) 
 	{
 		player.setPos({ player.getPos().x, entity.bndBox.top - player.getSize().y });
 		switch (bounceCount)
@@ -37,7 +41,6 @@ void Collider::EdgeCheck(Player& player, Entity& entity)
 		case 1:
 			player.setVel({ 0.0f, 0.0f });
 			player.setState(Player::State::Grounded);
-			// velocity.x = 0;
 			break;
 		}
 		player.setSquished(true);

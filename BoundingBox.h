@@ -1,5 +1,4 @@
 #pragma once
-#include "Line.h"
 struct BoundingBox
 {
 	float left;

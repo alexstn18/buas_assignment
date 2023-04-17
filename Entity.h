@@ -13,7 +13,8 @@ public:
         ground,
         platform,
         portal,
-        spike
+        spike,
+        coin
     };
 
     Type type;

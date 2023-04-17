@@ -10,10 +10,9 @@ namespace Tmpl8
 	{
 	public:
 		void Render(Surface* screen);
-		void Update(const vec2& mouseAxis, bool& playing);
-	private:
+		void Update(const vec2& mouseAxis);
 		void ButtonChecker(const vec2& mouseAxis, bool& playing);
-
+	private:
 		Sprite logo{ new Surface("assets/logo.png"), 1 };
 
 		Pixel textColor{ 0x0 };
@@ -21,5 +20,8 @@ namespace Tmpl8
 
 		int menuTextX{ ScreenWidth / 2 };
 		int menuTextY{ ScreenHeight / 2 };
+
+		bool isHoveringPlay{ false };
+		bool isHoveringExit{ false };
 	};
 }

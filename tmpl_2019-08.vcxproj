@@ -222,7 +222,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AnimationPlayer.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="game.cpp" />
@@ -236,7 +235,6 @@
     <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AnimationPlayer.h" />
     <ClInclude Include="BoundingBox.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="Components.h" />
@@ -244,7 +242,6 @@
     <ClInclude Include="game.h" />
     <ClInclude Include="HUD.h" />
     <ClInclude Include="Level.h" />
-    <ClInclude Include="Line.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Player.h" />

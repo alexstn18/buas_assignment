@@ -40,7 +40,7 @@ public:
 	bool getState();
 	vec2 getMouseAxis();
 	Level::Stage getCurrentLevel();
-	void KeyUp(int key) { /* implement if you want to handle keys */ }
+	void KeyUp(int key) { }
 	void KeyDown(int key) { }
 private:
 	Surface* screen;
@@ -49,7 +49,6 @@ private:
 	Level level;
 	Menu menu;
 	HUD hud;
-	// std::vector<Entity*> entities;
 	Map map;
 
 	Level::Stage currentLevel{ Level::Stage::ONE };
@@ -59,8 +58,6 @@ private:
 	Sprite m_map{ new Surface("assets/tutorialTileMap.png"), 1 };
 	Surface coinSurface{ "assets/coinSpriteTest.png" };
 	Sprite coin{ &coinSurface, 1 };
-
-	// vec2 coinPos{ 600.0f, 500.0f };
 
 	int bgX{ 0 };
 	int bgY{ 0 };

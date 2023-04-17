@@ -12,7 +12,6 @@
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Timer.cpp" />
-    <ClCompile Include="AnimationPlayer.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="HUD.cpp" />
@@ -31,12 +30,10 @@
     <ClInclude Include="Map.h" />
     <ClInclude Include="Components.h" />
     <ClInclude Include="Timer.h" />
-    <ClInclude Include="AnimationPlayer.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="HUD.h" />
     <ClInclude Include="BoundingBox.h" />
-    <ClInclude Include="Line.h" />
     <ClInclude Include="Level.h" />
   </ItemGroup>
   <ItemGroup>

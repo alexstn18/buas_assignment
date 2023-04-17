@@ -7,11 +7,11 @@ Level::Level()
 	entities.push_back(stonePlatform1);
 	entities.push_back(stonePlatform2);
 	entities.push_back(portal);
+	PushbackSpikesIntoVector();
 }
 
 void Level::Init(Stage level)
 {
-	// Entity* spike1{ new Entity() };
 	switch (level)
 	{
 	case Stage::ONE:
@@ -29,8 +29,6 @@ void Level::Init(Stage level)
 	default:
 		break;
 	}
-	// please replace this with a switch statement
-	// + refactor this into functions
 }
 
 void Level::Render(Stage level, Surface* screen)
@@ -59,9 +57,9 @@ vec2 Level::getSpawnPoint(Stage level) const
 	switch (level)
 	{
 	case Stage::ONE:
-		return { 0, 0 };
+		return { 0, 50 };
 	case Stage::TWO:
-		return { 0, 0 };
+		return { 32, 188 };
 	case Stage::THREE:
 		return { 0, 0 };
 	}
@@ -79,6 +77,7 @@ void Level::LoadFirstLevel()
 	entities.push_back(stonePlatform1);
 	entities.push_back(stonePlatform2);
 	entities.push_back(portal);
+	PushbackSpikesIntoVector();
 	
 	entities[0].setPos({ 0, 560 });
 	entities[0].setSize({ 1024, 160 });
@@ -91,6 +90,11 @@ void Level::LoadFirstLevel()
 	
 	entities[3].setPos({ 992, 496 });
 	entities[3].setSize({ 32, 64 });
+
+	LoadSpikes({ 31, 179 }, { 32, 32 },
+			   { 215, 179 }, { 32, 32 },
+		       { 256, 528 }, { 32, 32 },
+		       { 544, 528 }, { 32, 32 });
 }
 
 void Level::LoadSecondLevel()
@@ -106,6 +110,11 @@ void Level::LoadSecondLevel()
 
 	entities[3].setPos({64, 624});
 	entities[3].setSize({32, 64});
+
+	LoadSpikes({ 352, 320 }, { 32, 32 },
+		{ 848, 384 }, { 32, 32 },
+		{ 480, 656 }, { 32, 32 },
+		{ 960, 656 }, { 32, 32 });
 }
 
 void Level::LoadThirdLevel()
@@ -113,12 +122,40 @@ void Level::LoadThirdLevel()
 	entities[0].setPos({ 100, 400 });
 	entities[0].setSize({ 1024, 160 });
 
-	stonePlatform1.setPos({ 100, 247 });
-	stonePlatform1.setSize({ 384, 32 });
+	entities[1].setPos({100, 247});
+	entities[1].setSize({384, 32});
 
-	stonePlatform2.setPos({ 326, 515 });
-	stonePlatform2.setSize({ 384, 32 });
+	entities[2].setPos({326, 515});
+	entities[2].setSize({ 384, 32 });
 
-	portal.setPos({ 992, 528 });
-	portal.setSize({ 32, 32 });
+	entities[3].setPos({992, 528});
+	entities[3].setSize({32, 32});
+
+	LoadSpikes({ 352, 320 }, { 32, 32 },
+		{ 848, 384 }, { 32, 32 },
+		{ 480, 656 }, { 32, 32 },
+		{ 960, 656 }, { 32, 32 });
+}
+
+void Level::PushbackSpikesIntoVector()
+{
+	entities.push_back(spike1);
+	entities.push_back(spike2);
+	entities.push_back(spike3);
+	entities.push_back(spike4);
+}
+
+void Level::LoadSpikes(vec2 spike1Pos, vec2 spike1Size, vec2 spike2Pos, vec2 spike2Size, vec2 spike3Pos, vec2 spike3Size, vec2 spike4Pos, vec2 spike4Size)
+{
+	entities[4].setPos(spike1Pos);
+	entities[4].setSize(spike1Size);
+
+	entities[5].setPos(spike2Pos);
+	entities[5].setSize(spike2Size);
+
+	entities[6].setPos(spike3Pos);
+	entities[6].setSize(spike3Size);
+
+	entities[7].setPos(spike4Pos);
+	entities[7].setSize(spike4Size);
 }

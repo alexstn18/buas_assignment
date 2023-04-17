@@ -7,8 +7,6 @@ constexpr int loopBgValue = -1281;
 
 namespace Tmpl8
 {
-    // use another class for all elements of game state
-    
     enum class ButtonState
     {
         Released, // this is mouseUp
@@ -17,42 +15,9 @@ namespace Tmpl8
     };
 
     ButtonState buttonState;
-
-    /* FROM THEMPERROR
-    void Game::MouseDown(int key)
-    {
-      mouseKey = JustUp;
-    };
-
-
-    void Game::MouseDown(int key)
-    {
-      mouseKey = JustDown;
-    };
-
-    void Game::Tick(float dt)
-    {
-       if(mouseKey == JustUp)
-       {
-          mouseKey = Up;
-       } 
-       else if(mouseKey == JustDown)
-       {
-          mouseKey = Down;
-       }
-
-    //.. Game code;;
-      if(mouseKey == JustDown) 
-        //Logic that only needs to fire once on click
-
-      if(mouseKey == JustDown || mouseKey == Down)
-        //Logic that happens every frame we hold the button down
-}
-    */
     
     void Game::Init()
     {
-        // entities = level.getVector();
         level.Init(currentLevel);
     }
    
@@ -61,7 +26,6 @@ namespace Tmpl8
     void Game::Tick(float)
     {
         Timer::Get().Tick();
-        isPlaying = sCast<bool>(gameState);
         bool bgLoopCheck = bgX < lastBgValue;
 
         bgX -= sCast<int>(100 * Timer::Get().getElapsedS());
@@ -69,47 +33,43 @@ namespace Tmpl8
         {
             bgX = loopBgValue;
         }
-
-        // if (!isPlaying)
+        
         if (gameState == GameState::Menu)
         {
             opacityBg.Draw(screen, bgX, bgY);
             menu.Render(screen);
-            menu.Update(mouseAxis, isPlaying);
+            menu.Update(mouseAxis);
             if (isPlaying == true)
             {
                 gameState = GameState::Playing;
-                player.InitPlayer();
+                player.InitPlayer(level.getSpawnPoint(currentLevel));
             }
         }
         else
         {
             CheckLevel();
-            // player.InitPlayer();
             bg.Draw(screen, bgX, bgY);
-            // map.Render(*screen);
             level.Render(currentLevel, screen);
-            // level.Update(isPlaying, player);
-            // level.Render(screen);
             if (buttonState == ButtonState::Pressed)
             {
                 player.DrawDirection(*screen, mouseAxis);
             }
-            // if (mouseUp) player.mouseRelease(mouseAxis, Timer::Get().getElapsedS());
             player.Update(isPlaying, mouseAxis, sCast<float>(Timer::Get().getElapsedS()));
             player.Render(*screen);
             hud.Update(&player, level);
-            if(readyTextChecker == true) readyTextTime += Timer::Get().getElapsedS();
-            if (readyTextTime <= 3)
-            {
-                readyTextChecker = false;
-                // screen->Print("READY", ScreenWidth / 2, ScreenHeight / 2, 0x0, 2);
-                readyTextTime = 0;
-            }
-            if (player.getDeathCount() >= 10)
+            if (player.getDeathCount() >= 16)
             {
                 isPlaying = false;
-                if(isPlaying == false) gameState = GameState::Menu;
+                if (isPlaying == false)
+                {
+                    gameState = GameState::Menu;
+                    player.resetDeathCount();
+                }
+                
+            }
+            if (player.getSpikeChecker() == true)
+            {
+                player.InitPlayer(level.getSpawnPoint(currentLevel));
             }
             for (auto& e : level.getEntities())
             {
@@ -127,32 +87,28 @@ namespace Tmpl8
         {
             currentLevel = Level::Stage::TWO;
             level.Init(currentLevel);
-            player.InitPlayer();
-            // player.setPortalChecker(false);
+            player.InitPlayer(level.getSpawnPoint(currentLevel));
         }
         else if (currentLevel == Level::Stage::TWO && player.getPortalChecker() == true)
         {
             currentLevel = Level::Stage::THREE;
             level.Init(currentLevel);
-            player.InitPlayer();
-            // player.setPortalChecker(false);
+            player.InitPlayer(level.getSpawnPoint(currentLevel));
         }
         else if (currentLevel == Level::Stage::THREE && player.getPortalChecker() == true)
         {
             isPlaying = false;
             gameState = GameState::Menu;
             currentLevel = Level::Stage::ONE;
-            player.InitPlayer();
-            // player.setPortalChecker(false);
+            player.InitPlayer(level.getSpawnPoint(currentLevel));
         }
     }
 
     void Game::MouseUp(int button)
     {
+        if (gameState == GameState::Menu) menu.ButtonChecker(mouseAxis, isPlaying);
         if (isPlaying && player.getVel().sqrLentgh() < 0.001)
         {
-            readyTextTime = 0;
-            readyTextChecker = true;
             player.setDirColor(0xFFFFFF);
             player.mouseRelease(mouseAxis);
         }
@@ -163,10 +119,9 @@ namespace Tmpl8
         mouseDown = false;
         buttonState = ButtonState::Released;
     }
-    
+   
     void Game::MouseDown(int button)
     {
-        // player.DrawDirection(*screen, mouseAxis);
         mouseDown = true;
         buttonState = ButtonState::Pressed;
     }

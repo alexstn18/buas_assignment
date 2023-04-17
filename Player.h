@@ -4,6 +4,7 @@
 #include "template.h"
 #include "BoundingBox.h"
 #include <cassert>
+#include <algorithm>
 
 using namespace Tmpl8;
 class Player
@@ -17,7 +18,7 @@ public:
 	
 	BoundingBox bndBox;
 
-	void InitPlayer();
+	void InitPlayer(vec2 spawnPoint);
 
 	void Update(bool &playing, const vec2& mAxis, float dt);
 
@@ -36,14 +37,18 @@ public:
 	vec2 getVel() const;
 	bool getCollected() const;
 	bool getPortalChecker() const;
+	bool getSpikeChecker() const;
 
 	void setPos(vec2 pos);
 	void setVel(vec2 vel);
 	void setDirColor(Pixel color);
 	void setBounceCount();
+	void setDeathCount();
+	void resetDeathCount();
 	void setState(State newState);
 	void setSquished(bool squished);
 	void setPortalChecker(bool portalChecker);
+	void setSpikeChecker(bool spikeChecker);
 
 	bool checkState(State state);
 
@@ -71,7 +76,7 @@ private:
 	int deathCount{ 0 };
 	
 	float gravity{ 300.0f };
-	float launchImpulse{ 200.0f };
+	float launchImpulse{ 300.0f };
 
 	vec2 spriteSize{ sCast<float>(theSprite.GetWidth(), sCast<float>(theSprite.GetHeight())) };
 	vec2 pos{ 0.0f, 200.0f };
@@ -92,4 +97,5 @@ private:
 	bool readyForLaunch{ false };
 	bool hasCollectedCoin{ false };
 	bool hasHitPortal{ false };
+	bool hasHitSpike{ false };
 };

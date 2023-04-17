@@ -16,44 +16,41 @@ void Menu::Render(Surface* screen)
     screen->Print("EXIT", (ScreenWidth / 2) - 25, (ScreenHeight / 2) + 50, exitColor, textSize);
 }
 
-void Menu::Update(const vec2& mouseAxis, bool& playing)
+void Menu::Update(const vec2& mouseAxis)
 {
-    ButtonChecker(mouseAxis, playing);
-}
-
-void Menu::ButtonChecker(const vec2& mouseAxis, bool& playing)
-{
-    bool isPressingMouse1 = GetAsyncKeyState(VK_LBUTTON);
-    bool isHoveringPlay = mouseAxis.x > (menuTextX - 25)
+    isHoveringPlay = mouseAxis.x > (menuTextX - 25)
         && mouseAxis.x < (menuTextX - 25) + 115
         && mouseAxis.y >(menuTextY - 25)
         && mouseAxis.y < (menuTextY - 25) + 25;
-    bool isHoveringExit = mouseAxis.x > (menuTextX - 25)
+    isHoveringExit = mouseAxis.x > (menuTextX - 25)
         && mouseAxis.x < (menuTextX - 25) + 115
         && mouseAxis.y >(menuTextY + 50)
         && mouseAxis.y < (menuTextY + 50) + 25;
-    
+
     if (isHoveringPlay)
     {
         textColor = 0xFFFFFF;
-        // PLEASE HELP
-        if (isPressingMouse1)
-        {
-            Sleep(200);
-            playing = true;
-        }
     }
     else textColor = 0x0;
 
     if (isHoveringExit)
     {
         exitColor = 0xFFFFFF;
-        if (isPressingMouse1)
-        {
-            SDL_Event e{};
-            e.type = SDL_QUIT;
-            SDL_PushEvent(&e);
-        }
     }
     else exitColor = 0x0;
+}
+
+void Menu::ButtonChecker(const vec2& mouseAxis, bool& playing)
+{
+    if (isHoveringPlay)
+    {
+        playing = true;
+    }
+
+    if (isHoveringExit)
+    {
+        SDL_Event e{};
+        e.type = SDL_QUIT;
+        SDL_PushEvent(&e);
+    }
 }
