@@ -1,17 +1,17 @@
 #include "Collider.h"
 
-constexpr float velMultiplier = 0.8f;
+constexpr float velMultiplier = 0.7f;
 
-void Collider::CheckCollisions(Player& player, Entity& entity)
+void Collider::CheckCollisions(Player& player, Entity& entity, Coin& coin)
 {
 	if (player.checkState(Player::State::Grounded)) return;
 	if (BoundingBox::AABB(player.bndBox, entity.bndBox))
 	{
-		EdgeCheck(player, entity);
+		EdgeCheck(player, entity, coin);
 	}
 }
 
-void Collider::EdgeCheck(Player& player, Entity& entity)
+void Collider::EdgeCheck(Player& player, Entity& entity, Coin& coin)
 {
 	int bounceCount = player.getBounceCount();
 	
@@ -26,9 +26,20 @@ void Collider::EdgeCheck(Player& player, Entity& entity)
 		player.setSpikeChecker(true);
 		player.setDeathCount();
 	}
+
+	if (entity.type == Entity::Type::ground || entity.type == Entity::Type::platform)
+	{
+		player.damageHealth(5);
+	}
+
+	if (entity.type == Entity::Type::coin)
+	{
+		coin.setCollected(true);
+		return;
+	}
 	
-	if (player.bndBox.previousBottom < entity.bndBox.top 
-		&& player.bndBox.bottom >= entity.bndBox.top) 
+	if (player.bndBox.previousBottom <= entity.bndBox.top
+		&& player.bndBox.bottom >= entity.bndBox.top)
 	{
 		player.setPos({ player.getPos().x, entity.bndBox.top - player.getSize().y });
 		switch (bounceCount)
@@ -38,12 +49,16 @@ void Collider::EdgeCheck(Player& player, Entity& entity)
 			player.setBounceCount();
 			player.setVel({ player.getVel().x, -(player.getVel().y) * velMultiplier });
 			break;
-		case 1:
+		case 3:
 			player.setVel({ 0.0f, 0.0f });
 			player.setState(Player::State::Grounded);
 			break;
 		}
-		player.setSquished(true);
+		// transform this into an if statement
+		if(entity.type == Entity::Type::ground || entity.type == Entity::Type::platform)
+		{
+			player.setSquished(true);
+		}
 		return;
 	}
 

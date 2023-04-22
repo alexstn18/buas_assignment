@@ -8,6 +8,7 @@ Level::Level()
 	entities.push_back(stonePlatform2);
 	entities.push_back(portal);
 	PushbackSpikesIntoVector();
+	PushbackCoinsIntoVector();
 }
 
 void Level::Init(Stage level)
@@ -78,6 +79,7 @@ void Level::LoadFirstLevel()
 	entities.push_back(stonePlatform2);
 	entities.push_back(portal);
 	PushbackSpikesIntoVector();
+	PushbackCoinsIntoVector();
 	
 	entities[0].setPos({ 0, 560 });
 	entities[0].setSize({ 1024, 160 });
@@ -88,17 +90,20 @@ void Level::LoadFirstLevel()
 	entities[2].setPos({ 226, 415 });
 	entities[2].setSize({ 384, 32 });
 	
-	entities[3].setPos({ 992, 496 });
+	entities[3].setPos({ 384, 496 });
 	entities[3].setSize({ 32, 64 });
 
 	LoadSpikes({ 31, 179 }, { 32, 32 },
 			   { 215, 179 }, { 32, 32 },
 		       { 256, 528 }, { 32, 32 },
 		       { 544, 528 }, { 32, 32 });
+
+	LoadCoins({ 215, 115 }, { 32, 32 });
 }
 
 void Level::LoadSecondLevel()
 {
+
 	entities[0].setPos({ 0, 688 });
 	entities[0].setSize({ 1280, 32 });
 
@@ -112,13 +117,16 @@ void Level::LoadSecondLevel()
 	entities[3].setSize({32, 64});
 
 	LoadSpikes({ 352, 320 }, { 32, 32 },
-		{ 848, 384 }, { 32, 32 },
-		{ 480, 656 }, { 32, 32 },
-		{ 960, 656 }, { 32, 32 });
+			   { 848, 384 }, { 32, 32 },
+		       { 480, 656 }, { 32, 32 },
+		       { 960, 656 }, { 32, 32 });
+
+	LoadCoins({ 672, 384 }, { 32, 32 });
 }
 
 void Level::LoadThirdLevel()
 {
+
 	entities[0].setPos({ 100, 400 });
 	entities[0].setSize({ 1024, 160 });
 
@@ -135,6 +143,8 @@ void Level::LoadThirdLevel()
 		{ 848, 384 }, { 32, 32 },
 		{ 480, 656 }, { 32, 32 },
 		{ 960, 656 }, { 32, 32 });
+
+	LoadCoins({ 215, 115 }, { 32, 32 });
 }
 
 void Level::PushbackSpikesIntoVector()
@@ -143,6 +153,11 @@ void Level::PushbackSpikesIntoVector()
 	entities.push_back(spike2);
 	entities.push_back(spike3);
 	entities.push_back(spike4);
+}
+
+void Level::PushbackCoinsIntoVector()
+{
+	entities.push_back(coin1);
 }
 
 void Level::LoadSpikes(vec2 spike1Pos, vec2 spike1Size, vec2 spike2Pos, vec2 spike2Size, vec2 spike3Pos, vec2 spike3Size, vec2 spike4Pos, vec2 spike4Size)
@@ -158,4 +173,10 @@ void Level::LoadSpikes(vec2 spike1Pos, vec2 spike1Size, vec2 spike2Pos, vec2 spi
 
 	entities[7].setPos(spike4Pos);
 	entities[7].setSize(spike4Size);
+}
+
+void Level::LoadCoins(vec2 coin1Pos, vec2 coin1Size)
+{
+	entities[8].setPos(coin1Pos);
+	entities[8].setSize(coin1Size);
 }

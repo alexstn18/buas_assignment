@@ -4,7 +4,7 @@
 
 // health values
 constexpr int damage = 5;
-constexpr int maxHP = 100;
+constexpr int maxHP = 250;
 
 // sprite SET width
 constexpr int spriteSetWidth = 25;
@@ -23,6 +23,7 @@ void Player::InitPlayer(vec2 spawnPoint)
     bounceCount = 0;
     hasHitPortal = false;
     hasHitSpike = false;
+    isSquished = false;
     isFlipped = false;
 }
 
@@ -44,7 +45,32 @@ void Player::Physics(float dt)
 
 void Player::CollisionCheck(float dt)
 {
+    bool hitBottom = pos.y > ScreenHeight - theSprite.GetHeight();
+    bool hitTop = pos.y < 0;
+    bool hitSide = pos.x > ScreenWidth - theSprite.GetWidth() || pos.x < 0;
 
+    if (hitBottom)
+    {
+        deathCount++;
+        hasHitWater = true;
+    }
+
+    if (hitTop)
+    {
+        pos.y = 0;
+    }
+
+    if (hitSide)
+    {
+        if (pos.x < 0)
+        {
+            pos.x = 0;
+        }
+        else
+        {
+            pos.x = ScreenWidth - theSprite.GetWidth();
+        }
+    }
 }
 
 void Player::startState(State newState)
@@ -73,16 +99,16 @@ void Player::endState(State oldState)
 
 void Player::SquishCheck(float dt)
 {
-    // isSquished = spriteH < 25 || spriteW < 25;
     if (isSquished)
     {
-        spriteSize.y = 5000.0f * dt;
+        spriteSize.y -= 100.0f * dt;
         // spriteH += sCast<int>(500.0f * dt);
-        if (spriteSize.y >= spriteSetWidth)
+        if (spriteSize.y > spriteSetWidth)
         {
             spriteSize.y = spriteSetWidth;
             isSquished = false;
         }
+        else if (spriteSize.y < spriteSetWidth) spriteSize.y += 100.0f * dt;
     }
 }
 
@@ -101,9 +127,9 @@ void Player::mouseRelease(const vec2& mouseAxis)
 {
         setState(State::Bouncing);
 
-        ballDirection = vec2(mouseAxis.x - pos.x, mouseAxis.y - pos.y).normalized();
+        ballDirection = vec2(mouseAxis.x - pos.x, mouseAxis.y + pos.y).normalized();
         velocity = ballDirection * launchImpulse;
-        pos.y -= 6;
+        // pos.y -= 6;
     
 
     bounceCount = 0;
@@ -160,6 +186,11 @@ bool Player::getPortalChecker() const
 bool Player::getSpikeChecker() const
 {
     return hasHitSpike;
+}
+
+bool Player::getWaterChecker() const
+{
+    return hasHitWater;
 }
 
 void Player::setDirColor(Pixel color)
@@ -226,7 +257,8 @@ void Player::setVel(vec2 vel)
 void Player::DrawDirection(Surface& screen, const vec2 &mouseAxis)
 {
     // CHANGE (FIX) OTHER TIME :)
-    screen.Line(pos.x + (theSprite.GetWidth() / 2.0f), pos.y + theSprite.GetHeight() - 3.0f, mouseAxis.x, mouseAxis.y, dirColor);
+    screen.Line(pos.x + (theSprite.GetWidth() / 2.0f), pos.y + theSprite.GetHeight() - 12.0f, mouseAxis.x, mouseAxis.y, dirColor);
+    // screen.Line(mouseAxis.x, mouseAxis.y, mouseAxis.x + 5, mouseAxis.y + 10, dirColor);
 }
 
 void Player::Render(Surface& screen)
@@ -236,6 +268,23 @@ void Player::Render(Surface& screen)
 #ifdef _DEBUG
     screen.Box(sCast<int>(pos.x), sCast<int>(pos.y), sCast<int>(pos.x) + sCast<int>(spriteSize.x), sCast<int>(pos.y) + sCast<int>(spriteSize.y), 0xFFFFFF);
 #endif    
+}
+
+void Player::damageHealth(int damage)
+{
+    health -= damage;
+
+    if (health < 0)
+    {
+        deathCount++;
+        // InitPlayer();
+        health = maxHP;
+    }
+
+    if (health > maxHP)
+    {
+        health = maxHP;
+    }
 }
 
 bool Player::isColliding(int spriteX, int spriteY, int entityX, int entityY)
@@ -257,7 +306,6 @@ void Player::StorePosition()
 void Player::Update(bool &playing, const vec2 &mAxis, float dt)
 {
     Physics(dt);
-    // hpCheck(playing);
     CollisionCheck(dt);
     SquishCheck(dt);
     mouseCheck(mAxis);

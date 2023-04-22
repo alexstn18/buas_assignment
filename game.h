@@ -46,18 +46,16 @@ private:
 	Surface* screen;
 
 	Player player;
+	Coin coin;
 	Level level;
 	Menu menu;
 	HUD hud;
-	Map map;
 
 	Level::Stage currentLevel{ Level::Stage::ONE };
 
 	Sprite bg{ new Surface("assets/bgScroll.png"), 1 };
 	Sprite opacityBg{ new Surface("assets/halfOpacityBackground.png"), 1 };
 	Sprite m_map{ new Surface("assets/tutorialTileMap.png"), 1 };
-	Surface coinSurface{ "assets/coinSpriteTest.png" };
-	Sprite coin{ &coinSurface, 1 };
 
 	int bgX{ 0 };
 	int bgY{ 0 };

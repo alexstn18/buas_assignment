@@ -14,7 +14,8 @@ public:
         platform,
         portal,
         spike,
-        coin
+        coin,
+        checkpoint
     };
 
     Type type;

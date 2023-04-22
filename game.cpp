@@ -18,6 +18,7 @@ namespace Tmpl8
     
     void Game::Init()
     {
+        coin.Init();
         level.Init(currentLevel);
     }
    
@@ -54,15 +55,39 @@ namespace Tmpl8
             {
                 player.DrawDirection(*screen, mouseAxis);
             }
+            for (auto& e : level.getEntities())
+            {
+                e.Update();
+                e.Render(*screen);
+                Collider::CheckCollisions(player, e, coin);
+            }
             player.Update(isPlaying, mouseAxis, sCast<float>(Timer::Get().getElapsedS()));
             player.Render(*screen);
-            hud.Update(&player, level);
+            switch (currentLevel)
+            {
+            case Level::Stage::ONE:
+                coin.Render(*screen, 215, 115);
+                break;
+            case Level::Stage::TWO:
+                coin.Init();
+                coin.Render(*screen, 672, 384);
+                break;
+            case Level::Stage::THREE:
+                coin.Init();
+                coin.Render(*screen, 672, 384);
+                break;
+            }
+            coin.Update();
+            
+            hud.Update(&player, level, coin);
             if (player.getDeathCount() >= 16)
             {
                 isPlaying = false;
                 if (isPlaying == false)
                 {
                     gameState = GameState::Menu;
+                    currentLevel = Level::Stage::ONE;
+                    level.Init(currentLevel);
                     player.resetDeathCount();
                 }
                 
@@ -71,11 +96,9 @@ namespace Tmpl8
             {
                 player.InitPlayer(level.getSpawnPoint(currentLevel));
             }
-            for (auto& e : level.getEntities())
+            if (player.getWaterChecker() == true)
             {
-                e.Update();
-                e.Render(*screen);
-                Collider::CheckCollisions(player, e);
+                player.InitPlayer(level.getSpawnPoint(currentLevel));
             }
             hud.Render(screen);
         }
@@ -107,7 +130,7 @@ namespace Tmpl8
     void Game::MouseUp(int button)
     {
         if (gameState == GameState::Menu) menu.ButtonChecker(mouseAxis, isPlaying);
-        if (isPlaying && player.getVel().sqrLentgh() < 0.001)
+        if (isPlaying && player.checkState(Player::State::Grounded))
         {
             player.setDirColor(0xFFFFFF);
             player.mouseRelease(mouseAxis);

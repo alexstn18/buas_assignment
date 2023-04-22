@@ -4,6 +4,6 @@
 #include "Level.h"
 #include "HUD.h"
 #include "Entity.h"
+#include "Coin.h"
 #include "Collider.h"
-#include "Map.h"
 #include "BoundingBox.h"

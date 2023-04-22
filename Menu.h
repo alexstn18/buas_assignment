@@ -13,7 +13,7 @@ namespace Tmpl8
 		void Update(const vec2& mouseAxis);
 		void ButtonChecker(const vec2& mouseAxis, bool& playing);
 	private:
-		Sprite logo{ new Surface("assets/logo.png"), 1 };
+		Sprite logo{ new Surface("assets/logoInvert.png"), 1 };
 
 		Pixel textColor{ 0x0 };
 		Pixel exitColor{ 0x0 };

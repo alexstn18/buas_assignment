@@ -10,12 +10,12 @@
     </ClCompile>
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Entity.cpp" />
-    <ClCompile Include="Map.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="Level.cpp" />
+    <ClCompile Include="Coin.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -27,7 +27,6 @@
     </ClInclude>
     <ClInclude Include="Player.h" />
     <ClInclude Include="Entity.h" />
-    <ClInclude Include="Map.h" />
     <ClInclude Include="Components.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Collider.h" />
@@ -35,6 +34,7 @@
     <ClInclude Include="HUD.h" />
     <ClInclude Include="BoundingBox.h" />
     <ClInclude Include="Level.h" />
+    <ClInclude Include="Coin.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="template code">
