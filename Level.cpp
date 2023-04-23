@@ -43,7 +43,7 @@ void Level::Render(Stage level, Surface* screen)
 		map_level_two.Draw(screen, 0, 0);
 		break;
 	case Stage::THREE:
-		map_level_one.Draw(screen, 0, 0);
+		map_level_three.Draw(screen, 0, 0);
 		break;
 	}
 }
@@ -62,7 +62,7 @@ vec2 Level::getSpawnPoint(Stage level) const
 	case Stage::TWO:
 		return { 32, 188 };
 	case Stage::THREE:
-		return { 0, 0 };
+		return { 1024, 83 };
 	}
 	return { 0, 0 };
 }
@@ -90,7 +90,7 @@ void Level::LoadFirstLevel()
 	entities[2].setPos({ 226, 415 });
 	entities[2].setSize({ 384, 32 });
 	
-	entities[3].setPos({ 384, 496 });
+	entities[3].setPos({ 352, 496 });
 	entities[3].setSize({ 32, 64 });
 
 	LoadSpikes({ 31, 179 }, { 32, 32 },
@@ -110,14 +110,14 @@ void Level::LoadSecondLevel()
 	entities[1].setPos({ 0, 352 });
 	entities[1].setSize({ 736, 32 });
 	
-	entities[2].setPos({ 704, 416 });
+	entities[2].setPos({ 704, 448 });
 	entities[2].setSize({ 256, 32 });
 
 	entities[3].setPos({64, 624});
 	entities[3].setSize({32, 64});
 
 	LoadSpikes({ 352, 320 }, { 32, 32 },
-			   { 848, 384 }, { 32, 32 },
+			   { 848, 416 }, { 32, 32 },
 		       { 480, 656 }, { 32, 32 },
 		       { 960, 656 }, { 32, 32 });
 
@@ -127,24 +127,24 @@ void Level::LoadSecondLevel()
 void Level::LoadThirdLevel()
 {
 
-	entities[0].setPos({ 100, 400 });
+	entities[0].setPos({ 256, 560 });
 	entities[0].setSize({ 1024, 160 });
 
-	entities[1].setPos({100, 247});
+	entities[1].setPos({896, 147});
 	entities[1].setSize({384, 32});
 
-	entities[2].setPos({326, 515});
-	entities[2].setSize({ 384, 32 });
+	entities[2].setPos({254, 319});
+	entities[2].setSize({ 800, 32 });
 
-	entities[3].setPos({992, 528});
-	entities[3].setSize({32, 32});
+	entities[3].setPos({352, 496});
+	entities[3].setSize({32, 64});
 
-	LoadSpikes({ 352, 320 }, { 32, 32 },
-		{ 848, 384 }, { 32, 32 },
-		{ 480, 656 }, { 32, 32 },
-		{ 960, 656 }, { 32, 32 });
+	LoadSpikes({ 780, 287 }, { 32, 32 },
+		{ 479, 287 }, { 32, 32 },
+		{ 992, 528 }, { 32, 32 },
+		{ 576, 528 }, { 32, 32 });
 
-	LoadCoins({ 215, 115 }, { 32, 32 });
+	LoadCoins({ 415, 287 }, { 32, 32 });
 }
 
 void Level::PushbackSpikesIntoVector()

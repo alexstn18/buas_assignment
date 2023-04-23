@@ -16,11 +16,11 @@ class Game;
 
 void Player::InitPlayer(vec2 spawnPoint)
 {
-    state = State::Bouncing;
     health = maxHP;
+    bounceCount = 0;
     pos = spawnPoint;
     velocity = 0;
-    bounceCount = 0;
+    state = State::Bouncing;
     hasHitPortal = false;
     hasHitSpike = false;
     isSquished = false;
@@ -45,15 +45,8 @@ void Player::Physics(float dt)
 
 void Player::CollisionCheck(float dt)
 {
-    bool hitBottom = pos.y > ScreenHeight - theSprite.GetHeight();
     bool hitTop = pos.y < 0;
     bool hitSide = pos.x > ScreenWidth - theSprite.GetWidth() || pos.x < 0;
-
-    if (hitBottom)
-    {
-        deathCount++;
-        hasHitWater = true;
-    }
 
     if (hitTop)
     {
@@ -141,6 +134,17 @@ void Player::UpdateBoundingBox()
     bndBox.right = pos.x + spriteSize.x;
     bndBox.top = pos.y;
     bndBox.bottom = pos.y + spriteSize.y;
+}
+
+void Player::HitWaterCheck(vec2 spawnPos)
+{
+    bool hitBottom = pos.y > ScreenHeight - theSprite.GetHeight();
+
+    if (hitBottom)
+    {
+        deathCount++;
+        InitPlayer(spawnPos);
+    }
 }
 
 vec2 Player::getSize() const

@@ -2,8 +2,8 @@
 
 void Coin::Init()
 {
-	isActive = true;
 	hasBeenCollected = false;
+	isActive = true;
 }
 
 void Coin::Update()

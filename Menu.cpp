@@ -3,6 +3,8 @@
 // logo values
 constexpr short logoX = 240;
 constexpr short logoY = 50;
+constexpr short winImgX = 470;
+constexpr short winImgY = 500;
 
 // text values
 constexpr short textSize = 5;
@@ -12,16 +14,24 @@ using namespace Tmpl8;
 void Menu::Render(Surface* screen)
 {
     logo.Draw(screen, logoX, logoY);
-    screen->Print("PLAY", menuTextX - 25, menuTextY - 25, textColor, textSize);
+    if (!finished) screen->Print("PLAY", menuTextX - 25, menuTextY - 25, textColor, textSize);
+    else
+    {
+        screen->Print("CONGRATS ON FINISHING THE GAME!", menuTextX - 215, menuTextY - 25, textColor, 3);
+        winImage.Draw(screen, winImgX, winImgY);
+    }
     screen->Print("EXIT", (ScreenWidth / 2) - 25, (ScreenHeight / 2) + 50, exitColor, textSize);
 }
 
-void Menu::Update(const vec2& mouseAxis)
+void Menu::Update(const vec2& mouseAxis, bool& finished)
 {
-    isHoveringPlay = mouseAxis.x > (menuTextX - 25)
-        && mouseAxis.x < (menuTextX - 25) + 115
-        && mouseAxis.y >(menuTextY - 25)
-        && mouseAxis.y < (menuTextY - 25) + 25;
+    this->finished = finished;
+    if(!finished)
+        isHoveringPlay = mouseAxis.x > (menuTextX - 25)
+                      && mouseAxis.x < (menuTextX - 25) + 115
+                      && mouseAxis.y > (menuTextY - 25)
+                      && mouseAxis.y < (menuTextY - 25) + 25;
+
     isHoveringExit = mouseAxis.x > (menuTextX - 25)
         && mouseAxis.x < (menuTextX - 25) + 115
         && mouseAxis.y >(menuTextY + 50)
@@ -42,7 +52,7 @@ void Menu::Update(const vec2& mouseAxis)
 
 void Menu::ButtonChecker(const vec2& mouseAxis, bool& playing)
 {
-    if (isHoveringPlay)
+    if (isHoveringPlay && !finished)
     {
         playing = true;
     }

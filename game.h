@@ -65,6 +65,7 @@ private:
 	vec2 mouseAxis{};
 
 	bool isPlaying{ false };
+	bool hasFinishedGame{ false };
 	bool mouseDown{ false };
 	bool mouseUp{ false };
 	bool readyTextChecker{ false };

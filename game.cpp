@@ -39,7 +39,7 @@ namespace Tmpl8
         {
             opacityBg.Draw(screen, bgX, bgY);
             menu.Render(screen);
-            menu.Update(mouseAxis);
+            menu.Update(mouseAxis, hasFinishedGame);
             if (isPlaying == true)
             {
                 gameState = GameState::Playing;
@@ -48,13 +48,9 @@ namespace Tmpl8
         }
         else
         {
-            CheckLevel();
             bg.Draw(screen, bgX, bgY);
+            CheckLevel();
             level.Render(currentLevel, screen);
-            if (buttonState == ButtonState::Pressed)
-            {
-                player.DrawDirection(*screen, mouseAxis);
-            }
             for (auto& e : level.getEntities())
             {
                 e.Update();
@@ -62,6 +58,11 @@ namespace Tmpl8
                 Collider::CheckCollisions(player, e, coin);
             }
             player.Update(isPlaying, mouseAxis, sCast<float>(Timer::Get().getElapsedS()));
+            player.HitWaterCheck(level.getSpawnPoint(currentLevel));
+            if (buttonState == ButtonState::Pressed)
+            {
+                player.DrawDirection(*screen, mouseAxis);
+            }
             player.Render(*screen);
             switch (currentLevel)
             {
@@ -74,7 +75,7 @@ namespace Tmpl8
                 break;
             case Level::Stage::THREE:
                 coin.Init();
-                coin.Render(*screen, 672, 384);
+                coin.Render(*screen, 279, 287);
                 break;
             }
             coin.Update();
@@ -121,6 +122,7 @@ namespace Tmpl8
         else if (currentLevel == Level::Stage::THREE && player.getPortalChecker() == true)
         {
             isPlaying = false;
+            hasFinishedGame = true;
             gameState = GameState::Menu;
             currentLevel = Level::Stage::ONE;
             player.InitPlayer(level.getSpawnPoint(currentLevel));

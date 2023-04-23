@@ -319,7 +319,7 @@ int main( int argc, char **argv )
 #ifdef FULLSCREEN
 	window = SDL_CreateWindow(TemplateVersion, 100, 100, ScreenWidth, ScreenHeight, SDL_WINDOW_FULLSCREEN );
 #else
-	window = SDL_CreateWindow(TemplateVersion, 100, 100, ScreenWidth, ScreenHeight, SDL_WINDOW_SHOWN );
+	window = SDL_CreateWindow(TemplateVersion, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, ScreenWidth, ScreenHeight, SDL_WINDOW_SHOWN );
 #endif
 	surface = new Surface( ScreenWidth, ScreenHeight );
 	surface->Clear( 0 );
@@ -329,6 +329,8 @@ int main( int argc, char **argv )
 	int exitapp = 0;
 	game = new Game();
 	game->SetTarget( surface );
+	SDL_Surface* icon = SDL_LoadBMP("assets/windowIcon.bmp");
+	SDL_SetWindowIcon(window, icon);
 	timer t;
 	t.reset();
 	while (!exitapp) 

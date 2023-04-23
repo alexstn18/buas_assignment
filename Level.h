@@ -56,5 +56,5 @@ private:
 
 	Sprite map_level_one{ new Surface("assets/level1map.png"), 1 };
 	Sprite map_level_two{ new Surface("assets/level2map.png"), 1 };
-	// Sprite map_level_three{ new Surface("assets/tutorialTileMap.png"), 1 };
+	Sprite map_level_three{ new Surface("assets/level3map.png"), 1 };
 };	

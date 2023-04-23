@@ -10,10 +10,11 @@ namespace Tmpl8
 	{
 	public:
 		void Render(Surface* screen);
-		void Update(const vec2& mouseAxis);
+		void Update(const vec2& mouseAxis, bool& finished);
 		void ButtonChecker(const vec2& mouseAxis, bool& playing);
 	private:
 		Sprite logo{ new Surface("assets/logoInvert.png"), 1 };
+		Sprite winImage{ new Surface("assets/winImage.png"), 1};
 
 		Pixel textColor{ 0x0 };
 		Pixel exitColor{ 0x0 };
@@ -23,5 +24,6 @@ namespace Tmpl8
 
 		bool isHoveringPlay{ false };
 		bool isHoveringExit{ false };
+		bool finished{ false };
 	};
 }

@@ -25,6 +25,7 @@ public:
 	void mouseRelease(const vec2& mouseAxis);
 
 	void UpdateBoundingBox();
+	void HitWaterCheck(vec2 spawnPos);
 
 	void DrawDirection(Surface& screen, const vec2& mouseAxis);
 	void Render(Surface& screen);
@@ -63,7 +64,6 @@ private:
 	void mouseCheck(const vec2& mouseAxis);
 	void CollisionCheck(float dt);
 	void StorePosition();
-	// void hpCheck(bool &isPlaying);
 
 	void startState(State newState);
 	void endState(State oldState);
