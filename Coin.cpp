@@ -1,46 +1,50 @@
 #include "Coin.h"
 
-void Coin::Init()
+void Coin::Update(float dt)
 {
-	hasBeenCollected = false;
-	isActive = true;
+	/*
+	timePassed += dt;
+	if (timePassed > timeIncrement)
+	{
+		coinSprite.SetFrame(coinFrame);
+		coinFrame = ++coinFrame % 5;
+		timePassed = 0.0f;
+	}
+	std::cout << active << "\n";
+	*/
 }
 
-void Coin::Update()
+void Coin::Render(Surface& screen)
 {
-	if (hasBeenCollected == true)
+	/*
+	if (active)
 	{
-		if (isActive == true) coinCount += 1;
-		isActive = false;
+		coinSprite.Draw(&screen, pos.x, pos.y);
 	}
-}
-
-void Coin::Render(Surface& screen, int xPos, int yPos)
-{
-	if (isActive == true)
-	{
-		coinSprite.Draw(&screen, xPos, yPos);
-	}
+	*/
 }
 
 void Coin::setActive(bool activeStatus)
 {
-	isActive = activeStatus;
+	active = activeStatus;
 }
 
-void Coin::setCollected(bool collectedStatus)
+void Coin::collectCoin()
 {
-	hasBeenCollected = collectedStatus;
+	// coinCount += 1;
+	active = false;
 }
 
+/*
 int Coin::getCount() const
 {
 	return coinCount;
 }
+*/
 
 bool Coin::getActive() const
 {
-	return isActive;
+	return active;
 }
 
 bool Coin::getCollected() const

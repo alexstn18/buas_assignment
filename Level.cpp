@@ -2,7 +2,6 @@
 
 Level::Level()
 {
-	Init(Stage::ONE);
 	entities.push_back(ground);
 	entities.push_back(stonePlatform1);
 	entities.push_back(stonePlatform2);
@@ -74,36 +73,28 @@ std::vector<Entity>& Level::getEntities()
 
 void Level::LoadFirstLevel()
 {
-	entities.push_back(ground);
-	entities.push_back(stonePlatform1);
-	entities.push_back(stonePlatform2);
-	entities.push_back(portal);
-	PushbackSpikesIntoVector();
-	PushbackCoinsIntoVector();
-	
 	entities[0].setPos({ 0, 560 });
 	entities[0].setSize({ 1024, 160 });
-	
+
 	entities[1].setPos({ 0, 147 });
 	entities[1].setSize({ 384, 32 });
 
 	entities[2].setPos({ 226, 415 });
 	entities[2].setSize({ 384, 32 });
-	
+
 	entities[3].setPos({ 352, 496 });
 	entities[3].setSize({ 32, 64 });
 
 	LoadSpikes({ 31, 179 }, { 32, 32 },
 			   { 215, 179 }, { 32, 32 },
-		       { 256, 528 }, { 32, 32 },
-		       { 544, 528 }, { 32, 32 });
+			   { 256, 528 }, { 32, 32 },
+			   { 544, 528 }, { 32, 32 });
 
 	LoadCoins({ 215, 115 }, { 32, 32 });
 }
 
 void Level::LoadSecondLevel()
 {
-
 	entities[0].setPos({ 0, 688 });
 	entities[0].setSize({ 1280, 32 });
 
@@ -177,6 +168,7 @@ void Level::LoadSpikes(vec2 spike1Pos, vec2 spike1Size, vec2 spike2Pos, vec2 spi
 
 void Level::LoadCoins(vec2 coin1Pos, vec2 coin1Size)
 {
+	entities[8].active = true;
 	entities[8].setPos(coin1Pos);
 	entities[8].setSize(coin1Size);
 }

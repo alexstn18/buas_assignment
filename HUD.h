@@ -2,7 +2,7 @@
 #include "surface.h"
 #include "template.h"
 #include "Player.h"
-#include "Coin.h"
+#include "Entity.h"
 #include "Level.h"
 #include <string>
 
@@ -12,7 +12,7 @@ class HUD
 {
 public:
 	void Render(Surface* screen);
-	void Update(Player* player, Level& level, Coin& coin);
+	void Update(Player* player, Level& level, int coin);
 private:
 	Sprite hpIcon{ new Surface("assets/heart_shaded.png"), 1 };
 	Sprite deathIcon{ new Surface("assets/skullSprite.png"), 1 };

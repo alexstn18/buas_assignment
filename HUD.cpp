@@ -17,10 +17,10 @@ void HUD::Render(Surface* screen)
     screen->Print(coinString.c_str(), ScreenWidth - 20, 0 + 5, WHITE, 3);
 }
 
-void HUD::Update(Player* player, Level& level, Coin& coin)
+void HUD::Update(Player* player, Level& level, int count)
 {
     healthString = std::to_string(player->getHP());
     deathCountString = std::to_string(player->getDeathCount());
     levelString = std::to_string(level.getLevelID());
-    coinString = std::to_string(coin.getCount());
+    coinString = std::to_string(count);
 }

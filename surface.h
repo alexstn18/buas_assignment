@@ -102,7 +102,7 @@ public:
 	void Draw( Surface* a_Target, int a_X, int a_Y );
 	void DrawScaled( int a_X, int a_Y, int a_Width, int a_Height, bool flip, Surface* a_Target );
 	void SetFlags( unsigned int a_Flags ) { m_Flags = a_Flags; }
-	void SetFrame( unsigned int a_Index ) { m_CurrentFrame = a_Index; }
+	void SetFrame(unsigned int a_Index) { m_CurrentFrame = a_Index; }
 	unsigned int GetFlags() const { return m_Flags; }
 	int GetWidth() const { return m_Width; }
 	int GetHeight() const { return m_Height; }

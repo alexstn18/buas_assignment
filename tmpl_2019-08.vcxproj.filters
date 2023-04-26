@@ -35,6 +35,7 @@
     <ClInclude Include="BoundingBox.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="Coin.h" />
+    <ClInclude Include="SFX.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="template code">

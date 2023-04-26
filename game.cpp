@@ -18,8 +18,10 @@ namespace Tmpl8
     
     void Game::Init()
     {
-        coin.Init();
         level.Init(currentLevel);
+        Audio::Device::setMasterVolume(0.4f);
+        sfx.portalSound.setVolume(0.5f);
+        sfx.ambience.setVolume(0.3f);
     }
    
     void Game::Shutdown() {}
@@ -27,9 +29,10 @@ namespace Tmpl8
     void Game::Tick(float)
     {
         Timer::Get().Tick();
+        float delta = sCast<float>(Timer::Get().getElapsedS());
         bool bgLoopCheck = bgX < lastBgValue;
-
-        bgX -= sCast<int>(100 * Timer::Get().getElapsedS());
+        
+        bgX -= sCast<int>(100 * delta);
         if (bgLoopCheck)
         {
             bgX = loopBgValue;
@@ -37,6 +40,7 @@ namespace Tmpl8
         
         if (gameState == GameState::Menu)
         {
+            coinCount = 0;
             opacityBg.Draw(screen, bgX, bgY);
             menu.Render(screen);
             menu.Update(mouseAxis, hasFinishedGame);
@@ -48,39 +52,26 @@ namespace Tmpl8
         }
         else
         {
+            sfx.ambience.play();
             bg.Draw(screen, bgX, bgY);
             CheckLevel();
             level.Render(currentLevel, screen);
             for (auto& e : level.getEntities())
             {
-                e.Update();
+                e.Update(delta);
                 e.Render(*screen);
-                Collider::CheckCollisions(player, e, coin);
+                Collider::CheckCollisions(player, e, sfx, coinCount);
             }
-            player.Update(isPlaying, mouseAxis, sCast<float>(Timer::Get().getElapsedS()));
+            player.Update(isPlaying, mouseAxis, delta);
             player.HitWaterCheck(level.getSpawnPoint(currentLevel));
             if (buttonState == ButtonState::Pressed)
             {
+                sfx.clickSound.play();
                 player.DrawDirection(*screen, mouseAxis);
             }
             player.Render(*screen);
-            switch (currentLevel)
-            {
-            case Level::Stage::ONE:
-                coin.Render(*screen, 215, 115);
-                break;
-            case Level::Stage::TWO:
-                coin.Init();
-                coin.Render(*screen, 672, 384);
-                break;
-            case Level::Stage::THREE:
-                coin.Init();
-                coin.Render(*screen, 279, 287);
-                break;
-            }
-            coin.Update();
             
-            hud.Update(&player, level, coin);
+            hud.Update(&player, level, coinCount);
             if (player.getDeathCount() >= 16)
             {
                 isPlaying = false;
@@ -90,15 +81,16 @@ namespace Tmpl8
                     currentLevel = Level::Stage::ONE;
                     level.Init(currentLevel);
                     player.resetDeathCount();
-                }
-                
+                }   
             }
             if (player.getSpikeChecker() == true)
             {
+                sfx.deathSound.play();
                 player.InitPlayer(level.getSpawnPoint(currentLevel));
             }
             if (player.getWaterChecker() == true)
             {
+                sfx.deathSound.play();
                 player.InitPlayer(level.getSpawnPoint(currentLevel));
             }
             hud.Render(screen);
@@ -109,29 +101,35 @@ namespace Tmpl8
     {
         if (currentLevel == Level::Stage::ONE && player.getPortalChecker() == true)
         {
+            sfx.portalSound.play();
             currentLevel = Level::Stage::TWO;
             level.Init(currentLevel);
             player.InitPlayer(level.getSpawnPoint(currentLevel));
         }
         else if (currentLevel == Level::Stage::TWO && player.getPortalChecker() == true)
         {
+            sfx.portalSound.play();
             currentLevel = Level::Stage::THREE;
             level.Init(currentLevel);
             player.InitPlayer(level.getSpawnPoint(currentLevel));
         }
         else if (currentLevel == Level::Stage::THREE && player.getPortalChecker() == true)
         {
+            sfx.ambience.stop();
+            sfx.winSound.play();
+            gameState = GameState::Menu;
             isPlaying = false;
             hasFinishedGame = true;
-            gameState = GameState::Menu;
-            currentLevel = Level::Stage::ONE;
-            player.InitPlayer(level.getSpawnPoint(currentLevel));
         }
     }
 
     void Game::MouseUp(int button)
     {
-        if (gameState == GameState::Menu) menu.ButtonChecker(mouseAxis, isPlaying);
+        if (gameState == GameState::Menu)
+        {
+            menu.ButtonChecker(mouseAxis, isPlaying);
+            
+        }
         if (isPlaying && player.checkState(Player::State::Grounded))
         {
             player.setDirColor(0xFFFFFF);
@@ -147,6 +145,7 @@ namespace Tmpl8
    
     void Game::MouseDown(int button)
     {
+        sfx.clickSound.play();
         mouseDown = true;
         buttonState = ButtonState::Pressed;
     }

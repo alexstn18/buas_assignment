@@ -2,16 +2,13 @@
 #include "template.h"
 #include "surface.h"
 #include "Components.h"
-#include "Level.h"
 #include "Timer.h"
 #include <Windows.h>
 #include <SDL.h>
-#include <iostream>
-#include <vector>
-#include <array>
 #include <cmath>
 #include <algorithm>
 #include <string>
+#include <Audio/Device.hpp>
 
 namespace Tmpl8 {
 
@@ -46,10 +43,10 @@ private:
 	Surface* screen;
 
 	Player player;
-	Coin coin;
 	Level level;
 	Menu menu;
 	HUD hud;
+	SFX sfx;
 
 	Level::Stage currentLevel{ Level::Stage::ONE };
 
@@ -59,7 +56,7 @@ private:
 
 	int bgX{ 0 };
 	int bgY{ 0 };
-	int coinHitCount{ 0 };
+	int coinCount{ 0 };
 	int readyTextTime{ 0 };
 	
 	vec2 mouseAxis{};
@@ -69,7 +66,6 @@ private:
 	bool mouseDown{ false };
 	bool mouseUp{ false };
 	bool readyTextChecker{ false };
-
 };
 
 } // namespace Tmpl8

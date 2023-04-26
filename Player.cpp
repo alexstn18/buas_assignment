@@ -16,10 +16,10 @@ class Game;
 
 void Player::InitPlayer(vec2 spawnPoint)
 {
-    health = maxHP;
-    bounceCount = 0;
     pos = spawnPoint;
     velocity = 0;
+    health = maxHP;
+    bounceCount = 0;
     state = State::Bouncing;
     hasHitPortal = false;
     hasHitSpike = false;
@@ -94,7 +94,7 @@ void Player::SquishCheck(float dt)
 {
     if (isSquished)
     {
-        spriteSize.y -= 100.0f * dt;
+        spriteSize.y -= 10.0f * dt;
         // spriteH += sCast<int>(500.0f * dt);
         if (spriteSize.y > spriteSetWidth)
         {
@@ -118,13 +118,11 @@ void Player::mouseCheck(const vec2& mouseAxis)
 
 void Player::mouseRelease(const vec2& mouseAxis)
 {
-        setState(State::Bouncing);
+    setState(State::Bouncing);
 
-        ballDirection = vec2(mouseAxis.x - pos.x, mouseAxis.y + pos.y).normalized();
-        velocity = ballDirection * launchImpulse;
-        // pos.y -= 6;
-    
-
+    ballDirection = vec2(mouseAxis.x - pos.x, mouseAxis.y + pos.y).normalized();
+    velocity = ballDirection * launchImpulse;
+    // pos.y -= 6;
     bounceCount = 0;
 }
 

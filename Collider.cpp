@@ -2,25 +2,27 @@
 
 constexpr float velMultiplier = 0.7f;
 
-void Collider::CheckCollisions(Player& player, Entity& entity, Coin& coin)
+void Collider::CheckCollisions(Player& player, Entity& entity, SFX& sfx, int& coinCount)
 {
 	if (player.checkState(Player::State::Grounded)) return;
 	if (BoundingBox::AABB(player.bndBox, entity.bndBox))
 	{
-		EdgeCheck(player, entity, coin);
+		EdgeCheck(player, entity, sfx, coinCount);
 	}
 }
 
-void Collider::EdgeCheck(Player& player, Entity& entity, Coin& coin)
+void Collider::EdgeCheck(Player& player, Entity& entity, SFX& sfx, int& coinCount)
 {
 	int bounceCount = player.getBounceCount();
-	
+
+	entity.playEntitySound(sfx);
+
 	if (entity.type == Entity::Type::portal)
 	{
 		player.setPortalChecker(true);
 		return;
 	}
-
+	
 	if (entity.type == Entity::Type::spike)
 	{
 		player.setSpikeChecker(true);
@@ -34,7 +36,11 @@ void Collider::EdgeCheck(Player& player, Entity& entity, Coin& coin)
 
 	if (entity.type == Entity::Type::coin)
 	{
-		coin.setCollected(true);
+		if (entity.getActive())
+		{
+			entity.collectCoin();
+			coinCount++;
+		}
 		return;
 	}
 	

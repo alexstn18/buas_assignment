@@ -33,21 +33,29 @@ void Menu::Update(const vec2& mouseAxis, bool& finished)
                       && mouseAxis.y < (menuTextY - 25) + 25;
 
     isHoveringExit = mouseAxis.x > (menuTextX - 25)
-        && mouseAxis.x < (menuTextX - 25) + 115
-        && mouseAxis.y >(menuTextY + 50)
-        && mouseAxis.y < (menuTextY + 50) + 25;
+                  && mouseAxis.x < (menuTextX - 25) + 115
+                  && mouseAxis.y > (menuTextY + 50)
+                  && mouseAxis.y < (menuTextY + 50) + 25;
 
     if (isHoveringPlay)
     {
+        // menuSound.play();
         textColor = 0xFFFFFF;
     }
-    else textColor = 0x0;
+    else
+    {
+        textColor = 0x0;
+    }
 
     if (isHoveringExit)
     {
+        // menuSound.play();
         exitColor = 0xFFFFFF;
     }
-    else exitColor = 0x0;
+    else
+    {
+        exitColor = 0x0;
+    }
 }
 
 void Menu::ButtonChecker(const vec2& mouseAxis, bool& playing)
