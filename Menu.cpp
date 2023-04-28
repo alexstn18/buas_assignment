@@ -3,7 +3,7 @@
 // logo values
 constexpr short logoX = 240;
 constexpr short logoY = 50;
-constexpr short winImgX = 470;
+constexpr short winImgX = 480;
 constexpr short winImgY = 500;
 
 // text values
@@ -13,10 +13,12 @@ using namespace Tmpl8;
 
 void Menu::Render(Surface* screen)
 {
+    // Menu logo and button(s) display
     logo.Draw(screen, logoX, logoY);
     if (!finished) screen->Print("PLAY", menuTextX - 25, menuTextY - 25, textColor, textSize);
     else
     {
+        // if the player has finished the game, this displays the win screen
         screen->Print("CONGRATS ON FINISHING THE GAME!", menuTextX - 215, menuTextY - 25, textColor, 3);
         winImage.Draw(screen, winImgX, winImgY);
     }

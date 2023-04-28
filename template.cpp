@@ -319,6 +319,9 @@ int main( int argc, char **argv )
 #ifdef FULLSCREEN
 	window = SDL_CreateWindow(TemplateVersion, 100, 100, ScreenWidth, ScreenHeight, SDL_WINDOW_FULLSCREEN );
 #else
+	// SDL_WINDOWPOS_CENTERED centers the window according to the user's screen resolution
+	// taken from the "Remarks" part of the SDL documentation for the CreateWindow function
+	// https://wiki.libsdl.org/SDL2/SDL_CreateWindow
 	window = SDL_CreateWindow(TemplateVersion, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, ScreenWidth, ScreenHeight, SDL_WINDOW_SHOWN );
 #endif
 	surface = new Surface( ScreenWidth, ScreenHeight );
@@ -329,8 +332,11 @@ int main( int argc, char **argv )
 	int exitapp = 0;
 	game = new Game();
 	game->SetTarget( surface );
-	SDL_Surface* icon = SDL_LoadBMP("assets/windowIcon.bmp");
+
+	// https://wiki.libsdl.org/SDL2/SDL_SetWindowIcon
+	SDL_Surface* icon = SDL_LoadBMP("assets/windowIcon.bmp"); // couldn't find a proper way to actually load an image here other than this, hence SDL_image is not included with the Tmpl8
 	SDL_SetWindowIcon(window, icon);
+	
 	timer t;
 	t.reset();
 	while (!exitapp) 

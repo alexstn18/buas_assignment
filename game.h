@@ -2,13 +2,13 @@
 #include "template.h"
 #include "surface.h"
 #include "Components.h"
-#include "Timer.h"
+#include "Timer.h" // Implementation by Jeremiah van Oosten (@jpvanoosten)
 #include <Windows.h>
 #include <SDL.h>
 #include <cmath>
 #include <algorithm>
 #include <string>
-#include <Audio/Device.hpp>
+#include <Audio/Device.hpp> // Audio library from Jeremiah van Oosten (@jpvanoosten)
 
 namespace Tmpl8 {
 
@@ -17,7 +17,7 @@ class UserInterface;
 class Game
 {
 public:
-	enum class GameState
+	enum class GameState // game state machine
 	{
 		Menu,
 		Playing,
@@ -48,7 +48,7 @@ private:
 	HUD hud;
 	SFX sfx;
 
-	Level::Stage currentLevel{ Level::Stage::ONE };
+	Level::Stage currentLevel{ Level::Stage::ONE }; // initializes the current level to start at stage 1
 
 	Sprite bg{ new Surface("assets/bgScroll.png"), 1 };
 	Sprite opacityBg{ new Surface("assets/halfOpacityBackground.png"), 1 };
@@ -59,13 +59,12 @@ private:
 	int coinCount{ 0 };
 	int readyTextTime{ 0 };
 	
-	vec2 mouseAxis{};
+	vec2 mouseAxis{}; // vec2 variable that helds the x and y values of the mouseAxis => MouseMove function
 
 	bool isPlaying{ false };
 	bool hasFinishedGame{ false };
 	bool mouseDown{ false };
 	bool mouseUp{ false };
-	bool readyTextChecker{ false };
 };
 
 } // namespace Tmpl8

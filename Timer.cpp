@@ -1,5 +1,6 @@
 #include "Timer.h"
 // Timer class implementation from Jeremiah van Oosten's 3dgep.com Discord lectures
+// Additional help from Joey van Haren (@chadjoey)
 Timer::Timer()
 {
     Reset();

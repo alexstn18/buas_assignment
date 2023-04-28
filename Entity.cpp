@@ -4,6 +4,7 @@ void Entity::Update(float dt)
 {
 	if(type == Type::coin && active == true)
 	{
+		// if the entity is of type coin, switch through the coin's frames
 		timePassed += dt;
 		if (timePassed > timeIncrement)
 		{
@@ -12,7 +13,7 @@ void Entity::Update(float dt)
 			timePassed = 0.0f;
 		}
 	}
-
+	// update the entity's bounding box
 	bndBox.left = pos.x;
 	bndBox.right = pos.x + size.x;
 	bndBox.top = pos.y;
@@ -27,6 +28,7 @@ void Entity::Render(Surface& screen)
 	
 	if (type == Type::coin && active == true)
 	{
+		// renders the coin at its declared position (found in the Level class when loading levels)
 		sprite->Draw(&screen, pos.x, pos.y);
 	}
 }

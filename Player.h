@@ -79,12 +79,12 @@ private:
 	int deathCount{ 0 };
 	
 	float gravity{ 420.0f };
-	float launchImpulse{ 360.0f };
 
 	vec2 spriteSize{ sCast<float>(theSprite.GetWidth(), sCast<float>(theSprite.GetHeight())) };
 	vec2 pos{ 0.0f, 200.0f };
 	vec2 ballDirection{ 0.0f };
 	vec2 velocity{ 0.0f };
+	vec2 launchImpulse{ 400.0f, 500.0f };
 	vec2 speed{ 200.0f, 300.0f };
 
 	bool hitTop{ false };

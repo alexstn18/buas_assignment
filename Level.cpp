@@ -10,6 +10,8 @@ Level::Level()
 	PushbackCoinsIntoVector();
 }
 
+// function initializes (loads) the entities of the current level
+// each level also has a specific level ID, which gets assigned at its initialization
 void Level::Init(Stage level)
 {
 	switch (level)
@@ -30,7 +32,7 @@ void Level::Init(Stage level)
 		break;
 	}
 }
-
+// function renders the map (stored entirely in an image) of the current level
 void Level::Render(Stage level, Surface* screen)
 {
 	switch (level)
@@ -51,7 +53,7 @@ int Level::getLevelID() const
 {
 	return levelID;
 }
-
+// function returns the player's spawnpoint of the current level
 vec2 Level::getSpawnPoint(Stage level) const
 {
 	switch (level)
@@ -70,14 +72,14 @@ std::vector<Entity>& Level::getEntities()
 {
 	return entities;
 }
-
+// function loads the exact positions and sizes of all of the entities from the FIRST level
 void Level::LoadFirstLevel()
 {
 	entities[0].setPos({ 0, 560 });
-	entities[0].setSize({ 1024, 160 });
+	entities[0].setSize({ 1280, 160 });
 
 	entities[1].setPos({ 0, 147 });
-	entities[1].setSize({ 384, 32 });
+	entities[1].setSize({ 215, 32 });
 
 	entities[2].setPos({ 226, 415 });
 	entities[2].setSize({ 384, 32 });
@@ -85,14 +87,16 @@ void Level::LoadFirstLevel()
 	entities[3].setPos({ 352, 496 });
 	entities[3].setSize({ 32, 64 });
 
-	LoadSpikes({ 31, 179 }, { 32, 32 },
-			   { 215, 179 }, { 32, 32 },
-			   { 256, 528 }, { 32, 32 },
-			   { 544, 528 }, { 32, 32 });
-
-	LoadCoins({ 215, 115 }, { 32, 32 });
+	// the LoadSpikes function is to preserve space and to improve readability of the code
+	// loads the individual sizes and positions of each spike in the level
+	LoadSpikes({ 215, 147 }, { 26, 32 },
+			   { 31, 179 }, { 32, 26 },
+			   { 544, 540 }, { 32, 20 },
+			   { -100 , -100 }, { 0, 0 });
+	
+	LoadCoins({ 896, 528 }, { 32, 32 });
 }
-
+// function loads the exact positions and sizes of all of the entities from the SECOND level
 void Level::LoadSecondLevel()
 {
 	entities[0].setPos({ 0, 688 });
@@ -107,17 +111,16 @@ void Level::LoadSecondLevel()
 	entities[3].setPos({64, 624});
 	entities[3].setSize({32, 64});
 
-	LoadSpikes({ 352, 320 }, { 32, 32 },
-			   { 848, 416 }, { 32, 32 },
-		       { 480, 656 }, { 32, 32 },
-		       { 960, 656 }, { 32, 32 });
+	LoadSpikes({ 352, 324 }, { 32, 28 },
+			   { 848, 420 }, { 32, 28 },
+		       { 480, 660 }, { 32, 28 },
+		       { 960, 660 }, { 32, 28 });
 
 	LoadCoins({ 672, 384 }, { 32, 32 });
 }
-
+// function loads the exact positions and sizes of all of the entities from the THIRD level
 void Level::LoadThirdLevel()
 {
-
 	entities[0].setPos({ 256, 560 });
 	entities[0].setSize({ 1024, 160 });
 
@@ -130,10 +133,10 @@ void Level::LoadThirdLevel()
 	entities[3].setPos({352, 496});
 	entities[3].setSize({32, 64});
 
-	LoadSpikes({ 780, 287 }, { 32, 32 },
-		{ 479, 287 }, { 32, 32 },
-		{ 992, 528 }, { 32, 32 },
-		{ 576, 528 }, { 32, 32 });
+	LoadSpikes({ 780, 289 }, { 32, 30 },
+			   { 479, 289 }, { 32, 30 },
+		       { 992, 530 }, { 32, 30 },
+		       { 576, 530 }, { 32, 30 });
 
 	LoadCoins({ 415, 287 }, { 32, 32 });
 }

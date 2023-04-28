@@ -16,6 +16,7 @@ class Game;
 
 void Player::InitPlayer(vec2 spawnPoint)
 {
+    // initialize all the player's stats with their default values
     pos = spawnPoint;
     velocity = 0;
     health = maxHP;
@@ -29,13 +30,14 @@ void Player::InitPlayer(vec2 spawnPoint)
 
 void Player::Physics(float dt)
 {
+    // physics will not apply if the player's state is grounded, so the player can remain stationary in it's grounded state
     if (state == State::Grounded)
     {
         return;
     }
-    StorePosition();
+    StorePosition(); // stores the bounding box of the player
 
-    velocity.y += gravity * dt;
+    velocity.y += gravity * dt; 
     pos += velocity * dt;
 #ifdef _DEBUG
     std::cout << velocity.x << " " << velocity.y << std::endl;
@@ -45,6 +47,7 @@ void Player::Physics(float dt)
 
 void Player::CollisionCheck(float dt)
 {
+    // screen collision check
     bool hitTop = pos.y < 0;
     bool hitSide = pos.x > ScreenWidth - theSprite.GetWidth() || pos.x < 0;
 
@@ -66,6 +69,7 @@ void Player::CollisionCheck(float dt)
     }
 }
 
+// State machine section
 void Player::startState(State newState)
 {
     switch (newState)
@@ -90,6 +94,7 @@ void Player::endState(State oldState)
     }
 }
 
+// checker section
 void Player::SquishCheck(float dt)
 {
     if (isSquished)
@@ -107,6 +112,7 @@ void Player::SquishCheck(float dt)
 
 void Player::mouseCheck(const vec2& mouseAxis)
 {
+    // this function makes the player sprite follow the mouse's direction
     initialFlipped = isFlipped;
     if (isReleased == false)
     {
@@ -115,6 +121,18 @@ void Player::mouseCheck(const vec2& mouseAxis)
     }
     else isFlipped = initialFlipped;
 }
+
+void Player::HitWaterCheck(vec2 spawnPos)
+{
+    bool hitBottom = pos.y > ScreenHeight - theSprite.GetHeight();
+
+    if (hitBottom)
+    {
+        deathCount++;
+        InitPlayer(spawnPos);
+    }
+}
+
 
 void Player::mouseRelease(const vec2& mouseAxis)
 {
@@ -134,17 +152,8 @@ void Player::UpdateBoundingBox()
     bndBox.bottom = pos.y + spriteSize.y;
 }
 
-void Player::HitWaterCheck(vec2 spawnPos)
-{
-    bool hitBottom = pos.y > ScreenHeight - theSprite.GetHeight();
 
-    if (hitBottom)
-    {
-        deathCount++;
-        InitPlayer(spawnPos);
-    }
-}
-
+// Getter section
 vec2 Player::getSize() const
 {
     return spriteSize;
@@ -195,6 +204,7 @@ bool Player::getWaterChecker() const
     return hasHitWater;
 }
 
+// Setter section
 void Player::setDirColor(Pixel color)
 {
     dirColor = color;
@@ -256,6 +266,7 @@ void Player::setVel(vec2 vel)
     this->velocity = vel;
 }
 
+// Rendering section
 void Player::DrawDirection(Surface& screen, const vec2 &mouseAxis)
 {
     // CHANGE (FIX) OTHER TIME :)
@@ -272,14 +283,17 @@ void Player::Render(Surface& screen)
 #endif    
 }
 
+// health
 void Player::damageHealth(int damage)
 {
+    // damage the player + contains checks to prevent value overrides
+
     health -= damage;
 
     if (health < 0)
     {
         deathCount++;
-        // InitPlayer();
+        // pos = spawnPoint;
         health = maxHP;
     }
 

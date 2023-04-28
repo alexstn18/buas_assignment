@@ -431,7 +431,7 @@ void Sprite::Draw( Surface* a_Target, int a_X, int a_Y )
 		}
 	}
 }
-// credits to RedCotillion
+// credits to RedCotillion (Erik / ecupak) who helped me modify the original DrawScaled function to make a surface horizontally flippable
 void Sprite::DrawScaled(int a_X, int a_Y, int a_Width, int a_Height, bool flip, Surface* a_Target)
 {
 	// Exit if no width or height.
