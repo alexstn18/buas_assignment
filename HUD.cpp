@@ -24,3 +24,8 @@ void HUD::Update(Player* player, Level& level, int count)
     levelString = std::to_string(level.getLevelID());
     coinString = std::to_string(count);
 }
+
+std::string HUD::getCoinString() const
+{
+    return coinString;
+}

@@ -44,8 +44,8 @@ namespace Tmpl8
             // menu functionality, preceded by line 135 from game.cpp
             coinCount = 0; // useful after the player game overs (20 deaths)
             opacityBg.Draw(screen, bgX, bgY); // draw the half opacity background when in menu
-            menu.Render(screen); // render the menu buttons and logo (or finish screen if the game is finished)
-            menu.Update(mouseAxis, hasFinishedGame); 
+            menu.Render(screen, hud); // render the menu buttons and logo (or finish screen if the game is finished)
+            menu.Update(mouseAxis, hasFinishedGame, hasGameOvered);
             if (isPlaying == true)
             {
                 // available after line 135, when the player clicks on the "PLAY" button
@@ -56,6 +56,7 @@ namespace Tmpl8
         else
         {
             // non-menu gameplay functionality
+            hasGameOvered = false;
             sfx.ambience.play();
             bg.Draw(screen, bgX, bgY);
             CheckLevel();
@@ -82,6 +83,7 @@ namespace Tmpl8
             {
                 // game over check
                 isPlaying = false;
+                hasGameOvered = true;
                 if (isPlaying == false)
                 {
                     gameState = GameState::Menu;
@@ -90,18 +92,27 @@ namespace Tmpl8
                     player.resetDeathCount();
                 }   
             }
+
             if (player.getSpikeChecker() == true)
             {
                 // if the player has hit the spike, play the death sound and initialize the player
-                sfx.deathSound.play();
                 player.InitPlayer(level.getSpawnPoint(currentLevel));
+                sfx.deathSound.play();
             }
+            
             if (player.getWaterChecker() == true)
             {
                 // if the player has hit water, initialize the player
                 sfx.deathSound.play();
                 player.InitPlayer(level.getSpawnPoint(currentLevel));
             }
+            
+            if (player.getHP() <= 0)
+            {
+                player.InitPlayer(level.getSpawnPoint(currentLevel));
+                player.setDeathCount();
+            }
+            
             hud.Render(screen);
         }
     }

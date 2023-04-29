@@ -1,6 +1,8 @@
 #pragma once
 #include "template.h"
 #include "surface.h"
+#include "HUD.h"
+#include <string>
 #include <Windows.h>
 #include <SDL.h>
 #include <Audio/Sound.hpp>
@@ -10,8 +12,8 @@ namespace Tmpl8
 	class Menu
 	{
 	public:
-		void Render(Surface* screen);
-		void Update(const vec2& mouseAxis, bool& finished);
+		void Render(Surface* screen, HUD& hud);
+		void Update(const vec2& mouseAxis, bool& finished, bool& gameOver);
 		void ButtonChecker(const vec2& mouseAxis, bool& playing);
 	private:
 		Sprite logo{ new Surface("assets/logoInvert.png"), 1 };
@@ -37,5 +39,6 @@ namespace Tmpl8
 		bool isHoveringPlay{ false };
 		bool isHoveringExit{ false };
 		bool finished{ false };
+		bool gameOver{ false };
 	};
 }

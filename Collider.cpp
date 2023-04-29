@@ -32,12 +32,12 @@ void Collider::EdgeCheck(Player& player, Entity& entity, SFX& sfx, int& coinCoun
 		player.setPortalChecker(true);
 		return;
 	}
-	
 	if (entity.type == Entity::Type::spike)
 	{
 		// if statement that tracks whether the player has hit a spike
 		player.setSpikeChecker(true);
 		player.setDeathCount();
+		player.setPos({ player.getPos().x - 10, player.getPos().y - 30 });
 		return;
 	}
 
@@ -48,6 +48,7 @@ void Collider::EdgeCheck(Player& player, Entity& entity, SFX& sfx, int& coinCoun
 		{
 			// if the coin is active, the player is able to collect it and the coinCount increases
 			entity.collectCoin();
+			player.healHealth(10);
 			coinCount++;
 		}
 		return;
@@ -58,6 +59,7 @@ void Collider::EdgeCheck(Player& player, Entity& entity, SFX& sfx, int& coinCoun
 		&& player.bndBox.bottom >= entity.bndBox.top)
 	{
 		// if the player's bottom bounding box has collided with an entity's top bounding box
+
 		player.setPos({ player.getPos().x, entity.bndBox.top - player.getSize().y });
 		
 		switch (bounceCount)
@@ -86,13 +88,13 @@ void Collider::EdgeCheck(Player& player, Entity& entity, SFX& sfx, int& coinCoun
 			}
 			break;
 		case 3:
-			
+
 			player.setVel({ 0.0f, 0.0f });
 			player.setState(Player::State::Grounded);
 			break;
 		}
 
-		if(entity.type == Entity::Type::ground || entity.type == Entity::Type::platform)
+		if (entity.type == Entity::Type::ground || entity.type == Entity::Type::platform)
 		{
 			player.setSquished(true);
 		}
@@ -116,15 +118,14 @@ void Collider::EdgeCheck(Player& player, Entity& entity, SFX& sfx, int& coinCoun
 		player.setVel({ -(player.getVel().x) * velMultiplier, player.getVel().y });
 		return;
 	}
-
+	
 	if (player.bndBox.previousRight < entity.bndBox.left
 		&& player.bndBox.right >= entity.bndBox.left)
 	{
 		// if the player's right bounding box has collided with an entity's left bounding box
-		player.setPos({ entity.bndBox.left - player.getSize().x, player.getPos().y});
+		player.setPos({ entity.bndBox.left - player.getSize().x, player.getPos().y });
 		player.setVel({ -(player.getVel().x), player.getVel().y });
 		player.setBounceCount();
 		return;
 	}
-
 }

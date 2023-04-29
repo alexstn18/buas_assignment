@@ -63,6 +63,7 @@ private:
 
 	bool isPlaying{ false };
 	bool hasFinishedGame{ false };
+	bool hasGameOvered{ false };
 	bool mouseDown{ false };
 	bool mouseUp{ false };
 };

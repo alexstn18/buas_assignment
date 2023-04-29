@@ -31,6 +31,7 @@ public:
 	void Render(Surface& screen);
 
 	void damageHealth(int damage);
+	void healHealth(int heal);
 	
 	int getHP() const;
 	int getBounceCount() const;

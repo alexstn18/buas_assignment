@@ -22,8 +22,8 @@ void Player::InitPlayer(vec2 spawnPoint)
     health = maxHP;
     bounceCount = 0;
     state = State::Bouncing;
-    hasHitPortal = false;
     hasHitSpike = false;
+    hasHitPortal = false;
     isSquished = false;
     isFlipped = false;
 }
@@ -286,21 +286,21 @@ void Player::Render(Surface& screen)
 // health
 void Player::damageHealth(int damage)
 {
-    // damage the player + contains checks to prevent value overrides
-
+    // damage the player
     health -= damage;
+}
 
-    if (health < 0)
-    {
-        deathCount++;
-        // pos = spawnPoint;
-        health = maxHP;
-    }
+void Player::healHealth(int heal)
+{
+    // heal the player + override check
+    
+    health += heal;
 
     if (health > maxHP)
     {
         health = maxHP;
     }
+    
 }
 
 bool Player::isColliding(int spriteX, int spriteY, int entityX, int entityY)
