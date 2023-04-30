@@ -15,7 +15,6 @@
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="Level.cpp" />
-    <ClCompile Include="Coin.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -34,7 +33,6 @@
     <ClInclude Include="HUD.h" />
     <ClInclude Include="BoundingBox.h" />
     <ClInclude Include="Level.h" />
-    <ClInclude Include="Coin.h" />
     <ClInclude Include="SFX.h" />
   </ItemGroup>
   <ItemGroup>

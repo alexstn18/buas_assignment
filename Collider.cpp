@@ -37,7 +37,7 @@ void Collider::EdgeCheck(Player& player, Entity& entity, SFX& sfx, int& coinCoun
 		// if statement that tracks whether the player has hit a spike
 		player.setSpikeChecker(true);
 		player.setDeathCount();
-		player.setPos({ player.getPos().x - 10, player.getPos().y - 30 });
+		player.setPos({ player.getPos().x - 10, player.getPos().y - 30 }); // set position to prevent another collision with the same object after it was already hit during the same life
 		return;
 	}
 
@@ -88,15 +88,9 @@ void Collider::EdgeCheck(Player& player, Entity& entity, SFX& sfx, int& coinCoun
 			}
 			break;
 		case 3:
-
 			player.setVel({ 0.0f, 0.0f });
 			player.setState(Player::State::Grounded);
 			break;
-		}
-
-		if (entity.type == Entity::Type::ground || entity.type == Entity::Type::platform)
-		{
-			player.setSquished(true);
 		}
 		return;
 	}

@@ -18,12 +18,4 @@ struct BoundingBox
 			a.bottom > b.top &&
 			a.top < b.bottom);
 	}
-
-	bool Intersect(const BoundingBox& other)
-	{
-		return(right > other.left &&
-			left < other.right &&
-			bottom > other.top &&
-			top < other.bottom);
-	}
 };

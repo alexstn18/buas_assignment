@@ -34,9 +34,6 @@ public:
 	void MouseUp(int button);
 	void MouseDown(int button);
 	void MouseMove(int x, int y) { mouseAxis.x = sCast<float>(x); mouseAxis.y = sCast<float>(y); }
-	bool getState();
-	vec2 getMouseAxis();
-	Level::Stage getCurrentLevel();
 	void KeyUp(int key) { }
 	void KeyDown(int key) { }
 private:
@@ -52,12 +49,11 @@ private:
 
 	Sprite bg{ new Surface("assets/bgScroll.png"), 1 };
 	Sprite opacityBg{ new Surface("assets/halfOpacityBackground.png"), 1 };
-	Sprite m_map{ new Surface("assets/tutorialTileMap.png"), 1 };
 
-	int bgX{ 0 };
-	int bgY{ 0 };
 	int coinCount{ 0 };
 	int readyTextTime{ 0 };
+	
+	float bgX{ 0 };
 	
 	vec2 mouseAxis{}; // vec2 variable that helds the x and y values of the mouseAxis => MouseMove function
 

@@ -4,15 +4,10 @@
 
 // health values
 constexpr int damage = 5;
-constexpr int maxHP = 250;
-
-// sprite SET width
-constexpr int spriteSetWidth = 25;
+constexpr int maxHP = 230;
 
 // sprite SET starting point
 constexpr float startingPoint = 0.0f;
-
-class Game;
 
 void Player::InitPlayer(vec2 spawnPoint)
 {
@@ -22,9 +17,9 @@ void Player::InitPlayer(vec2 spawnPoint)
     health = maxHP;
     bounceCount = 0;
     state = State::Bouncing;
+    hasHitWater = false;
     hasHitSpike = false;
     hasHitPortal = false;
-    isSquished = false;
     isFlipped = false;
 }
 
@@ -94,22 +89,24 @@ void Player::endState(State oldState)
     }
 }
 
-// checker section
-void Player::SquishCheck(float dt)
+// state machine setter
+void Player::setState(State newState)
 {
-    if (isSquished)
+    if (newState != state)
     {
-        spriteSize.y -= 10.0f * dt;
-        // spriteH += sCast<int>(500.0f * dt);
-        if (spriteSize.y > spriteSetWidth)
-        {
-            spriteSize.y = spriteSetWidth;
-            isSquished = false;
-        }
-        else if (spriteSize.y < spriteSetWidth) spriteSize.y += 100.0f * dt;
+        endState(state);
+        startState(newState);
+        state = newState;
     }
 }
+// state machine checker
+bool Player::checkState(State state)
+{
+    if (state == this->state) return true;
+    else return false;
+}
 
+// checker section
 void Player::mouseCheck(const vec2& mouseAxis)
 {
     // this function makes the player sprite follow the mouse's direction
@@ -125,33 +122,33 @@ void Player::mouseCheck(const vec2& mouseAxis)
 void Player::HitWaterCheck(vec2 spawnPos)
 {
     bool hitBottom = pos.y > ScreenHeight - theSprite.GetHeight();
-
+    // bottom collision check => water check
     if (hitBottom)
     {
         deathCount++;
+        hasHitWater = true;
         InitPlayer(spawnPos);
     }
 }
 
-
 void Player::mouseRelease(const vec2& mouseAxis)
 {
+    // this function stores the direction that the player is aiming for, then the player's velocity is calculated using this direction and the launch impulse
     setState(State::Bouncing);
 
     ballDirection = vec2(mouseAxis.x - pos.x, mouseAxis.y + pos.y).normalized();
     velocity = ballDirection * launchImpulse;
-    // pos.y -= 6;
     bounceCount = 0;
 }
 
 void Player::UpdateBoundingBox()
 {
+    // updates the bounding box of the player
     bndBox.left = pos.x;
     bndBox.right = pos.x + spriteSize.x;
     bndBox.top = pos.y;
     bndBox.bottom = pos.y + spriteSize.y;
 }
-
 
 // Getter section
 vec2 Player::getSize() const
@@ -225,21 +222,6 @@ void Player::resetDeathCount()
     deathCount = 0;
 }
 
-void Player::setState(State newState)
-{
-    if (newState != state)
-    {
-        endState(state);
-        startState(newState);
-        state = newState;
-    }
-}
-
-void Player::setSquished(bool squished)
-{
-    isSquished = squished;
-}
-
 void Player::setPortalChecker(bool portalChecker)
 {
     this->hasHitPortal = portalChecker;
@@ -248,12 +230,6 @@ void Player::setPortalChecker(bool portalChecker)
 void Player::setSpikeChecker(bool spikeChecker)
 {
     hasHitSpike = spikeChecker;
-}
-
-bool Player::checkState(State state)
-{
-    if (state == this->state) return true;
-    else return false;
 }
 
 void Player::setPos(vec2 pos)
@@ -266,16 +242,17 @@ void Player::setVel(vec2 vel)
     this->velocity = vel;
 }
 
+
 // Rendering section
 void Player::DrawDirection(Surface& screen, const vec2 &mouseAxis)
 {
-    // CHANGE (FIX) OTHER TIME :)
+    // draws a line from the player's position to the mouse's position, representing the direction of the movement
     screen.Line(pos.x + (theSprite.GetWidth() / 2.0f), pos.y + theSprite.GetHeight() - 12.0f, mouseAxis.x, mouseAxis.y, dirColor);
-    // screen.Line(mouseAxis.x, mouseAxis.y, mouseAxis.x + 5, mouseAxis.y + 10, dirColor);
 }
 
 void Player::Render(Surface& screen)
 {
+    // draws the player to the screen
     theSprite.DrawScaled(sCast<int>(pos.x), sCast<int>(pos.y), sCast<int>(spriteSize.x), sCast<int>(spriteSize.y), isFlipped, &screen);
     //debugging collision box for player
 #ifdef _DEBUG
@@ -303,16 +280,9 @@ void Player::healHealth(int heal)
     
 }
 
-bool Player::isColliding(int spriteX, int spriteY, int entityX, int entityY)
-{
-    return ((spriteX + spriteSize.x) > entityX
-           && (spriteX - spriteSize.x) < entityX)
-           && ((spriteY + spriteSize.y) > entityY 
-           && (spriteY - spriteSize.y) < entityY);
-}
-
 void Player::StorePosition()
 {
+    // stores the bounding box of the player
     bndBox.previousLeft = bndBox.left;
     bndBox.previousRight = bndBox.right;
     bndBox.previousTop = bndBox.top;
@@ -323,6 +293,5 @@ void Player::Update(bool &playing, const vec2 &mAxis, float dt)
 {
     Physics(dt);
     CollisionCheck(dt);
-    SquishCheck(dt);
     mouseCheck(mAxis);
 }

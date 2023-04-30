@@ -32,7 +32,7 @@ namespace Tmpl8
         float delta = sCast<float>(Timer::Get().getElapsedS()); // deltaTime
         bool bgLoopCheck = bgX < lastBgValue; // background loop checker
         
-        bgX -= sCast<int>(100 * delta); // constantly move/animate the background
+        bgX -= 100 * delta; // constantly move/animate the background
         if (bgLoopCheck)
         {
             // loops the background
@@ -43,7 +43,7 @@ namespace Tmpl8
         {
             // menu functionality, preceded by line 135 from game.cpp
             coinCount = 0; // useful after the player game overs (20 deaths)
-            opacityBg.Draw(screen, bgX, bgY); // draw the half opacity background when in menu
+            opacityBg.Draw(screen, sCast<int>(bgX), 0); // draw the half opacity background when in menu
             menu.Render(screen, hud); // render the menu buttons and logo (or finish screen if the game is finished)
             menu.Update(mouseAxis, hasFinishedGame, hasGameOvered);
             if (isPlaying == true)
@@ -58,7 +58,7 @@ namespace Tmpl8
             // non-menu gameplay functionality
             hasGameOvered = false;
             sfx.ambience.play();
-            bg.Draw(screen, bgX, bgY);
+            bg.Draw(screen, sCast<int>(bgX), 0);
             CheckLevel();
             level.Render(currentLevel, screen);
             for (auto& e : level.getEntities())
@@ -79,7 +79,7 @@ namespace Tmpl8
             player.Render(*screen);
             
             hud.Update(&player, level, coinCount);
-            if (player.getDeathCount() >= 20)
+            if (player.getDeathCount() >= 25)
             {
                 // game over check
                 isPlaying = false;
@@ -164,6 +164,7 @@ namespace Tmpl8
         {
             player.setDirColor(0xFF0000);
         }
+        // releases the mouse button
         mouseDown = false;
         buttonState = ButtonState::Released;
     }
@@ -173,21 +174,5 @@ namespace Tmpl8
         sfx.clickSound.play();
         mouseDown = true;
         buttonState = ButtonState::Pressed;
-    }
-
-    bool Game::getState()
-    {
-        if (gameState == GameState::Menu) return false;
-        else if (gameState == GameState::Playing) return true;
-        else if (gameState == GameState::Paused) return false;
-    }
-
-    vec2 Game::getMouseAxis()
-    {
-        return mouseAxis;
-    }
-    Level::Stage Game::getCurrentLevel()
-    {
-        return currentLevel;
     }
 }

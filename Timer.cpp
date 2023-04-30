@@ -8,14 +8,14 @@ Timer::Timer()
 
 Timer& Timer::Get()
 {
-    // someone else added this function
-    // NOT JEREMIAH!!!!!!!!!!!!1111
+    // returns the timer
     static Timer t;
     return t;
 }
 
 void Timer::Tick()
 {
+    // calculates the timer
     m_t1 = high_resolution_clock::now();
     auto delta = m_t1 - m_t0;
     m_t0 = m_t1;
@@ -26,6 +26,7 @@ void Timer::Tick()
 
 void Timer::Reset()
 {
+    // resets the timer
     m_t0 = high_resolution_clock::now();
     m_t1 = m_t0;
 

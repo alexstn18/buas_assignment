@@ -50,18 +50,14 @@ public:
 	void setBounceCount();
 	void setDeathCount();
 	void resetDeathCount();
-	void setState(State newState);
-	void setSquished(bool squished);
 	void setPortalChecker(bool portalChecker);
 	void setSpikeChecker(bool spikeChecker);
 
+	void setState(State newState);
 	bool checkState(State state);
-
-	bool isColliding(int spriteX, int spriteY, int entityX, int entityY);
 	
 private:
 	void Physics(float dt);
-	void SquishCheck(float dt);
 	void mouseCheck(const vec2& mouseAxis);
 	void CollisionCheck(float dt);
 	void StorePosition();
@@ -86,19 +82,16 @@ private:
 	vec2 ballDirection{ 0.0f };
 	vec2 velocity{ 0.0f };
 	vec2 launchImpulse{ 400.0f, 500.0f };
-	vec2 speed{ 200.0f, 300.0f };
 
 	bool hitTop{ false };
 	bool hitBottom{ false };
 	bool hitSideL{ false };
 	bool hitSideR{ false };
 	bool hitSide{ false };
-	bool isSquished{ spriteSize.y < 25 };
 	bool isBouncing{ false };
 	bool isFlipped{ false };
 	bool isReleased{ false };
 	bool initialFlipped{ false };
-	bool readyForLaunch{ false };
 	bool hasCollectedCoin{ false };
 	bool hasHitPortal{ false };
 	bool hasHitSpike{ false };

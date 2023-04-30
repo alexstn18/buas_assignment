@@ -89,8 +89,8 @@ void Level::LoadFirstLevel()
 
 	// the LoadSpikes function is to preserve space and to improve readability of the code
 	// loads the individual sizes and positions of each spike in the level
-	LoadSpikes({ 215, 147 }, { 26, 32 },
-			   { 31, 179 }, { 32, 26 },
+	LoadSpikes({ 215, 179 }, { 32, 32 },
+			   { 226, 447 }, { 32, 20 },
 			   { 544, 540 }, { 32, 20 },
 			   { -100 , -100 }, { 0, 0 });
 	

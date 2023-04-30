@@ -35,20 +35,20 @@ void Menu::Update(const vec2& mouseAxis, bool& finished, bool& gameOver)
 {
     this->finished = finished;
     this->gameOver = gameOver;
+    // if the player has not finished the game, isHoveringPlay creates an interval in which the "PLAY" BUTTON is hoverable with the mouse
     if(!finished)
         isHoveringPlay = mouseAxis.x > (menuTextX - 25)
                       && mouseAxis.x < (menuTextX - 25) + 115
                       && mouseAxis.y > (menuTextY - 25)
                       && mouseAxis.y < (menuTextY - 25) + 25;
-
+    // "EXIT" button hover interval
     isHoveringExit = mouseAxis.x > (menuTextX - 25)
                   && mouseAxis.x < (menuTextX - 25) + 115
                   && mouseAxis.y > (menuTextY + 50)
                   && mouseAxis.y < (menuTextY + 50) + 25;
-
+    // the following lines of code (50 -> 66) change the color of the text if the player is hovering their mouse over the buttons
     if (isHoveringPlay)
     {
-        // menuSound.play();
         textColor = 0xFFFFFF;
     }
     else
@@ -58,7 +58,6 @@ void Menu::Update(const vec2& mouseAxis, bool& finished, bool& gameOver)
 
     if (isHoveringExit)
     {
-        // menuSound.play();
         exitColor = 0xFFFFFF;
     }
     else
@@ -66,16 +65,18 @@ void Menu::Update(const vec2& mouseAxis, bool& finished, bool& gameOver)
         exitColor = 0x0;
     }
 }
-
+// function only available in the mouse functionality in the "Game" class
 void Menu::ButtonChecker(const vec2& mouseAxis, bool& playing)
 {
+    // "PLAY" button press code
     if (isHoveringPlay && !finished)
     {
         playing = true;
     }
-
+    // "EXIT" button press code 
     if (isHoveringExit)
     {
+        // quits the game
         SDL_Event e{};
         e.type = SDL_QUIT;
         SDL_PushEvent(&e);

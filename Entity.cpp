@@ -29,7 +29,7 @@ void Entity::Render(Surface& screen)
 	if (type == Type::coin && active == true)
 	{
 		// renders the coin at its declared position (found in the Level class when loading levels)
-		sprite->Draw(&screen, pos.x, pos.y);
+		sprite->Draw(&screen, sCast<int>(pos.x), sCast<int>(pos.y));
 	}
 }
 
