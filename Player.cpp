@@ -59,7 +59,7 @@ void Player::CollisionCheck(float dt)
         }
         else
         {
-            pos.x = ScreenWidth - theSprite.GetWidth();
+            pos.x = static_cast<float>( ScreenWidth - theSprite.GetWidth() );
         }
     }
 }
