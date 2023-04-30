@@ -361,3 +361,7 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/Build
+/Build.zip
+/template.zip
+/IJWB_README.txt
