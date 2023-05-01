@@ -23,7 +23,7 @@ void Entity::Update(float dt)
 void Entity::Render(Surface& screen)
 {
 #ifdef _DEBUG
-	screen.Box(bndBox.left, bndBox.top, bndBox.right, bndBox.bottom, 0xFF0000);
+	screen.Box( static_cast<int>( bndBox.left ), static_cast<int>( bndBox.top ), static_cast<int>( bndBox.right ), static_cast<int>( bndBox.bottom ), 0xFF0000);
 #endif
 	
 	if (type == Type::coin && active == true)
