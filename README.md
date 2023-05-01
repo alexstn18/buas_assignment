@@ -24,7 +24,3 @@ Developed in close to 3 months, initially starting with barely any OOP knowledge
 - Windows 3.1 Startup Sound by Microsoft, source: https://www.winhistory.de/more/winstart/winstart_en.htm
 - Ambience Sound by https://www.youtube.com/@greatrelaxationsound, bitcrushed by me in a DAW to sound "8-bit", source: https://youtu.be/4a0xOdZXBpk
 - MMRock9 Font by caveras, source: https://fontstruct.com/fontstructions/show/1039463/mmrock9
-
-## Additional
-If you download the code and you want to build the solution, please note that the .lib files are not included with this Github project.
-Please download them from: https://files.catbox.moe/uk0ndq.zip
