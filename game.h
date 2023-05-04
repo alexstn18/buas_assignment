@@ -8,7 +8,7 @@
 #include <cmath>
 #include <algorithm>
 #include <string>
-#include <Audio/Device.hpp> // Audio library from Jeremiah van Oosten (@jpvanoosten)
+#include <Device.hpp> // Audio library from Jeremiah van Oosten (@jpvanoosten)
 
 namespace Tmpl8 {
 
@@ -60,6 +60,7 @@ private:
 	bool isPlaying{ false };
 	bool hasFinishedGame{ false };
 	bool hasGameOvered{ false };
+	bool hasPlayedSound{ false };
 	bool mouseDown{ false };
 	bool mouseUp{ false };
 };

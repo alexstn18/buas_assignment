@@ -1,5 +1,5 @@
 #pragma once
-#include <Audio/Sound.hpp>
+#include <Sound.hpp>
 
 class SFX
 {
@@ -17,4 +17,4 @@ public:
 	Audio::Sound portalSound{ "assets/sfx_movement_portal1.wav", Audio::Sound::Type::Sound };
 	Audio::Sound coinSound{ "assets/sfx_coin_double3.wav", Audio::Sound::Type::Sound };
 	Audio::Sound winSound{ "assets/sfx_windows3point1_sound.wav", Audio::Sound::Type::Sound };
-};
+};	

@@ -1,51 +1,94 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="game.cpp" />
     <ClCompile Include="surface.cpp">
       <Filter>template code</Filter>
     </ClCompile>
     <ClCompile Include="template.cpp">
       <Filter>template code</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="Entity.cpp" />
-    <ClCompile Include="Timer.cpp" />
-    <ClCompile Include="Collider.cpp" />
-    <ClCompile Include="Menu.cpp" />
-    <ClCompile Include="HUD.cpp" />
-    <ClCompile Include="Level.cpp" />
+    <ClCompile Include="Timer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="Level.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="HUD.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="game.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="game.h" />
     <ClInclude Include="surface.h">
       <Filter>template code</Filter>
     </ClInclude>
     <ClInclude Include="template.h">
       <Filter>template code</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="Entity.h" />
-    <ClInclude Include="Components.h" />
-    <ClInclude Include="Timer.h" />
-    <ClInclude Include="Collider.h" />
-    <ClInclude Include="Menu.h" />
-    <ClInclude Include="HUD.h" />
-    <ClInclude Include="BoundingBox.h" />
-    <ClInclude Include="Level.h" />
-    <ClInclude Include="SFX.h" />
+    <ClInclude Include="Timer.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="SFX.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Level.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="HUD.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="game.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Components.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="BoundingBox.h">
+      <Filter>inc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="template code">
       <UniqueIdentifier>{bf32dd6e-4be7-4889-8ac6-49e7ee163c40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="inc">
+      <UniqueIdentifier>{9e0434d7-58ad-4db2-9e96-3f5bc4f2f676}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{e0b6a12e-1e4a-47f4-a240-9ae4ac46c853}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="_readme.txt">
       <Filter>template code</Filter>
     </Text>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="cpp.hint" />
   </ItemGroup>
 </Project>

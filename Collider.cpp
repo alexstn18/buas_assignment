@@ -6,7 +6,7 @@ constexpr float velMultiplier = 0.6f;
 
 void Collider::CheckCollisions(Player& player, Entity& entity, SFX& sfx, int& coinCount)
 {
-	if (player.checkState(Player::State::Grounded)) return; // 
+	if (player.checkState(Player::State::Grounded)) return;
 	if (BoundingBox::AABB(player.bndBox, entity.bndBox))
 	{
 		EdgeCheck(player, entity, sfx, coinCount);
@@ -55,13 +55,13 @@ void Collider::EdgeCheck(Player& player, Entity& entity, SFX& sfx, int& coinCoun
 	}
 	
 
-	if (player.bndBox.previousBottom <= entity.bndBox.top
-		&& player.bndBox.bottom >= entity.bndBox.top)
+	if (player.bndBox.previousBottom < entity.bndBox.top
+		&& player.bndBox.bottom > entity.bndBox.top)
 	{
 		// if the player's bottom bounding box has collided with an entity's top bounding box
-
-		player.setPos({ player.getPos().x, entity.bndBox.top - player.getSize().y });
 		
+		player.setPos({ player.getPos().x, entity.bndBox.top - player.getSize().y - 1 });
+		player.UpdateBoundingBox();
 		switch (bounceCount)
 		{
 		case 0:
@@ -103,7 +103,7 @@ void Collider::EdgeCheck(Player& player, Entity& entity, SFX& sfx, int& coinCoun
 		player.setVel({ player.getVel().x, -(player.getVel().y) * velMultiplier });
 		return;
 	}
-
+	
 	if (player.bndBox.previousLeft > entity.bndBox.right
 		&& player.bndBox.left <= entity.bndBox.right)
 	{

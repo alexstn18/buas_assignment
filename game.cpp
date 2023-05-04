@@ -61,6 +61,7 @@ namespace Tmpl8
             bg.Draw(screen, sCast<int>(bgX), 0);
             CheckLevel();
             level.Render(currentLevel, screen);
+            player.Update(isPlaying, mouseAxis, delta);
             for (auto& e : level.getEntities())
             {
                 // gets all the level's entities, and updates, renders and checks collision with them and the player
@@ -68,13 +69,17 @@ namespace Tmpl8
                 e.Render(*screen);
                 Collider::CheckCollisions(player, e, sfx, coinCount);
             }
-            player.Update(isPlaying, mouseAxis, delta);
             player.HitWaterCheck(level.getSpawnPoint(currentLevel));
             if (buttonState == ButtonState::Pressed)
             {
                 // if the mouse button is pressed, play the click sound and draw the trajectory direction from the player to the mouse
-                sfx.clickSound.play();
+                if (!hasPlayedSound) sfx.clickSound.play();
+                hasPlayedSound = true;
                 player.DrawDirection(*screen, mouseAxis);
+            }
+            else
+            {
+                hasPlayedSound = false;
             }
             player.Render(*screen);
             
@@ -165,13 +170,15 @@ namespace Tmpl8
             player.setDirColor(0xFF0000);
         }
         // releases the mouse button
+        hasPlayedSound = false;
         mouseDown = false;
         buttonState = ButtonState::Released;
     }
    
     void Game::MouseDown(int button)
     {
-        sfx.clickSound.play();
+        if(!hasPlayedSound) sfx.clickSound.play();
+        hasPlayedSound = true;
         mouseDown = true;
         buttonState = ButtonState::Pressed;
     }

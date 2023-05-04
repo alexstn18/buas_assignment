@@ -83,14 +83,14 @@ void Level::LoadFirstLevel()
 
 	entities[2].setPos({ 226, 415 });
 	entities[2].setSize({ 384, 32 });
-
+	
 	entities[3].setPos({ 352, 496 });
 	entities[3].setSize({ 32, 64 });
 
 	// the LoadSpikes function is to preserve space and to improve readability of the code
 	// loads the individual sizes and positions of each spike in the level
 	LoadSpikes({ 215, 179 }, { 32, 32 },
-			   { 226, 447 }, { 32, 20 },
+			   { -300, -300 }, { 32, 20 },
 			   { 544, 540 }, { 32, 20 },
 			   { -100 , -100 }, { 0, 0 });
 	
@@ -101,7 +101,7 @@ void Level::LoadSecondLevel()
 {
 	entities[0].setPos({ 0, 688 });
 	entities[0].setSize({ 1280, 32 });
-
+	
 	entities[1].setPos({ 0, 352 });
 	entities[1].setSize({ 736, 32 });
 	
@@ -109,12 +109,12 @@ void Level::LoadSecondLevel()
 	entities[2].setSize({ 256, 32 });
 
 	entities[3].setPos({64, 624});
-	entities[3].setSize({32, 64});
-
-	LoadSpikes({ 352, 324 }, { 32, 28 },
-			   { 848, 420 }, { 32, 28 },
-		       { 480, 660 }, { 32, 28 },
-		       { 960, 660 }, { 32, 28 });
+	entities[3].setSize({ 32, 64 });;
+	
+	LoadSpikes({ 352, 330 }, { 32, 22 },
+			   { 928, 426 }, { 32, 22 },
+		       { 441, 666 }, { 32, 22 },
+		       { -100, -100 }, { 32, 22 });
 
 	LoadCoins({ 672, 384 }, { 32, 32 });
 }
@@ -133,10 +133,10 @@ void Level::LoadThirdLevel()
 	entities[3].setPos({352, 496});
 	entities[3].setSize({32, 64});
 
-	LoadSpikes({ 780, 289 }, { 32, 30 },
-			   { 479, 289 }, { 32, 30 },
-		       { 992, 530 }, { 32, 30 },
-		       { 576, 530 }, { 32, 30 });
+	LoadSpikes({ 1022, 295 }, { 32, 24 },
+			   { 479, 295 }, { 32, 24 },
+		       { -100, -100 }, { 32, 24 },
+		       { 576, 536 }, { 32, 24 });
 
 	LoadCoins({ 415, 287 }, { 32, 32 });
 }

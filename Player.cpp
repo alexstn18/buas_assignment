@@ -35,9 +35,9 @@ void Player::Physics(float dt)
     velocity.y += gravity * dt; 
     pos += velocity * dt;
 #ifdef _DEBUG
-    std::cout << velocity.x << " " << velocity.y << std::endl;
+    // std::cout << velocity.x << " " << velocity.y << std::endl;
 #endif
-    UpdateBoundingBox();
+    UpdateBoundingBox(); // updates the player's bounding box after it's velocity has been modified
 }
 
 void Player::CollisionCheck(float dt)
@@ -136,8 +136,19 @@ void Player::mouseRelease(const vec2& mouseAxis)
     // this function stores the direction that the player is aiming for, then the player's velocity is calculated using this direction and the launch impulse
     setState(State::Bouncing);
 
-    ballDirection = vec2(mouseAxis.x - pos.x, mouseAxis.y + pos.y).normalized();
+    ballDirection = vec2(mouseAxis.x - pos.x, mouseAxis.y - pos.y).normalized();
+    
+    
+#ifdef _DEBUG
+    std::cout << "pos: " << pos.x << " " << pos.y << std::endl;
+    std::cout << "mouseAxis: " << mouseAxis.x << " " << mouseAxis.y << std::endl;
+    std::cout << "unnormalized: " << mouseAxis.x - pos.x << " " << mouseAxis.y - pos.y << std::endl;
+    std::cout << "normalized:" << ballDirection.x << " " << ballDirection.y << std::endl;
+    std::cout << "launch impulse: " << launchImpulse << std::endl;
+    std::cout << std::endl;
+#endif  
     velocity = ballDirection * launchImpulse;
+
     bounceCount = 0;
 }
 
